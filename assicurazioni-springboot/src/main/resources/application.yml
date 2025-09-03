@@ -15,3 +15,9 @@ logging:
     name: logs/app.log
   level:
     root: INFO
+
+security:
+  user:
+    name: "user"
+    password: "password"
+    role: "USER"

@@ -1,5 +1,6 @@
 package it.onyx.assicurazioni.configuration;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -15,6 +16,15 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
+
+    @Value("${security.user.name}")
+    private String userName;
+
+    @Value("${security.user.password}")
+    private String userPassword;
+
+    @Value("${security.user.role}")
+    private String userRole;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -37,9 +47,9 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails user = User
-                .withUsername("admin")
-                .password(passwordEncoder().encode("password"))
-                .roles("USER")
+                .withUsername(userName)
+                .password(passwordEncoder().encode(userPassword))
+                .roles(userRole)
                 .build();
 
         return new InMemoryUserDetailsManager(user);
