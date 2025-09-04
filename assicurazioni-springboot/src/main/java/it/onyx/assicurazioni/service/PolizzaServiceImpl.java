@@ -20,9 +20,13 @@ public class PolizzaServiceImpl implements PolizzaService {
     @Override
     public PolizzaDTO insert(PolizzaDTO dto) {
         try {
+            dto.setCombinato();
             Polizza polizza = Conversioni.daPolizzaDTOAPolizza(dto);    //conversione ad entità del dto
+            if(dto.getDtFine().isBefore(dto.getDtInizio())) {   //controllo che la data sia coerente
+                return null;
+            }
             polizza = polizzaRepository.save(polizza);  //effetua il salvataggio sia nel database che nella variabile
-            if (polizzaRepository.existsById(dto.getIdPolizza())) { //controllo se andato tutto bene
+            if (polizzaRepository.existsById(polizza.getIdPolizza())) { //controllo se andato tutto bene
                 return Conversioni.daPolizzaAPolizzaDTO(polizza);
             } else {
                 return null;
@@ -87,7 +91,10 @@ public class PolizzaServiceImpl implements PolizzaService {
                if (dto.getNote() == null) {
                    dto.setNote(polizzaDB.getNote());
                }
-               dto.setCombinato(dto.getIdIntestatario(), dto.getIdTipoPolizza());  //viene reimpostato il campo numPolizza
+               if(dto.getDtFine().isBefore(dto.getDtInizio())) {    // controllo che la data sia coerente
+                   return null;
+               }
+               dto.setCombinato();  //viene reimpostato il campo numPolizza
                return Conversioni.daPolizzaAPolizzaDTO(polizzaRepository.save(Conversioni.daPolizzaDTOAPolizza(dto))); //viene salvato e il ritornato
            } else {
                return null;
