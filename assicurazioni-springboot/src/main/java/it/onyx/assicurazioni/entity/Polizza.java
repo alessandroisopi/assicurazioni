@@ -1,14 +1,14 @@
 package it.onyx.assicurazioni.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
 @Entity(name = "POLIZZA")
 public class Polizza {
     @Id
+    @SequenceGenerator(allocationSize = 1, sequenceName = "SEQ_POLIZZA", name = "id_polizza")
+    @GeneratedValue(generator = "id_polizza", strategy = GenerationType.SEQUENCE)
     private long idPolizza; //indentificativo polizza
 
     @Column(name = "ID_TIPO_POLIZZA")
