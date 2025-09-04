@@ -18,10 +18,10 @@ public class PolizzaServiceImpl implements PolizzaService {
     private PolizzaRepository polizzaRepository;
 
     @Override
-    public PolizzaDTO insert(PolizzaDTO p) {
-        Polizza polizza = Conversioni.daPolizzaDTOAPolizza(p);
+    public PolizzaDTO insert(PolizzaDTO dto) {
+        Polizza polizza = Conversioni.daPolizzaDTOAPolizza(dto);
         polizza = polizzaRepository.save(polizza);
-        if (polizzaRepository.existsById(p.getIdPolizza())) {
+        if (polizzaRepository.existsById(dto.getIdPolizza())) {
             return Conversioni.daPolizzaAPolizzaDTO(polizza);
         } else {
             return null;
@@ -47,9 +47,9 @@ public class PolizzaServiceImpl implements PolizzaService {
     }
 
     @Override
-    public PolizzaDTO update(PolizzaDTO p) {
-        if (polizzaRepository.existsById(p.getIdPolizza())) {
-           Polizza polizza = polizzaRepository.save(Conversioni.daPolizzaDTOAPolizza(p));
+    public PolizzaDTO update(PolizzaDTO dto) {
+        if (polizzaRepository.existsById(dto.getIdPolizza())) {
+           Polizza polizza = polizzaRepository.save(Conversioni.daPolizzaDTOAPolizza(dto));
            return  Conversioni.daPolizzaAPolizzaDTO(polizza);
         } else {
             return null;
