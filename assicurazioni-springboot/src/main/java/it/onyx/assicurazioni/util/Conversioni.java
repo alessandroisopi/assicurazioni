@@ -15,7 +15,8 @@ public class Conversioni {
                 polizza.getIdIntestatario(),
                 polizza.getIdStatoPolizza(),
                 polizza.getDtInizio(),
-                polizza.getDtFine()
+                polizza.getDtFine(),
+                polizza.getNote()
         );
     }
 
@@ -30,7 +31,8 @@ public class Conversioni {
                 dto.getIdIntestatario(),
                 dto.getIdStatoPolizza(),
                 dto.getDtInizio(),
-                dto.getDtFine()
+                dto.getDtFine(),
+                dto.getNote()
         );
     }
 }
