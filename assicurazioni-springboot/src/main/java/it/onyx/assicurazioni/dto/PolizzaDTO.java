@@ -94,6 +94,10 @@ public class PolizzaDTO {
         this.numPolizza = numPolizza;
     }
 
+    public void setCombinato(long idIntestatario, long idTipoPolizza) { //a differenza del set principale questo usa i campi primari
+        this.numPolizza = idIntestatario + "|" + idTipoPolizza;
+    }
+
     public LocalDate getDtInizio() {
         return dtInizio;
     }
