@@ -4,6 +4,7 @@ import it.onyx.assicurazioni.groupvalidator.OnCreate;
 import it.onyx.assicurazioni.groupvalidator.OnUpdate;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 
 import java.time.LocalDate;
 
@@ -25,6 +26,7 @@ public class PolizzaDTO {
     @Min(value=1, message = "Il valore deve essere maggiore o uguale a 1", groups = {OnCreate.class})
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
     private long idStatoPolizza;
+    @Null(message = "Il valore deve essere nullo", groups = {OnCreate.class, OnUpdate.class})
     private String numPolizza;
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
     private LocalDate dtInizio;
@@ -41,6 +43,18 @@ public class PolizzaDTO {
         this.idIntestatario = idIntestatario;
         this.idStatoPolizza = idStatoPolizza;
         this.numPolizza = idIntestatario + "|" + idTipoPolizza;
+        this.dtInizio = dtInizio;
+        this.dtFine = dtFine;
+        this.note = note;
+    }
+
+    public PolizzaDTO(long idPolizza, long idTipoPolizza, long idClasse, long idIntestatario, long idStatoPolizza, String numPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
+        this.idPolizza = idPolizza;
+        this.idTipoPolizza = idTipoPolizza;
+        this.idClasse = idClasse;
+        this.idIntestatario = idIntestatario;
+        this.idStatoPolizza = idStatoPolizza;
+        this.numPolizza = numPolizza;
         this.dtInizio = dtInizio;
         this.dtFine = dtFine;
         this.note = note;
@@ -94,8 +108,8 @@ public class PolizzaDTO {
         this.numPolizza = numPolizza;
     }
 
-    public void setCombinato(long idIntestatario, long idTipoPolizza) { //a differenza del set principale questo usa i campi primari
-        this.numPolizza = idIntestatario + "|" + idTipoPolizza;
+    public void setCombinato() { //a differenza del set principale questo usa i campi primari
+        this.numPolizza = this.idIntestatario + "|" + this.idTipoPolizza;
     }
 
     public LocalDate getDtInizio() {
@@ -130,6 +144,7 @@ public class PolizzaDTO {
                 ", idClasse=" + idClasse +
                 ", idIntestatario=" + idIntestatario +
                 ", idStatoPolizza=" + idStatoPolizza +
+                ", numPolizza='" + numPolizza + '\'' +
                 ", dtInizio=" + dtInizio +
                 ", dtFine=" + dtFine +
                 ", note='" + note + '\'' +
