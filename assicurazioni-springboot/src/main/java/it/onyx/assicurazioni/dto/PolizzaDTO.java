@@ -25,6 +25,7 @@ public class PolizzaDTO {
     @Min(value=1, message = "Il valore deve essere maggiore o uguale a 1", groups = {OnCreate.class})
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
     private long idStatoPolizza;
+    private String numPolizza;
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
     private LocalDate dtInizio;
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
@@ -39,6 +40,7 @@ public class PolizzaDTO {
         this.idClasse = idClasse;
         this.idIntestatario = idIntestatario;
         this.idStatoPolizza = idStatoPolizza;
+        this.numPolizza = idIntestatario + "|" + idTipoPolizza;
         this.dtInizio = dtInizio;
         this.dtFine = dtFine;
         this.note = note;
@@ -82,6 +84,14 @@ public class PolizzaDTO {
 
     public void setIdStatoPolizza(long idStatoPolizza) {
         this.idStatoPolizza = idStatoPolizza;
+    }
+
+    public String getNumPolizza() {
+        return numPolizza;
+    }
+
+    public void setNumPolizza(String numPolizza) {
+        this.numPolizza = numPolizza;
     }
 
     public LocalDate getDtInizio() {
