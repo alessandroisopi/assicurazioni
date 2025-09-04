@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/polizza")
-public class Controller {
+public class PolizzaController {
 
     @Autowired
     private PolizzaService polizzaService;
