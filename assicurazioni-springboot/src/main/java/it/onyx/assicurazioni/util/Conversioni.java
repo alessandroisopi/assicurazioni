@@ -30,6 +30,7 @@ public class Conversioni {
                 dto.getIdClasse(),
                 dto.getIdIntestatario(),
                 dto.getIdStatoPolizza(),
+                dto.getNumPolizza(),
                 dto.getDtInizio(),
                 dto.getDtFine(),
                 dto.getNote()
