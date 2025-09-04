@@ -29,7 +29,10 @@ public class Polizza {
     @Column(name = "DT_FINE")
     private LocalDate dtFine; //data fine polizza
 
-    public Polizza(long idPolizza, long idTipoPolizza, long idClasse, long idIntestatario, long idStatoPolizza, LocalDate dtInizio, LocalDate dtFine) {
+    @Column(name = "NOTE")
+    private String note; //note polizza
+
+    public Polizza(long idPolizza, long idTipoPolizza, long idClasse, long idIntestatario, long idStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
         this.idPolizza = idPolizza;
         this.idTipoPolizza = idTipoPolizza;
         this.idClasse = idClasse;
@@ -37,9 +40,11 @@ public class Polizza {
         this.idStatoPolizza = idStatoPolizza;
         this.dtInizio = dtInizio;
         this.dtFine = dtFine;
+        this.note = note;
     }
 
-    public Polizza() {}
+    public Polizza() {
+    }
 
     public long getIdPolizza() {
         return idPolizza;
@@ -95,5 +100,27 @@ public class Polizza {
 
     public void setDtFine(LocalDate dtFine) {
         this.dtFine = dtFine;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    @Override
+    public String toString() {
+        return "Polizza{" +
+                "idPolizza=" + idPolizza +
+                ", idTipoPolizza=" + idTipoPolizza +
+                ", idClasse=" + idClasse +
+                ", idIntestatario=" + idIntestatario +
+                ", idStatoPolizza=" + idStatoPolizza +
+                ", dtInizio=" + dtInizio +
+                ", dtFine=" + dtFine +
+                ", note='" + note + '\'' +
+                '}';
     }
 }
