@@ -23,6 +23,9 @@ public class Polizza {
     @Column(name = "ID_STATO_POLIZZA")
     private long idStatoPolizza; //indentificativo stato polizza
 
+    @Column(name = "NUM_POLIZZA")
+    private String numPolizza;  //numero della polizza
+
     @Column(name = "DT_INIZIO")
     private LocalDate dtInizio; //data inizio polizza
 
@@ -32,18 +35,19 @@ public class Polizza {
     @Column(name = "NOTE")
     private String note; //note polizza
 
-    public Polizza(long idPolizza, long idTipoPolizza, long idClasse, long idIntestatario, long idStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
+    public Polizza() {
+    }
+
+    public Polizza(long idPolizza, long idTipoPolizza, long idClasse, long idIntestatario, long idStatoPolizza, String numPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
         this.idPolizza = idPolizza;
         this.idTipoPolizza = idTipoPolizza;
         this.idClasse = idClasse;
         this.idIntestatario = idIntestatario;
         this.idStatoPolizza = idStatoPolizza;
+        this.numPolizza = numPolizza;
         this.dtInizio = dtInizio;
         this.dtFine = dtFine;
         this.note = note;
-    }
-
-    public Polizza() {
     }
 
     public long getIdPolizza() {
@@ -86,6 +90,14 @@ public class Polizza {
         this.idStatoPolizza = idStatoPolizza;
     }
 
+    public String getNumPolizza() {
+        return numPolizza;
+    }
+
+    public void setNumPolizza(String numPolizza) {
+        this.numPolizza = numPolizza;
+    }
+
     public LocalDate getDtInizio() {
         return dtInizio;
     }
@@ -118,6 +130,7 @@ public class Polizza {
                 ", idClasse=" + idClasse +
                 ", idIntestatario=" + idIntestatario +
                 ", idStatoPolizza=" + idStatoPolizza +
+                ", numPolizza='" + numPolizza + '\'' +
                 ", dtInizio=" + dtInizio +
                 ", dtFine=" + dtFine +
                 ", note='" + note + '\'' +
