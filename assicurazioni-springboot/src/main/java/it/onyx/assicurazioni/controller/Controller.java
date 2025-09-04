@@ -38,7 +38,7 @@ public class Controller {
     }
 
     @GetMapping(path = "/getById/{id}", produces = "application/json")
-    public String getById(@PathVariable long id) {
+    public String getById(@PathVariable("id") long id) {
         PolizzaDTO polizzaDTO = polizzaService.getById(id); //ricerca per id
         if (polizzaDTO != null) {   //controlla se ci sono stati risultati
             return polizzaDTO.toString();   //successo
@@ -58,7 +58,7 @@ public class Controller {
     }
 
     @DeleteMapping(path = "/delete/{id}", produces = "application/json")
-    public String delete(@PathVariable long id) {
+    public String delete(@PathVariable("id") long id) {
         boolean result = polizzaService.delete(id); //cerca di eliminare la polizza tramite id
         if (result) {   //controlla cosa viene tornato
             return "Polizza eliminata con successo";    //messaggio di successo
