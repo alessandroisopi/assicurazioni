@@ -14,6 +14,7 @@ public class Conversioni {
                 polizza.getIdClasse(),
                 polizza.getIdIntestatario(),
                 polizza.getIdStatoPolizza(),
+                polizza.getNumPolizza(),
                 polizza.getDtInizio(),
                 polizza.getDtFine(),
                 polizza.getNote()
