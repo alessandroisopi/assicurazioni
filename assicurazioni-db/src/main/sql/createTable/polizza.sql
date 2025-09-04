@@ -4,6 +4,7 @@ CREATE TABLE POLIZZA (
     ID_CLASSE NUMBER NOT NULL,  --identificativo classe polizza
     ID_INTESTATARIO NUMBER NOT NULL,    --identificativo intestatario polizza
     ID_STATO_POLIZZA NUMBER NOT NULL,   --identificativo stato polizza
+    NUM_POLIZZA VARCHAR2(64) NOT NULL,  --numero della polizza
     DT_INIZIO DATE NOT NULL,    --data inizio polizza
     DT_FINE DATE NOT NULL,  --data fine polizza
     NOTE VARCHAR2(255)  --note polizza
