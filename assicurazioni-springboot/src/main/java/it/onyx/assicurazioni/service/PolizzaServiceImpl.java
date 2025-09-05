@@ -33,7 +33,7 @@ public class PolizzaServiceImpl implements PolizzaService {
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            return null;
+            throw e;
         }
     }
 
@@ -47,7 +47,7 @@ public class PolizzaServiceImpl implements PolizzaService {
             return result;
         }  catch (Exception e) {
             System.err.println(e.getMessage());
-            return null;
+            throw e;
         }
     }
 
@@ -61,7 +61,7 @@ public class PolizzaServiceImpl implements PolizzaService {
             }
         }  catch (Exception e) {
             System.err.println(e.getMessage());
-            return null;
+            throw e;
         }
     }
 
@@ -101,7 +101,7 @@ public class PolizzaServiceImpl implements PolizzaService {
            }
        } catch (Exception e) {
            System.err.println(e.getMessage());
-           return null;
+           throw e;
        }
     }
 
@@ -116,7 +116,7 @@ public class PolizzaServiceImpl implements PolizzaService {
             }
         }  catch (Exception e) {
             System.err.println(e.getMessage());
-            return false;
+            throw e;
         }
     }
 }
