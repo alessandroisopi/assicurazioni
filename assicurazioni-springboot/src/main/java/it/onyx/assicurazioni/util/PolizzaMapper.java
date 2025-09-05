@@ -3,7 +3,7 @@ package it.onyx.assicurazioni.util;
 import it.onyx.assicurazioni.dto.PolizzaDTO;
 import it.onyx.assicurazioni.entity.Polizza;
 
-public class Conversioni {
+public class PolizzaMapper {
     public static PolizzaDTO daPolizzaAPolizzaDTO(Polizza polizza) {
         if (polizza == null) {
             return null;
