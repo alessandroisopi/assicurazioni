@@ -3,7 +3,7 @@ package it.onyx.assicurazioni.service;
 import it.onyx.assicurazioni.dto.PolizzaDTO;
 import it.onyx.assicurazioni.entity.Polizza;
 import it.onyx.assicurazioni.repository.PolizzaRepository;
-import it.onyx.assicurazioni.util.Conversioni;
+import it.onyx.assicurazioni.util.PolizzaMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,13 +21,13 @@ public class PolizzaServiceImpl implements PolizzaService {
     public PolizzaDTO insert(PolizzaDTO dto) {
         try {
             dto.setCombinato();
-            Polizza polizza = Conversioni.daPolizzaDTOAPolizza(dto);    //conversione ad entità del dto
+            Polizza polizza = PolizzaMapper.daPolizzaDTOAPolizza(dto);    //conversione ad entità del dto
             if(dto.getDtFine().isBefore(dto.getDtInizio())) {   //controllo che la data sia coerente
                 return null;
             }
             polizza = polizzaRepository.save(polizza);  //effetua il salvataggio sia nel database che nella variabile
             if (polizzaRepository.existsById(polizza.getIdPolizza())) { //controllo se andato tutto bene
-                return Conversioni.daPolizzaAPolizzaDTO(polizza);
+                return PolizzaMapper.daPolizzaAPolizzaDTO(polizza);
             } else {
                 return null;
             }
@@ -42,7 +42,7 @@ public class PolizzaServiceImpl implements PolizzaService {
         try {
             List<PolizzaDTO> result = new ArrayList<>();    //istanziata lista per il risultato
             for (Polizza p : polizzaRepository.findAll()) { //itera tutta la tabella e inserisce ogni riga nella lista
-                result.add(Conversioni.daPolizzaAPolizzaDTO(p));
+                result.add(PolizzaMapper.daPolizzaAPolizzaDTO(p));
             }
             return result;
         }  catch (Exception e) {
@@ -55,7 +55,7 @@ public class PolizzaServiceImpl implements PolizzaService {
     public PolizzaDTO getById(long id) {
         try {
             if (polizzaRepository.existsById(id)) { //controlla l'esistenza e ritorna l'oggetto
-                return Conversioni.daPolizzaAPolizzaDTO(polizzaRepository.findById(id).get());
+                return PolizzaMapper.daPolizzaAPolizzaDTO(polizzaRepository.findById(id).get());
             } else {
                 return null;
             }
@@ -95,7 +95,7 @@ public class PolizzaServiceImpl implements PolizzaService {
                    return null;
                }
                dto.setCombinato();  //viene reimpostato il campo numPolizza
-               return Conversioni.daPolizzaAPolizzaDTO(polizzaRepository.save(Conversioni.daPolizzaDTOAPolizza(dto))); //viene salvato e il ritornato
+               return PolizzaMapper.daPolizzaAPolizzaDTO(polizzaRepository.save(PolizzaMapper.daPolizzaDTOAPolizza(dto))); //viene salvato e il ritornato
            } else {
                return null;
            }
