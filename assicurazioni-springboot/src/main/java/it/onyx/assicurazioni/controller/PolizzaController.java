@@ -9,10 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-//http.cat per i codici
+
 @RestController
 @RequestMapping(path = "/polizza")
 public class PolizzaController {
@@ -22,71 +21,51 @@ public class PolizzaController {
 
     @PostMapping(path = "/insert", produces = "application/json", consumes = "application/json")
     public ResponseEntity<PolizzaDTO> insert(@Validated(OnCreate.class) @RequestBody PolizzaDTO dto) {
-        try {
-            PolizzaDTO polizzaDTO = polizzaService.insert(dto); //avviene l'insert
-            if (polizzaDTO != null) {   //controlla cosa ha tornato la service
-                return ResponseEntity.status(HttpStatus.CREATED).body(polizzaDTO);   //successo codice 201
-            } else {    //altrimento torna un messaggio di errore
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();       //codice 400
-            }
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());    //codice 500
+        PolizzaDTO polizzaDTO = polizzaService.insert(dto);
+        if (polizzaDTO != null) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(polizzaDTO);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
     @GetMapping(path = "/getAll", produces = "application/json")
     public ResponseEntity<List<PolizzaDTO>> getAll() {
-        try {
-            List<PolizzaDTO> polizzaDTO = polizzaService.getAll();  //prende tutti gli elementi
-            if  (!polizzaDTO.isEmpty()) {  //controlla se ci sono risultati
-                return ResponseEntity.status(HttpStatus.OK).body(polizzaDTO);   //successo codice 200
-            } else {    //altrimenti da messaggi di errore
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();     //codice 404
-            }
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());    //codice 500
+        List<PolizzaDTO> polizzaDTO = polizzaService.getAll();
+        if (!polizzaDTO.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.OK).body(polizzaDTO);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
     @GetMapping(path = "/getById/{id}", produces = "application/json")
     public ResponseEntity<PolizzaDTO> getById(@PathVariable("id") long id) {
-        try {
-            PolizzaDTO polizzaDTO = polizzaService.getById(id); //ricerca per id
-            if (polizzaDTO != null) {   //controlla se ci sono stati risultati
-                return ResponseEntity.status(HttpStatus.OK).body(polizzaDTO);   //successo codice 200
-            } else {    //altrimenti da messaggio di errore
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();     //codice 404
-            }
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());    //codice 500
+        PolizzaDTO polizzaDTO = polizzaService.getById(id);
+        if (polizzaDTO != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(polizzaDTO);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
     @PutMapping(path = "/update", produces = "application/json", consumes = "application/json")
     public ResponseEntity<PolizzaDTO> update(@Validated(OnUpdate.class) @RequestBody PolizzaDTO dto) {
-        try {
-            PolizzaDTO polizzaDTO = polizzaService.update(dto); //cerca di fare l'update
-            if (polizzaDTO != null) {   //controlla se ci sono stati risultati
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(polizzaDTO);   //successo codice 204
-            } else {    //altrimenti da messaggio di errore
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); //codice 404
-            }
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());    //codice 500
+        PolizzaDTO polizzaDTO = polizzaService.update(dto);
+        if (polizzaDTO != null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(polizzaDTO);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
     @DeleteMapping(path = "/delete/{id}", produces = "application/json")
     public ResponseEntity<Void> delete(@PathVariable("id") long id) {
-        try {
-            boolean result = polizzaService.delete(id); //cerca di eliminare la polizza tramite id
-            if (result) {   //controlla cosa viene tornato
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();    //messaggio di successo codice 204
-            } else {    //altrimenti da messaggio di errore
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();     //codice 404
-            }
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());    //codice 500
+        boolean result = polizzaService.delete(id);
+        if (result) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 }
