@@ -53,7 +53,7 @@ public class PolizzaController {
     public ResponseEntity<PolizzaDTO> update(@Validated(OnUpdate.class) @RequestBody PolizzaDTO dto) {
         PolizzaDTO polizzaDTO = polizzaService.update(dto);
         if (polizzaDTO != null) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(polizzaDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(polizzaDTO);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
