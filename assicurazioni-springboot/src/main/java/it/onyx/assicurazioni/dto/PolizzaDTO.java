@@ -16,7 +16,7 @@ public class PolizzaDTO {
     private long idPolizza;
     @Min(value=1, message = "Il valore deve essere maggiore o uguale a 1", groups = {OnCreate.class})
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
-    private long idTipoPolizza;
+    private TipoPolizzaDTO idTipoPolizza;
     @Min(value=1, message = "Il valore deve essere maggiore o uguale a 1", groups = {OnCreate.class})
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
     private long idClasse;
@@ -36,19 +36,7 @@ public class PolizzaDTO {
 
     public PolizzaDTO() {}
 
-    public PolizzaDTO(long idPolizza, long idTipoPolizza, long idClasse, long idIntestatario, long idStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
-        this.idPolizza = idPolizza;
-        this.idTipoPolizza = idTipoPolizza;
-        this.idClasse = idClasse;
-        this.idIntestatario = idIntestatario;
-        this.idStatoPolizza = idStatoPolizza;
-        this.numPolizza = idIntestatario + "|" + idTipoPolizza;
-        this.dtInizio = dtInizio;
-        this.dtFine = dtFine;
-        this.note = note;
-    }
-
-    public PolizzaDTO(long idPolizza, long idTipoPolizza, long idClasse, long idIntestatario, long idStatoPolizza, String numPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
+    public PolizzaDTO(long idPolizza, TipoPolizzaDTO idTipoPolizza, long idClasse, long idIntestatario, long idStatoPolizza, String numPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
         this.idPolizza = idPolizza;
         this.idTipoPolizza = idTipoPolizza;
         this.idClasse = idClasse;
@@ -68,11 +56,11 @@ public class PolizzaDTO {
         this.idPolizza = idPolizza;
     }
 
-    public long getIdTipoPolizza() {
+    public TipoPolizzaDTO getIdTipoPolizza() {
         return idTipoPolizza;
     }
 
-    public void setIdTipoPolizza(long idTipoPolizza) {
+    public void setIdTipoPolizza(TipoPolizzaDTO idTipoPolizza) {
         this.idTipoPolizza = idTipoPolizza;
     }
 
@@ -106,10 +94,6 @@ public class PolizzaDTO {
 
     public void setNumPolizza(String numPolizza) {
         this.numPolizza = numPolizza;
-    }
-
-    public void setCombinato() { //a differenza del set principale questo usa i campi primari
-        this.numPolizza = this.idIntestatario + "|" + this.idTipoPolizza;
     }
 
     public LocalDate getDtInizio() {
