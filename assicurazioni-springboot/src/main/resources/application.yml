@@ -13,8 +13,7 @@ spring:
 logging:
   file:
     name: logs/app.log
-  level:
-    root: INFO
+
 
 security:
   user:
