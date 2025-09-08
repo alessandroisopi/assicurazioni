@@ -4,6 +4,7 @@ import it.onyx.assicurazioni.dto.PolizzaDTO;
 import it.onyx.assicurazioni.entity.Polizza;
 import it.onyx.assicurazioni.repository.PolizzaRepository;
 import it.onyx.assicurazioni.util.PolizzaMapper;
+import it.onyx.assicurazioni.util.TipoPolizzaMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,8 +71,8 @@ public class PolizzaServiceImpl implements PolizzaService {
        try {
            if (polizzaRepository.existsById(dto.getIdPolizza())) { //controlla l'esistenza dell'oggetto
                Polizza polizzaDB = polizzaRepository.findById(dto.getIdPolizza()).get();   //prende il campo nel db per riempire le colonne che non devono essere aggiornate
-               if (dto.getIdTipoPolizza() == 0) {  //una serie di if che controlla campo per campo
-                   dto.setIdTipoPolizza(polizzaDB.getIdTipoPolizza());
+               if (dto.getIdTipoPolizza().getIdTipoPolizza() == 0) {  //una serie di if che controlla campo per campo
+                   dto.setIdTipoPolizza(TipoPolizzaMapper.daTipoPolizzaATipoPolizzaDTO(polizzaDB.getIdTipoPolizza()));
                }
                if (dto.getIdClasse() == 0) {
                    dto.setIdClasse(polizzaDB.getIdClasse());

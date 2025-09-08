@@ -42,7 +42,7 @@ public class PolizzaDTO {
         this.idClasse = idClasse;
         this.idIntestatario = idIntestatario;
         this.idStatoPolizza = idStatoPolizza;
-        this.numPolizza = numPolizza;
+        this.numPolizza = idIntestatario + "|" + idTipoPolizza.getIdTipoPolizza();
         this.dtInizio = dtInizio;
         this.dtFine = dtFine;
         this.note = note;
@@ -94,6 +94,10 @@ public class PolizzaDTO {
 
     public void setNumPolizza(String numPolizza) {
         this.numPolizza = numPolizza;
+    }
+
+    public void setCombinato() {
+        this.numPolizza = idIntestatario + "|" + idTipoPolizza.getIdTipoPolizza();
     }
 
     public LocalDate getDtInizio() {
