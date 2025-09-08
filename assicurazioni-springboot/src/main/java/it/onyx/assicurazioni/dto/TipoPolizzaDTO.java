@@ -26,6 +26,10 @@ public class TipoPolizzaDTO {
         this.dtFine = dtFine;
     }
 
+    public TipoPolizzaDTO(long idTipoPolizza) {
+        this.idTipoPolizza = idTipoPolizza;
+    }
+
     public TipoPolizzaDTO() {
     }
 

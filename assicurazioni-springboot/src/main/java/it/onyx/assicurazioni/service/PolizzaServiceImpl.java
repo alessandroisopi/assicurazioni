@@ -2,7 +2,9 @@ package it.onyx.assicurazioni.service;
 
 import it.onyx.assicurazioni.dto.PolizzaDTO;
 import it.onyx.assicurazioni.entity.Polizza;
+import it.onyx.assicurazioni.entity.TipoPolizza;
 import it.onyx.assicurazioni.repository.PolizzaRepository;
+import it.onyx.assicurazioni.repository.TipoPolizzaRepository;
 import it.onyx.assicurazioni.util.PolizzaMapper;
 import it.onyx.assicurazioni.util.TipoPolizzaMapper;
 import jakarta.transaction.Transactional;
@@ -18,11 +20,16 @@ public class PolizzaServiceImpl implements PolizzaService {
     @Autowired
     private PolizzaRepository polizzaRepository;
 
+    @Autowired
+    private TipoPolizzaRepository tipoPolizzaRepository;
+
     @Override
     public PolizzaDTO insert(PolizzaDTO dto) {
         try {
             dto.setCombinato();
             Polizza polizza = PolizzaMapper.daPolizzaDTOAPolizza(dto);    //conversione ad entità del dto
+            TipoPolizza tipoPolizza = tipoPolizzaRepository.findById(dto.getIdTipoPolizza().getIdTipoPolizza()).get();
+            polizza.setIdTipoPolizza(tipoPolizza);
             if(dto.getDtFine().isBefore(dto.getDtInizio())) {   //controllo che la data sia coerente
                 return null;
             }

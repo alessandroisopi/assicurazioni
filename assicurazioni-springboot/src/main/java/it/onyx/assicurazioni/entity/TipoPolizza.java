@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Entity(name = "TIPO_POLIZZA")
 public class TipoPolizza {
     @Id
+    @Column(name = "ID_TIPO_POLIZZA")
     private long idTipoPolizza;
 
     @Column(name = "DS_TIPO_POLIZZA")
