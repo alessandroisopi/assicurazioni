@@ -60,4 +60,14 @@ public class TipoPolizzaDTO {
     public void setDtFine(LocalDate dtFine) {
         this.dtFine = dtFine;
     }
+
+    @Override
+    public String toString() {
+        return "TipoPolizzaDTO{" +
+                "idTipoPolizza=" + idTipoPolizza +
+                ", dsTipoPolizza='" + dsTipoPolizza + '\'' +
+                ", dtInizio=" + dtInizio +
+                ", dtFine=" + dtFine +
+                '}';
+    }
 }
