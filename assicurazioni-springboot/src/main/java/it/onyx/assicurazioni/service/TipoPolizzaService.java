@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface TipoPolizzaService {
     public List<TipoPolizzaDTO> getAll();
-    public TipoPolizzaDTO getById(int id);
+    public TipoPolizzaDTO getById(long id);
     public TipoPolizzaDTO update(TipoPolizzaDTO dto);
 }
