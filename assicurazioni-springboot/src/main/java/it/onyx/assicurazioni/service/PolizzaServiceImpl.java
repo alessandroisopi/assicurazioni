@@ -2,8 +2,11 @@ package it.onyx.assicurazioni.service;
 
 import it.onyx.assicurazioni.dto.PolizzaDTO;
 import it.onyx.assicurazioni.entity.Polizza;
+import it.onyx.assicurazioni.entity.TipoPolizza;
 import it.onyx.assicurazioni.repository.PolizzaRepository;
+import it.onyx.assicurazioni.repository.TipoPolizzaRepository;
 import it.onyx.assicurazioni.util.PolizzaMapper;
+import it.onyx.assicurazioni.util.TipoPolizzaMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +20,16 @@ public class PolizzaServiceImpl implements PolizzaService {
     @Autowired
     private PolizzaRepository polizzaRepository;
 
+    @Autowired
+    private TipoPolizzaRepository tipoPolizzaRepository;
+
     @Override
     public PolizzaDTO insert(PolizzaDTO dto) {
         try {
             dto.setCombinato();
             Polizza polizza = PolizzaMapper.daPolizzaDTOAPolizza(dto);    //conversione ad entità del dto
+            TipoPolizza tipoPolizza = tipoPolizzaRepository.findById(dto.getIdTipoPolizza().getIdTipoPolizza()).get();
+            polizza.setIdTipoPolizza(tipoPolizza);
             if(dto.getDtFine().isBefore(dto.getDtInizio())) {   //controllo che la data sia coerente
                 return null;
             }
@@ -70,8 +78,8 @@ public class PolizzaServiceImpl implements PolizzaService {
        try {
            if (polizzaRepository.existsById(dto.getIdPolizza())) { //controlla l'esistenza dell'oggetto
                Polizza polizzaDB = polizzaRepository.findById(dto.getIdPolizza()).get();   //prende il campo nel db per riempire le colonne che non devono essere aggiornate
-               if (dto.getIdTipoPolizza() == 0) {  //una serie di if che controlla campo per campo
-                   dto.setIdTipoPolizza(polizzaDB.getIdTipoPolizza());
+               if (dto.getIdTipoPolizza().getIdTipoPolizza() == 0) {  //una serie di if che controlla campo per campo
+                   dto.setIdTipoPolizza(TipoPolizzaMapper.daTipoPolizzaATipoPolizzaDTO(polizzaDB.getIdTipoPolizza()));
                }
                if (dto.getIdClasse() == 0) {
                    dto.setIdClasse(polizzaDB.getIdClasse());

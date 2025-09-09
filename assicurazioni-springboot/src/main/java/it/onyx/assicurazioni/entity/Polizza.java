@@ -11,8 +11,9 @@ public class Polizza {
     @GeneratedValue(generator = "id_polizza", strategy = GenerationType.SEQUENCE)
     private long idPolizza; //indentificativo polizza
 
-    @Column(name = "ID_TIPO_POLIZZA")
-    private long idTipoPolizza; //indentificativo tipo polizza
+    @ManyToOne
+    @JoinColumn(name = "ID_TIPO_POLIZZA", referencedColumnName = "ID_TIPO_POLIZZA")
+    private TipoPolizza idTipoPolizza; //indentificativo tipo polizza
 
     @Column(name = "ID_CLASSE")
     private long idClasse; //indentificativo classe polizza
@@ -38,7 +39,7 @@ public class Polizza {
     public Polizza() {
     }
 
-    public Polizza(long idPolizza, long idTipoPolizza, long idClasse, long idIntestatario, long idStatoPolizza, String numPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
+    public Polizza(long idPolizza, TipoPolizza idTipoPolizza, long idClasse, long idIntestatario, long idStatoPolizza, String numPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
         this.idPolizza = idPolizza;
         this.idTipoPolizza = idTipoPolizza;
         this.idClasse = idClasse;
@@ -58,11 +59,11 @@ public class Polizza {
         this.idPolizza = idPolizza;
     }
 
-    public long getIdTipoPolizza() {
+    public TipoPolizza getIdTipoPolizza() {
         return idTipoPolizza;
     }
 
-    public void setIdTipoPolizza(long idTipoPolizza) {
+    public void setIdTipoPolizza(TipoPolizza idTipoPolizza) {
         this.idTipoPolizza = idTipoPolizza;
     }
 
