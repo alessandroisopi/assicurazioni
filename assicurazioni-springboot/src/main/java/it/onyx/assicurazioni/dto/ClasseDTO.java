@@ -1,35 +1,33 @@
-package it.onyx.assicurazioni.entity;
+package it.onyx.assicurazioni.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import it.onyx.assicurazioni.groupvalidator.OnCreate;
+import it.onyx.assicurazioni.groupvalidator.OnUpdate;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "CLASSE")
-public class Classe {
-    @Id
-    @Column(name = "ID_CLASSE")
+public class ClasseDTO {
+
+    @Min(value = 1, message = "Il valore deve essere maggiore o uguale a 1", groups = {OnUpdate.class, OnCreate.class})
+    @NotNull(message = "il valore non può essere nullo", groups = {OnUpdate.class, OnCreate.class})
     private long idClasse;
 
-    @Column(name = "CD_CLASSE")
+    @NotNull(message = "il valore non può essere nullo", groups = {OnUpdate.class, OnCreate.class})
     private String cdClasse;
 
-    @Column(name = "DS_CLASSE")
+    @NotNull(message = "il valore non può essere nullo", groups = {OnUpdate.class, OnCreate.class})
     private String dsClasse;
 
-    @Column(name = "DT_INIZIO")
+    @NotNull(message = "il valore non può essere nullo", groups = {OnUpdate.class, OnCreate.class})
     private LocalDate dtInizio;
 
-    @Column(name = "DT_FINE")
     private LocalDate dtFine;
 
-    public Classe() {
+    public ClasseDTO() {
     }
 
-    public Classe(long idClasse, String cdClasse, String dsClasse, LocalDate dtInizio, LocalDate dtFine) {
+    public ClasseDTO(long idClasse, String cdClasse, String dsClasse, LocalDate dtInizio, LocalDate dtFine) {
         this.idClasse = idClasse;
         this.cdClasse = cdClasse;
         this.dsClasse = dsClasse;
@@ -79,7 +77,7 @@ public class Classe {
 
     @Override
     public String toString() {
-        return "Classe{" +
+        return "ClasseDTO{" +
                 "idClasse=" + idClasse +
                 ", cdClasse='" + cdClasse + '\'' +
                 ", dsClasse='" + dsClasse + '\'' +

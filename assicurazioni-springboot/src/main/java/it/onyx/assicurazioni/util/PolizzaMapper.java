@@ -10,11 +10,11 @@ public class PolizzaMapper {
         }
         return new PolizzaDTO(
                 polizza.getIdPolizza(),
+                polizza.getDtInserimento(),
                 TipoPolizzaMapper.daTipoPolizzaATipoPolizzaDTO(polizza.getIdTipoPolizza()),
-                polizza.getIdClasse(),
+                ClasseMapper.daClasseAClasseDTO(polizza.getIdClasse()),
                 polizza.getIdIntestatario(),
                 polizza.getIdStatoPolizza(),
-                polizza.getNumPolizza(),
                 polizza.getDtInizio(),
                 polizza.getDtFine(),
                 polizza.getNote()
@@ -27,8 +27,9 @@ public class PolizzaMapper {
         }
         return new Polizza(
                 dto.getIdPolizza(),
+                dto.getDtInserimento(),
                 TipoPolizzaMapper.daTipoPolizzaDTOATipoPolizza(dto.getIdTipoPolizza()),
-                dto.getIdClasse(),
+                ClasseMapper.daClasseDTOAClasse(dto.getIdClasse()),
                 dto.getIdIntestatario(),
                 dto.getIdStatoPolizza(),
                 dto.getNumPolizza(),

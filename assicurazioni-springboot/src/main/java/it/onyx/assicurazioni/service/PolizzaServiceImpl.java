@@ -5,6 +5,7 @@ import it.onyx.assicurazioni.entity.Polizza;
 import it.onyx.assicurazioni.entity.TipoPolizza;
 import it.onyx.assicurazioni.repository.PolizzaRepository;
 import it.onyx.assicurazioni.repository.TipoPolizzaRepository;
+import it.onyx.assicurazioni.util.ClasseMapper;
 import it.onyx.assicurazioni.util.PolizzaMapper;
 import it.onyx.assicurazioni.util.TipoPolizzaMapper;
 import jakarta.transaction.Transactional;
@@ -81,8 +82,8 @@ public class PolizzaServiceImpl implements PolizzaService {
                if (dto.getIdTipoPolizza().getIdTipoPolizza() == 0) {  //una serie di if che controlla campo per campo
                    dto.setIdTipoPolizza(TipoPolizzaMapper.daTipoPolizzaATipoPolizzaDTO(polizzaDB.getIdTipoPolizza()));
                }
-               if (dto.getIdClasse() == 0) {
-                   dto.setIdClasse(polizzaDB.getIdClasse());
+               if (dto.getIdClasse().getIdClasse() == 0) {
+                   dto.setIdClasse(ClasseMapper.daClasseAClasseDTO(polizzaDB.getIdClasse()));
                }
                if (dto.getIdIntestatario() == 0) {
                    dto.setIdIntestatario(polizzaDB.getIdIntestatario());

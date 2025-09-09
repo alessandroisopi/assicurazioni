@@ -3,10 +3,12 @@ package it.onyx.assicurazioni.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.time.LocalDate;
 
-@Entity(name = "TIPO_POLIZZA")
+@Entity
+@Table(name = "TIPO_POLIZZA")
 public class TipoPolizza {
     @Id
     @Column(name = "ID_TIPO_POLIZZA")

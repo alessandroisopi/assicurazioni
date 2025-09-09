@@ -4,19 +4,26 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
-@Entity(name = "POLIZZA")
+@Entity
+@Table(name = "POLIZZA")
 public class Polizza {
-    @Id
-    @SequenceGenerator(allocationSize = 1, sequenceName = "SEQ_POLIZZA", name = "id_polizza")
-    @GeneratedValue(generator = "id_polizza", strategy = GenerationType.SEQUENCE)
+
+    @EmbeddedId
+    private PolizzaEmbeddedId id;
+
+    @Column(name = "ID_POLIZZA")
     private long idPolizza; //indentificativo polizza
+
+    @Column(name = "DT_INSERIMENTO")
+    private LocalDate dtInserimento;
 
     @ManyToOne
     @JoinColumn(name = "ID_TIPO_POLIZZA", referencedColumnName = "ID_TIPO_POLIZZA")
     private TipoPolizza idTipoPolizza; //indentificativo tipo polizza
 
-    @Column(name = "ID_CLASSE")
-    private long idClasse; //indentificativo classe polizza
+    @ManyToOne
+    @JoinColumn(name = "ID_CLASSE", referencedColumnName = "ID_CLASSE")
+    private Classe idClasse; //indentificativo classe polizza
 
     @Column(name = "ID_INTESTATARIO")
     private long idIntestatario; //indentificativo intestatario polizza
@@ -39,8 +46,9 @@ public class Polizza {
     public Polizza() {
     }
 
-    public Polizza(long idPolizza, TipoPolizza idTipoPolizza, long idClasse, long idIntestatario, long idStatoPolizza, String numPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
+    public Polizza(long idPolizza, LocalDate dtInserimento, TipoPolizza idTipoPolizza, Classe idClasse, long idIntestatario, long idStatoPolizza, String numPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
         this.idPolizza = idPolizza;
+        this.dtInserimento = dtInserimento;
         this.idTipoPolizza = idTipoPolizza;
         this.idClasse = idClasse;
         this.idIntestatario = idIntestatario;
@@ -49,6 +57,15 @@ public class Polizza {
         this.dtInizio = dtInizio;
         this.dtFine = dtFine;
         this.note = note;
+        this.id =  new PolizzaEmbeddedId(this.idPolizza, this.dtInserimento);
+    }
+
+    public PolizzaEmbeddedId getId() {
+        return id;
+    }
+
+    public void setId(PolizzaEmbeddedId id) {
+        this.id = id;
     }
 
     public long getIdPolizza() {
@@ -59,6 +76,14 @@ public class Polizza {
         this.idPolizza = idPolizza;
     }
 
+    public LocalDate getDtInserimento() {
+        return dtInserimento;
+    }
+
+    public void setDtInserimento(LocalDate dtInserimento) {
+        this.dtInserimento = dtInserimento;
+    }
+
     public TipoPolizza getIdTipoPolizza() {
         return idTipoPolizza;
     }
@@ -67,11 +92,11 @@ public class Polizza {
         this.idTipoPolizza = idTipoPolizza;
     }
 
-    public long getIdClasse() {
+    public Classe getIdClasse() {
         return idClasse;
     }
 
-    public void setIdClasse(long idClasse) {
+    public void setIdClasse(Classe idClasse) {
         this.idClasse = idClasse;
     }
 
@@ -127,6 +152,7 @@ public class Polizza {
     public String toString() {
         return "Polizza{" +
                 "idPolizza=" + idPolizza +
+                ", dtInserimento=" + dtInserimento +
                 ", idTipoPolizza=" + idTipoPolizza +
                 ", idClasse=" + idClasse +
                 ", idIntestatario=" + idIntestatario +
