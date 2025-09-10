@@ -25,11 +25,7 @@ public class ClasseServiceImpl implements ClasseService {
             for (Classe c : classeRepository.findAll()) {   //itera tutta la lista di entità
                 result.add(ClasseMapper.daClasseAClasseDTO(c)); //converte ogni lista in dto e inserisce nel risultato
             }
-            if (result.isEmpty()) { //se vuota torna null
-                return null;
-            } else {    //se c'è almeno un elemento torna la lista
-                return result;
-            }
+            return result;
         } catch (Exception e){
             System.err.println(e.getMessage());
             throw e;
