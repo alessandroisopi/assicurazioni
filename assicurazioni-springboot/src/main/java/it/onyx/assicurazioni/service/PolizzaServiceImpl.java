@@ -36,8 +36,14 @@ public class PolizzaServiceImpl implements PolizzaService {
         try {
             dto.setCombinato();
             Polizza polizza = PolizzaMapper.daPolizzaDTOAPolizza(dto);    //conversione a entità del dto
+            if (tipoPolizzaRepository.findById(dto.getIdTipoPolizza().getIdTipoPolizza()).isEmpty()) {
+                return null;
+            }
             TipoPolizza tipoPolizza = tipoPolizzaRepository.findById(dto.getIdTipoPolizza().getIdTipoPolizza()).get();  //ottiene il tipo di polizza tramite l'id
             polizza.setIdTipoPolizza(tipoPolizza);  //viene settato il tipo di polizza
+            if (classeRepository.findById(dto.getIdClasse().getIdClasse()).isEmpty()) {
+                return null;
+            }
             Classe classe = classeRepository.findById(dto.getIdClasse().getIdClasse()).get();   //ottiene la classe della polizza tramite l'id
             polizza.setIdClasse(classe);    //viene settata la classe
             if(dto.getDtFine().isBefore(dto.getDtInizio())) {   //controllo che la data sia coerente
@@ -73,7 +79,7 @@ public class PolizzaServiceImpl implements PolizzaService {
     public PolizzaDTO getById(long idPolizza, LocalDate dtInserimento) {
         try {
             PolizzaEmbeddedId id = new PolizzaEmbeddedId(idPolizza, dtInserimento); //viene creato direttamente l'oggetto della chiave composta per comodità
-            if (polizzaRepository.existsById(id)) { //controlla l'esistenza e ritorna l'oggetto
+            if (polizzaRepository.findById(id).isPresent()) { //controlla l'esistenza e ritorna l'oggetto
                 return PolizzaMapper.daPolizzaAPolizzaDTO(polizzaRepository.findById(id).get());
             } else {
                 return null;
@@ -88,7 +94,7 @@ public class PolizzaServiceImpl implements PolizzaService {
     public PolizzaDTO update(PolizzaDTO dto) {
        try {
            PolizzaEmbeddedId id = new PolizzaEmbeddedId(dto.getIdPolizza(), dto.getDtInserimento());
-           if (polizzaRepository.existsById(id)) { //controlla l'esistenza dell'oggetto
+           if (polizzaRepository.findById(id).isPresent()) { //controlla l'esistenza dell'oggetto
                Polizza polizzaDB = polizzaRepository.findById(id).get();   //prende il campo nel db per riempire le colonne che non devono essere aggiornate
                if (dto.getIdTipoPolizza().getIdTipoPolizza() == 0) {  //una serie di if che controlla campo per campo, se nulli vengono rimpiazzati con quelli da database
                    dto.setIdTipoPolizza(TipoPolizzaMapper.daTipoPolizzaATipoPolizzaDTO(polizzaDB.getIdTipoPolizza()));
