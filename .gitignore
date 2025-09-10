@@ -5,3 +5,4 @@
 target/
 
 *.iml
+/assicurazioni-springboot/src/main/resources/http/requestPolizza.http
