@@ -5,11 +5,13 @@ import it.onyx.assicurazioni.groupvalidator.OnCreate;
 import it.onyx.assicurazioni.groupvalidator.OnUpdate;
 import it.onyx.assicurazioni.service.PolizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -19,7 +21,7 @@ public class PolizzaController {
     @Autowired
     private PolizzaService polizzaService;
 
-    @PostMapping(path = "/insert", produces = "application/json", consumes = "application/json")
+    @PostMapping(produces = "application/json", consumes = "application/json")
     public ResponseEntity<PolizzaDTO> insert(@Validated(OnCreate.class) @RequestBody PolizzaDTO dto) {
         PolizzaDTO polizzaDTO = polizzaService.insert(dto);
         if (polizzaDTO != null) {
@@ -39,9 +41,9 @@ public class PolizzaController {
         }
     }
 
-    @GetMapping(path = "/getById/{id}", produces = "application/json")
-    public ResponseEntity<PolizzaDTO> getById(@PathVariable("id") long id) {
-        PolizzaDTO polizzaDTO = polizzaService.getById(id);
+    @GetMapping(path = "/getById/{id}/{dtInserimento}", produces = "application/json")
+    public ResponseEntity<PolizzaDTO> getById(@PathVariable("id") long id, @PathVariable("dtInserimento") @DateTimeFormat LocalDate  dtInserimento) {
+        PolizzaDTO polizzaDTO = polizzaService.getById(id, dtInserimento);
         if (polizzaDTO != null) {
             return ResponseEntity.status(HttpStatus.OK).body(polizzaDTO);
         } else {
@@ -49,7 +51,7 @@ public class PolizzaController {
         }
     }
 
-    @PutMapping(path = "/update", produces = "application/json", consumes = "application/json")
+    @PutMapping(produces = "application/json", consumes = "application/json")
     public ResponseEntity<PolizzaDTO> update(@Validated(OnUpdate.class) @RequestBody PolizzaDTO dto) {
         PolizzaDTO polizzaDTO = polizzaService.update(dto);
         if (polizzaDTO != null) {
@@ -59,9 +61,9 @@ public class PolizzaController {
         }
     }
 
-    @DeleteMapping(path = "/delete/{id}", produces = "application/json")
-    public ResponseEntity<Void> delete(@PathVariable("id") long id) {
-        boolean result = polizzaService.delete(id);
+    @DeleteMapping(path = "/{id}/{dtInserimento}", produces = "application/json")
+    public ResponseEntity<Void> delete(@PathVariable("id") long id,@PathVariable("dtInserimento") @DateTimeFormat LocalDate dtInserimento) {
+        boolean result = polizzaService.delete(id, dtInserimento);
         if (result) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
