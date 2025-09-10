@@ -38,7 +38,7 @@ public class TipoPolizzaController {
         }
     }
 
-    @PutMapping(path = "/update", consumes = "application/json", produces = "application/json")
+    @PutMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<TipoPolizzaDTO> update(@Validated(OnUpdate.class) @RequestBody TipoPolizzaDTO dto) {
         TipoPolizzaDTO result = tipoPolizzaService.update(dto);
         if (result != null) {
