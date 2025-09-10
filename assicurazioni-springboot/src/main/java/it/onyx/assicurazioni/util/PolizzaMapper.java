@@ -9,8 +9,8 @@ public class PolizzaMapper {
             return null;
         }
         return new PolizzaDTO(
-                polizza.getIdPolizza(),
-                polizza.getDtInserimento(),
+                polizza.getId().getIdPolizza(),
+                polizza.getId().getDtInserimento(),
                 TipoPolizzaMapper.daTipoPolizzaATipoPolizzaDTO(polizza.getIdTipoPolizza()),
                 ClasseMapper.daClasseAClasseDTO(polizza.getIdClasse()),
                 polizza.getIdIntestatario(),
