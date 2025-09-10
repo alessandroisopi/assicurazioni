@@ -27,6 +27,10 @@ public class ClasseDTO {
     public ClasseDTO() {
     }
 
+    public ClasseDTO(long idClasse) {
+        this.idClasse = idClasse;
+    }
+
     public ClasseDTO(long idClasse, String cdClasse, String dsClasse, LocalDate dtInizio, LocalDate dtFine) {
         this.idClasse = idClasse;
         this.cdClasse = cdClasse;
