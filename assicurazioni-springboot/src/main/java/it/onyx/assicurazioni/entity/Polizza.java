@@ -11,12 +11,6 @@ public class Polizza {
     @EmbeddedId
     private PolizzaEmbeddedId id;
 
-    @Column(name = "ID_POLIZZA")
-    private long idPolizza; //indentificativo polizza
-
-    @Column(name = "DT_INSERIMENTO")
-    private LocalDate dtInserimento;
-
     @ManyToOne
     @JoinColumn(name = "ID_TIPO_POLIZZA", referencedColumnName = "ID_TIPO_POLIZZA")
     private TipoPolizza idTipoPolizza; //indentificativo tipo polizza
@@ -47,8 +41,6 @@ public class Polizza {
     }
 
     public Polizza(long idPolizza, LocalDate dtInserimento, TipoPolizza idTipoPolizza, Classe idClasse, long idIntestatario, long idStatoPolizza, String numPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
-        this.idPolizza = idPolizza;
-        this.dtInserimento = dtInserimento;
         this.idTipoPolizza = idTipoPolizza;
         this.idClasse = idClasse;
         this.idIntestatario = idIntestatario;
@@ -57,7 +49,7 @@ public class Polizza {
         this.dtInizio = dtInizio;
         this.dtFine = dtFine;
         this.note = note;
-        this.id =  new PolizzaEmbeddedId(this.idPolizza, this.dtInserimento);
+        this.id =  new PolizzaEmbeddedId(idPolizza, dtInserimento);
     }
 
     public PolizzaEmbeddedId getId() {
@@ -66,22 +58,6 @@ public class Polizza {
 
     public void setId(PolizzaEmbeddedId id) {
         this.id = id;
-    }
-
-    public long getIdPolizza() {
-        return idPolizza;
-    }
-
-    public void setIdPolizza(long idPolizza) {
-        this.idPolizza = idPolizza;
-    }
-
-    public LocalDate getDtInserimento() {
-        return dtInserimento;
-    }
-
-    public void setDtInserimento(LocalDate dtInserimento) {
-        this.dtInserimento = dtInserimento;
     }
 
     public TipoPolizza getIdTipoPolizza() {
@@ -151,8 +127,8 @@ public class Polizza {
     @Override
     public String toString() {
         return "Polizza{" +
-                "idPolizza=" + idPolizza +
-                ", dtInserimento=" + dtInserimento +
+                "idPolizza=" + id.getIdPolizza() +
+                "dtInserimento=" + id.getIdPolizza() +
                 ", idTipoPolizza=" + idTipoPolizza +
                 ", idClasse=" + idClasse +
                 ", idIntestatario=" + idIntestatario +
