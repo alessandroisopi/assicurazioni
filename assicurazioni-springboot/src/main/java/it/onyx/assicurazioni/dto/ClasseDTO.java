@@ -13,13 +13,13 @@ public class ClasseDTO {
     @NotNull(message = "il valore non può essere nullo", groups = {OnUpdate.class, OnCreate.class})
     private long idClasse;
 
-    @NotNull(message = "il valore non può essere nullo", groups = {OnUpdate.class, OnCreate.class})
+    @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
     private String cdClasse;
 
-    @NotNull(message = "il valore non può essere nullo", groups = {OnUpdate.class, OnCreate.class})
+    @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
     private String dsClasse;
 
-    @NotNull(message = "il valore non può essere nullo", groups = {OnUpdate.class, OnCreate.class})
+    @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
     private LocalDate dtInizio;
 
     private LocalDate dtFine;

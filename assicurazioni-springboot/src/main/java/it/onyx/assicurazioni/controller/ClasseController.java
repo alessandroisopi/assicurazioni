@@ -1,10 +1,12 @@
 package it.onyx.assicurazioni.controller;
 
 import it.onyx.assicurazioni.dto.ClasseDTO;
+import it.onyx.assicurazioni.groupvalidator.OnUpdate;
 import it.onyx.assicurazioni.service.ClasseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,7 +39,7 @@ public class ClasseController {
     }
 
     @PutMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<ClasseDTO> update(ClasseDTO dto) {
+    public ResponseEntity<ClasseDTO> update(@Validated(OnUpdate.class) @RequestBody ClasseDTO dto) {
         ClasseDTO result = classeService.update(dto);
         if (result != null) {
             return ResponseEntity.status(HttpStatus.OK).body(result);
