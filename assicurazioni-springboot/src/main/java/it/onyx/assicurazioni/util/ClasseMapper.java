@@ -4,7 +4,7 @@ import it.onyx.assicurazioni.dto.ClasseDTO;
 import it.onyx.assicurazioni.entity.Classe;
 
 public class ClasseMapper {
-    public static ClasseDTO daClasseAClasseDTO(Classe entity) {
+    public static ClasseDTO toDto(Classe entity) {
         return new ClasseDTO(
                 entity.getIdClasse(),
                 entity.getCdClasse(),
@@ -14,7 +14,7 @@ public class ClasseMapper {
         );
     }
 
-    public  static Classe daClasseDTOAClasse(ClasseDTO dto) {
+    public  static Classe toEntity(ClasseDTO dto) {
         return new Classe(
                 dto.getIdClasse(),
                 dto.getCdClasse(),

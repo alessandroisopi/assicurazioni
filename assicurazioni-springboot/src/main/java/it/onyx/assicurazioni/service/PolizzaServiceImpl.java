@@ -35,7 +35,7 @@ public class PolizzaServiceImpl implements PolizzaService {
     public PolizzaDTO insert(PolizzaDTO dto) {
         try {
             dto.setCombinato();
-            Polizza polizza = PolizzaMapper.daPolizzaDTOAPolizza(dto);    //conversione a entità del dto
+            Polizza polizza = PolizzaMapper.toEntity(dto);    //conversione a entità del dto
             if (tipoPolizzaRepository.findById(dto.getIdTipoPolizza().getIdTipoPolizza()).isEmpty()) {
                 return null;
             }
@@ -51,7 +51,7 @@ public class PolizzaServiceImpl implements PolizzaService {
             }
             polizza = polizzaRepository.save(polizza);  //effettua il salvataggio sia nel database che nella variabile
             if (polizzaRepository.existsById(polizza.getId())) { //controllo se andato tutto bene
-                return PolizzaMapper.daPolizzaAPolizzaDTO(polizza);
+                return PolizzaMapper.toDto(polizza);
             } else {
                 return null;
             }
@@ -66,7 +66,7 @@ public class PolizzaServiceImpl implements PolizzaService {
         try {
             List<PolizzaDTO> result = new ArrayList<>();    //crea la lista per il risultato
             for (Polizza p : polizzaRepository.findAll()) { //itera tutta la tabella e inserisce ogni riga nella lista
-                result.add(PolizzaMapper.daPolizzaAPolizzaDTO(p));
+                result.add(PolizzaMapper.toDto(p));
             }
             return result;
         }  catch (Exception e) {
@@ -80,7 +80,7 @@ public class PolizzaServiceImpl implements PolizzaService {
         try {
             PolizzaEmbeddedId id = new PolizzaEmbeddedId(idPolizza, dtInserimento); //viene creato direttamente l'oggetto della chiave composta per comodità
             if (polizzaRepository.findById(id).isPresent()) { //controlla l'esistenza e ritorna l'oggetto
-                return PolizzaMapper.daPolizzaAPolizzaDTO(polizzaRepository.findById(id).get());
+                return PolizzaMapper.toDto(polizzaRepository.findById(id).get());
             } else {
                 return null;
             }
@@ -97,10 +97,10 @@ public class PolizzaServiceImpl implements PolizzaService {
            if (polizzaRepository.findById(id).isPresent()) { //controlla l'esistenza dell'oggetto
                Polizza polizzaDB = polizzaRepository.findById(id).get();   //prende il campo nel db per riempire le colonne che non devono essere aggiornate
                if (dto.getIdTipoPolizza().getIdTipoPolizza() == 0) {  //una serie di if che controlla campo per campo, se nulli vengono rimpiazzati con quelli da database
-                   dto.setIdTipoPolizza(TipoPolizzaMapper.daTipoPolizzaATipoPolizzaDTO(polizzaDB.getIdTipoPolizza()));
+                   dto.setIdTipoPolizza(TipoPolizzaMapper.toDto(polizzaDB.getIdTipoPolizza()));
                }
                if (dto.getIdClasse().getIdClasse() == 0) {
-                   dto.setIdClasse(ClasseMapper.daClasseAClasseDTO(polizzaDB.getIdClasse()));
+                   dto.setIdClasse(ClasseMapper.toDto(polizzaDB.getIdClasse()));
                }
                if (dto.getIdIntestatario() == 0) {
                    dto.setIdIntestatario(polizzaDB.getIdIntestatario());
@@ -121,7 +121,7 @@ public class PolizzaServiceImpl implements PolizzaService {
                    return null;
                }
                dto.setCombinato();  //viene reimpostato il campo numPolizza
-               return PolizzaMapper.daPolizzaAPolizzaDTO(polizzaRepository.save(PolizzaMapper.daPolizzaDTOAPolizza(dto))); //viene salvato e il ritornato
+               return PolizzaMapper.toDto(polizzaRepository.save(PolizzaMapper.toEntity(dto))); //viene salvato e il ritornato
            } else {
                return null;
            }
