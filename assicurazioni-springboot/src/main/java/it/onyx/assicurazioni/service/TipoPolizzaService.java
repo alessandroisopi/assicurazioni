@@ -1,12 +1,11 @@
 package it.onyx.assicurazioni.service;
 
 import it.onyx.assicurazioni.dto.TipoPolizzaDTO;
-import it.onyx.assicurazioni.entity.TipoPolizza;
 
 import java.util.List;
 
 public interface TipoPolizzaService {
-    public List<TipoPolizzaDTO> getAll();
-    public TipoPolizzaDTO getById(long id);
-    public TipoPolizzaDTO update(TipoPolizzaDTO dto);
+    List<TipoPolizzaDTO> getAll();   //ottiene tutti i record nel database
+    TipoPolizzaDTO getById(long id); //ottiene per id
+    TipoPolizzaDTO update(TipoPolizzaDTO dto);   //update del record
 }

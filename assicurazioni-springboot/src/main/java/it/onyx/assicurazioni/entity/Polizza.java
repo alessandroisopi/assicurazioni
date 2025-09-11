@@ -4,19 +4,20 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
-@Entity(name = "POLIZZA")
+@Entity
+@Table(name = "POLIZZA")
 public class Polizza {
-    @Id
-    @SequenceGenerator(allocationSize = 1, sequenceName = "SEQ_POLIZZA", name = "id_polizza")
-    @GeneratedValue(generator = "id_polizza", strategy = GenerationType.SEQUENCE)
-    private long idPolizza; //indentificativo polizza
+
+    @EmbeddedId
+    private PolizzaEmbeddedId id;
 
     @ManyToOne
     @JoinColumn(name = "ID_TIPO_POLIZZA", referencedColumnName = "ID_TIPO_POLIZZA")
     private TipoPolizza idTipoPolizza; //indentificativo tipo polizza
 
-    @Column(name = "ID_CLASSE")
-    private long idClasse; //indentificativo classe polizza
+    @ManyToOne
+    @JoinColumn(name = "ID_CLASSE", referencedColumnName = "ID_CLASSE")
+    private Classe idClasse; //indentificativo classe polizza
 
     @Column(name = "ID_INTESTATARIO")
     private long idIntestatario; //indentificativo intestatario polizza
@@ -39,8 +40,7 @@ public class Polizza {
     public Polizza() {
     }
 
-    public Polizza(long idPolizza, TipoPolizza idTipoPolizza, long idClasse, long idIntestatario, long idStatoPolizza, String numPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
-        this.idPolizza = idPolizza;
+    public Polizza(long idPolizza, LocalDate dtInserimento, TipoPolizza idTipoPolizza, Classe idClasse, long idIntestatario, long idStatoPolizza, String numPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
         this.idTipoPolizza = idTipoPolizza;
         this.idClasse = idClasse;
         this.idIntestatario = idIntestatario;
@@ -49,14 +49,15 @@ public class Polizza {
         this.dtInizio = dtInizio;
         this.dtFine = dtFine;
         this.note = note;
+        this.id =  new PolizzaEmbeddedId(idPolizza, dtInserimento);
     }
 
-    public long getIdPolizza() {
-        return idPolizza;
+    public PolizzaEmbeddedId getId() {
+        return id;
     }
 
-    public void setIdPolizza(long idPolizza) {
-        this.idPolizza = idPolizza;
+    public void setId(PolizzaEmbeddedId id) {
+        this.id = id;
     }
 
     public TipoPolizza getIdTipoPolizza() {
@@ -67,11 +68,11 @@ public class Polizza {
         this.idTipoPolizza = idTipoPolizza;
     }
 
-    public long getIdClasse() {
+    public Classe getIdClasse() {
         return idClasse;
     }
 
-    public void setIdClasse(long idClasse) {
+    public void setIdClasse(Classe idClasse) {
         this.idClasse = idClasse;
     }
 
@@ -126,7 +127,8 @@ public class Polizza {
     @Override
     public String toString() {
         return "Polizza{" +
-                "idPolizza=" + idPolizza +
+                "idPolizza=" + id.getIdPolizza() +
+                "dtInserimento=" + id.getIdPolizza() +
                 ", idTipoPolizza=" + idTipoPolizza +
                 ", idClasse=" + idClasse +
                 ", idIntestatario=" + idIntestatario +

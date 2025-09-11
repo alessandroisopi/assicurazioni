@@ -11,14 +11,15 @@ import java.time.LocalDate;
 public class PolizzaDTO {
 
 
-    @Min(value = 1, message = "Il valore deve essere maggiore o uguale a 1", groups = {OnUpdate.class})
-    @NotNull(message = "il valore non può essere nullo", groups = {OnUpdate.class})
+    @Min(value = 1, message = "Il valore deve essere maggiore o uguale a 1", groups = {OnUpdate.class, OnCreate.class})
+    @NotNull(message = "il valore non può essere nullo", groups = {OnUpdate.class, OnCreate.class})
     private long idPolizza;
+    @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class, OnUpdate.class})
+    private LocalDate dtInserimento;
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
     private TipoPolizzaDTO idTipoPolizza;
-    @Min(value=1, message = "Il valore deve essere maggiore o uguale a 1", groups = {OnCreate.class})
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
-    private long idClasse;
+    private ClasseDTO idClasse;
     @Min(value=1, message = "Il valore deve essere maggiore o uguale a 1", groups = {OnCreate.class})
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
     private long idIntestatario;
@@ -35,8 +36,9 @@ public class PolizzaDTO {
 
     public PolizzaDTO() {}
 
-    public PolizzaDTO(long idPolizza, TipoPolizzaDTO idTipoPolizza, long idClasse, long idIntestatario, long idStatoPolizza, String numPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
+    public PolizzaDTO(long idPolizza, LocalDate dtInserimento, TipoPolizzaDTO idTipoPolizza, ClasseDTO idClasse, long idIntestatario, long idStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
         this.idPolizza = idPolizza;
+        this.dtInserimento = dtInserimento;
         this.idTipoPolizza = idTipoPolizza;
         this.idClasse = idClasse;
         this.idIntestatario = idIntestatario;
@@ -55,6 +57,14 @@ public class PolizzaDTO {
         this.idPolizza = idPolizza;
     }
 
+    public LocalDate getDtInserimento() {
+        return dtInserimento;
+    }
+
+    public void setDtInserimento(LocalDate dtInserimento) {
+        this.dtInserimento = dtInserimento;
+    }
+
     public TipoPolizzaDTO getIdTipoPolizza() {
         return idTipoPolizza;
     }
@@ -63,11 +73,12 @@ public class PolizzaDTO {
         this.idTipoPolizza = idTipoPolizza;
     }
 
-    public long getIdClasse() {
+
+    public ClasseDTO getIdClasse() {
         return idClasse;
     }
 
-    public void setIdClasse(long idClasse) {
+    public void setIdClasse(ClasseDTO idClasse) {
         this.idClasse = idClasse;
     }
 
@@ -127,6 +138,7 @@ public class PolizzaDTO {
     public String toString() {
         return "PolizzaDTO{" +
                 "idPolizza=" + idPolizza +
+                ", dtInserimento=" + dtInserimento +
                 ", idTipoPolizza=" + idTipoPolizza +
                 ", idClasse=" + idClasse +
                 ", idIntestatario=" + idIntestatario +

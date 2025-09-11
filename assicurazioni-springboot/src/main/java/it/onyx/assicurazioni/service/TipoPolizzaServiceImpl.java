@@ -34,7 +34,7 @@ public class TipoPolizzaServiceImpl implements TipoPolizzaService {
     @Override
     public TipoPolizzaDTO getById(long id) {
         try {
-            if (tipoPolizzaRepository.existsById(id)){
+            if (tipoPolizzaRepository.findById(id).isPresent()){
                 return TipoPolizzaMapper.daTipoPolizzaATipoPolizzaDTO(tipoPolizzaRepository.findById(id).get());
             } else {
                 return null;
@@ -48,7 +48,7 @@ public class TipoPolizzaServiceImpl implements TipoPolizzaService {
     @Override
     public TipoPolizzaDTO update(TipoPolizzaDTO dto) {
         try {
-            if (tipoPolizzaRepository.existsById(dto.getIdTipoPolizza())) {
+            if (tipoPolizzaRepository.findById(dto.getIdTipoPolizza()).isPresent()) {
                 TipoPolizza tipoPolizzaDB = tipoPolizzaRepository.findById(dto.getIdTipoPolizza()).get();
                 if (dto.getDsTipoPolizza() == null) {
                     dto.setDsTipoPolizza(tipoPolizzaDB.getDsTipoPolizza());
