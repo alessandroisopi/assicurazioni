@@ -9,5 +9,5 @@ public interface StatoPolizzaService {
     List<StatoPolizzaDTO> getAll();
     StatoPolizzaDTO getById(long id);
     StatoPolizzaDTO update(StatoPolizzaDTO dto);
-    StatoPolizzaDTO delete(long id);
+    boolean delete(long id);
 }

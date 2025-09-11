@@ -19,7 +19,6 @@ public class StatoPolizzaDTO {
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
     private LocalDate dtInizio;
 
-    @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
     private LocalDate dtFine;
 
     public StatoPolizzaDTO() {
