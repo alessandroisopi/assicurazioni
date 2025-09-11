@@ -83,14 +83,13 @@ public class PolizzaServiceImpl implements PolizzaService {
     }
 
     @Override
-    public PolizzaDTO getById(long idPolizza, LocalDate dtInserimento) {
+    public PolizzaDTO getById(long idPolizza) {
         try {
-            PolizzaEmbeddedId id = new PolizzaEmbeddedId(idPolizza, dtInserimento); //viene creato direttamente l'oggetto della chiave composta per comodità
-            if (polizzaRepository.findById(id).isPresent()) { //controlla l'esistenza e ritorna l'oggetto
-                return PolizzaMapper.toDto(polizzaRepository.findById(id).get());
-            } else {
+            Polizza polizza = polizzaRepository.getById(idPolizza); //richiama la query nativa
+            if  (polizza == null) {
                 return null;
             }
+            return PolizzaMapper.toDto(polizza);
         }  catch (Exception e) {
             System.err.println(e.getMessage());
             throw e;

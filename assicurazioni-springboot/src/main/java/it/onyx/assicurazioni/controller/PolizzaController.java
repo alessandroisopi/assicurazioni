@@ -41,9 +41,9 @@ public class PolizzaController {
         }
     }
 
-    @GetMapping(path = "/getById/{id}/{dtInserimento}", produces = "application/json")
-    public ResponseEntity<PolizzaDTO> getById(@PathVariable("id") long id, @PathVariable("dtInserimento") @DateTimeFormat LocalDate  dtInserimento) {
-        PolizzaDTO polizzaDTO = polizzaService.getById(id, dtInserimento);  //ottiene il risultato
+    @GetMapping(path = "/getById/{id}", produces = "application/json")
+    public ResponseEntity<PolizzaDTO> getById(@PathVariable("id") long id) {
+        PolizzaDTO polizzaDTO = polizzaService.getById(id);  //ottiene il risultato
         if (polizzaDTO != null) {
             return ResponseEntity.status(HttpStatus.OK).body(polizzaDTO);   //se c'è un riscontro torna lo stato ok e l'oggetto
         } else {
