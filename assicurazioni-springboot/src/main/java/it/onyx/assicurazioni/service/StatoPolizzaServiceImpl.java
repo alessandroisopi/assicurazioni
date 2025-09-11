@@ -20,8 +20,10 @@ public class StatoPolizzaServiceImpl implements StatoPolizzaService {
     @Override
     public StatoPolizzaDTO insert(StatoPolizzaDTO dto) {
         try {
-            if (dto.getDtFine().isBefore(dto.getDtInizio())) {
-                return null;
+            if (dto.getDtFine() != null) {
+                if (dto.getDtFine().isBefore(dto.getDtInizio())) {
+                    return null;
+                }
             }
             StatoPolizza statoPolizza = StatoPolizzaMapper.toEntity(dto);
             StatoPolizzaDTO result = StatoPolizzaMapper.toDto(statoPolizzaRepository.save(statoPolizza));
