@@ -1,15 +1,14 @@
 package it.onyx.assicurazioni.service;
 
 import it.onyx.assicurazioni.dto.PolizzaDTO;
-import it.onyx.assicurazioni.entity.Classe;
-import it.onyx.assicurazioni.entity.Polizza;
-import it.onyx.assicurazioni.entity.PolizzaEmbeddedId;
-import it.onyx.assicurazioni.entity.TipoPolizza;
+import it.onyx.assicurazioni.entity.*;
 import it.onyx.assicurazioni.repository.ClasseRepository;
 import it.onyx.assicurazioni.repository.PolizzaRepository;
+import it.onyx.assicurazioni.repository.StatoPolizzaRepository;
 import it.onyx.assicurazioni.repository.TipoPolizzaRepository;
 import it.onyx.assicurazioni.util.ClasseMapper;
 import it.onyx.assicurazioni.util.PolizzaMapper;
+import it.onyx.assicurazioni.util.StatoPolizzaMapper;
 import it.onyx.assicurazioni.util.TipoPolizzaMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,9 @@ public class PolizzaServiceImpl implements PolizzaService {
     @Autowired
     private ClasseRepository classeRepository;
 
+    @Autowired
+    private StatoPolizzaRepository statoPolizzaRepository;
+
     @Override
     public PolizzaDTO insert(PolizzaDTO dto) {
         try {
@@ -46,6 +48,11 @@ public class PolizzaServiceImpl implements PolizzaService {
             }
             Classe classe = classeRepository.findById(dto.getIdClasse().getIdClasse()).get();   //ottiene la classe della polizza tramite l'id
             polizza.setIdClasse(classe);    //viene settata la classe
+            if (statoPolizzaRepository.findById(dto.getIdStatoPolizza().getIdStatoPolizza()).isEmpty()) {
+                return null;
+            }
+            StatoPolizza statoPolizza = statoPolizzaRepository.findById(dto.getIdStatoPolizza().getIdStatoPolizza()).get();
+            polizza.setIdStatoPolizza(statoPolizza);
             if(dto.getDtFine().isBefore(dto.getDtInizio())) {   //controllo che la data sia coerente
                 return null;
             }
@@ -105,8 +112,8 @@ public class PolizzaServiceImpl implements PolizzaService {
                if (dto.getIdIntestatario() == 0) {
                    dto.setIdIntestatario(polizzaDB.getIdIntestatario());
                }
-               if (dto.getIdStatoPolizza() == 0) {
-                   dto.setIdStatoPolizza(polizzaDB.getIdStatoPolizza());
+               if (dto.getIdStatoPolizza() == null) {
+                   dto.setIdStatoPolizza(StatoPolizzaMapper.toDto(polizzaDB.getIdStatoPolizza()));
                }
                if (dto.getDtInizio() == null) {
                    dto.setDtInizio(polizzaDB.getDtInizio());

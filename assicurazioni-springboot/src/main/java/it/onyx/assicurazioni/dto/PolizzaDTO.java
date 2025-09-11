@@ -23,9 +23,8 @@ public class PolizzaDTO {
     @Min(value=1, message = "Il valore deve essere maggiore o uguale a 1", groups = {OnCreate.class})
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
     private long idIntestatario;
-    @Min(value=1, message = "Il valore deve essere maggiore o uguale a 1", groups = {OnCreate.class})
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
-    private long idStatoPolizza;
+    private StatoPolizzaDTO idStatoPolizza;
     @Null(message = "Il valore deve essere nullo", groups = {OnCreate.class, OnUpdate.class})
     private String numPolizza;
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
@@ -36,7 +35,7 @@ public class PolizzaDTO {
 
     public PolizzaDTO() {}
 
-    public PolizzaDTO(long idPolizza, LocalDate dtInserimento, TipoPolizzaDTO idTipoPolizza, ClasseDTO idClasse, long idIntestatario, long idStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
+    public PolizzaDTO(long idPolizza, LocalDate dtInserimento, TipoPolizzaDTO idTipoPolizza, ClasseDTO idClasse, long idIntestatario, StatoPolizzaDTO idStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
         this.idPolizza = idPolizza;
         this.dtInserimento = dtInserimento;
         this.idTipoPolizza = idTipoPolizza;
@@ -90,11 +89,11 @@ public class PolizzaDTO {
         this.idIntestatario = idIntestatario;
     }
 
-    public long getIdStatoPolizza() {
+    public StatoPolizzaDTO getIdStatoPolizza() {
         return idStatoPolizza;
     }
 
-    public void setIdStatoPolizza(long idStatoPolizza) {
+    public void setIdStatoPolizza(StatoPolizzaDTO idStatoPolizza) {
         this.idStatoPolizza = idStatoPolizza;
     }
 
