@@ -22,8 +22,9 @@ public class Polizza {
     @Column(name = "ID_INTESTATARIO")
     private long idIntestatario; //indentificativo intestatario polizza
 
-    @Column(name = "ID_STATO_POLIZZA")
-    private long idStatoPolizza; //indentificativo stato polizza
+    @ManyToOne
+    @JoinColumn(name = "ID_STATO_POLIZZA", referencedColumnName = "ID_STATO_POLIZZA")
+    private StatoPolizza idStatoPolizza; //indentificativo stato polizza
 
     @Column(name = "NUM_POLIZZA")
     private String numPolizza;  //numero della polizza
@@ -40,7 +41,7 @@ public class Polizza {
     public Polizza() {
     }
 
-    public Polizza(long idPolizza, LocalDate dtInserimento, TipoPolizza idTipoPolizza, Classe idClasse, long idIntestatario, long idStatoPolizza, String numPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
+    public Polizza(long idPolizza, LocalDate dtInserimento, TipoPolizza idTipoPolizza, Classe idClasse, long idIntestatario, StatoPolizza idStatoPolizza, String numPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
         this.idTipoPolizza = idTipoPolizza;
         this.idClasse = idClasse;
         this.idIntestatario = idIntestatario;
@@ -84,11 +85,11 @@ public class Polizza {
         this.idIntestatario = idIntestatario;
     }
 
-    public long getIdStatoPolizza() {
+    public StatoPolizza getIdStatoPolizza() {
         return idStatoPolizza;
     }
 
-    public void setIdStatoPolizza(long idStatoPolizza) {
+    public void setIdStatoPolizza(StatoPolizza idStatoPolizza) {
         this.idStatoPolizza = idStatoPolizza;
     }
 

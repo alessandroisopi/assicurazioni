@@ -22,7 +22,7 @@ public class TipoPolizzaServiceImpl implements TipoPolizzaService {
         try {
             List<TipoPolizzaDTO> result = new ArrayList<>();
             for (TipoPolizza tipoPolizza : tipoPolizzaRepository.findAll()) {
-                result.add(TipoPolizzaMapper.daTipoPolizzaATipoPolizzaDTO(tipoPolizza));
+                result.add(TipoPolizzaMapper.toDto(tipoPolizza));
             }
             return result;
         } catch (Exception e) {
@@ -35,7 +35,7 @@ public class TipoPolizzaServiceImpl implements TipoPolizzaService {
     public TipoPolizzaDTO getById(long id) {
         try {
             if (tipoPolizzaRepository.findById(id).isPresent()){
-                return TipoPolizzaMapper.daTipoPolizzaATipoPolizzaDTO(tipoPolizzaRepository.findById(id).get());
+                return TipoPolizzaMapper.toDto(tipoPolizzaRepository.findById(id).get());
             } else {
                 return null;
             }
@@ -62,7 +62,7 @@ public class TipoPolizzaServiceImpl implements TipoPolizzaService {
                 if (dto.getDtFine().isBefore(tipoPolizzaDB.getDtInizio())) {
                     return null;
                 }
-                return TipoPolizzaMapper.daTipoPolizzaATipoPolizzaDTO(tipoPolizzaRepository.save(TipoPolizzaMapper.daTipoPolizzaDTOATipoPolizza(dto)));
+                return TipoPolizzaMapper.toDto(tipoPolizzaRepository.save(TipoPolizzaMapper.toEntity(dto)));
             } else {
                 return null;
             }
