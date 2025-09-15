@@ -1,5 +1,6 @@
 package it.onyx.assicurazioni.dto;
 
+import it.onyx.assicurazioni.context.UserContext;
 import it.onyx.assicurazioni.groupvalidator.OnCreate;
 import it.onyx.assicurazioni.groupvalidator.OnUpdate;
 import jakarta.validation.constraints.Min;
@@ -74,6 +75,7 @@ public class StatoPolizzaDTO {
                 ", dsStatoPolizza='" + dsStatoPolizza + '\'' +
                 ", dtInizio=" + dtInizio +
                 ", dtFine=" + dtFine +
+                ", Utente=" + UserContext.getUtente() +
                 '}';
     }
 }
