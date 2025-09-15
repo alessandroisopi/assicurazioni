@@ -38,10 +38,13 @@ public class Polizza {
     @Column(name = "NOTE")
     private String note; //note polizza
 
+    @Column(name = "UTENTE_C")
+    private String utenteC;
+
     public Polizza() {
     }
 
-    public Polizza(long idPolizza, LocalDate dtInserimento, TipoPolizza idTipoPolizza, Classe idClasse, long idIntestatario, StatoPolizza idStatoPolizza, String numPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
+    public Polizza(long idPolizza, LocalDate dtInserimento, TipoPolizza idTipoPolizza, Classe idClasse, long idIntestatario, StatoPolizza idStatoPolizza, String numPolizza, LocalDate dtInizio, LocalDate dtFine, String note,  String utenteC) {
         this.idTipoPolizza = idTipoPolizza;
         this.idClasse = idClasse;
         this.idIntestatario = idIntestatario;
@@ -50,6 +53,7 @@ public class Polizza {
         this.dtInizio = dtInizio;
         this.dtFine = dtFine;
         this.note = note;
+        this.utenteC = utenteC;
         this.id =  new PolizzaEmbeddedId(idPolizza, dtInserimento);
     }
 
@@ -123,6 +127,14 @@ public class Polizza {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getUtenteC() {
+        return utenteC;
+    }
+
+    public void setUtenteC(String utenteC) {
+        this.utenteC = utenteC;
     }
 
     @Override
