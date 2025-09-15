@@ -1,5 +1,6 @@
 package it.onyx.assicurazioni.util;
 
+import it.onyx.assicurazioni.context.UserContext;
 import it.onyx.assicurazioni.dto.ClasseDTO;
 import it.onyx.assicurazioni.entity.Classe;
 
@@ -20,7 +21,8 @@ public class ClasseMapper {
                 dto.getCdClasse(),
                 dto.getDsClasse(),
                 dto.getDtInizio(),
-                dto.getDtFine()
+                dto.getDtFine(),
+                UserContext.getUtente().getCF()
         );
     }
 }
