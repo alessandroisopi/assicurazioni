@@ -50,4 +50,14 @@ public class Utente {
     public void setDataNascita(LocalDate dataNascita) {
         this.dataNascita = dataNascita;
     }
+
+    @Override
+    public String toString() {
+        return "Utente{" +
+                "codiceFiscale='" + CF + '\'' +
+                ", nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", dataNascita=" + dataNascita +
+                '}';
+    }
 }
