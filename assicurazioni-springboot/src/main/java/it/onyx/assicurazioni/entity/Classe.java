@@ -88,15 +88,4 @@ public class Classe {
     public void setUtenteC(String utenteC) {
         this.utenteC = utenteC;
     }
-
-    @Override
-    public String toString() {
-        return "Classe{" +
-                "idClasse=" + idClasse +
-                ", cdClasse='" + cdClasse + '\'' +
-                ", dsClasse='" + dsClasse + '\'' +
-                ", dtInizio=" + dtInizio +
-                ", dtFine=" + dtFine +
-                '}';
-    }
 }

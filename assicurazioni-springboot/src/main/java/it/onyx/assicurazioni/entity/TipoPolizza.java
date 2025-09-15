@@ -23,11 +23,15 @@ public class TipoPolizza {
     @Column(name = "DT_FINE")
     private LocalDate dtFine;
 
-    public TipoPolizza(long idTipoPolizza, String dsTipoPolizza, LocalDate dtInizio, LocalDate dtFine) {
+    @Column(name = "UTENTE_C")
+    private String utenteC;
+
+    public TipoPolizza(long idTipoPolizza, String dsTipoPolizza, LocalDate dtInizio, LocalDate dtFine,  String utenteC) {
         this.idTipoPolizza = idTipoPolizza;
         this.dsTipoPolizza = dsTipoPolizza;
         this.dtInizio = dtInizio;
         this.dtFine = dtFine;
+        this.utenteC = utenteC;
     }
     public TipoPolizza() {}
 
@@ -61,5 +65,13 @@ public class TipoPolizza {
 
     public void setDtFine(LocalDate dtFine) {
         this.dtFine = dtFine;
+    }
+
+    public String getUtenteC() {
+        return utenteC;
+    }
+
+    public void setUtenteC(String utenteC) {
+        this.utenteC = utenteC;
     }
 }

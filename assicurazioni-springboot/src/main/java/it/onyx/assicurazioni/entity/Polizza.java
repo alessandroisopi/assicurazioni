@@ -136,20 +136,4 @@ public class Polizza {
     public void setUtenteC(String utenteC) {
         this.utenteC = utenteC;
     }
-
-    @Override
-    public String toString() {
-        return "Polizza{" +
-                "idPolizza=" + id.getIdPolizza() +
-                "dtInserimento=" + id.getIdPolizza() +
-                ", idTipoPolizza=" + idTipoPolizza +
-                ", idClasse=" + idClasse +
-                ", idIntestatario=" + idIntestatario +
-                ", idStatoPolizza=" + idStatoPolizza +
-                ", numPolizza='" + numPolizza + '\'' +
-                ", dtInizio=" + dtInizio +
-                ", dtFine=" + dtFine +
-                ", note='" + note + '\'' +
-                '}';
-    }
 }
