@@ -5,7 +5,7 @@ import it.onyx.assicurazioni.entity.TipoPolizza;
 
 public class TipoPolizzaMapper {
 
-    public static TipoPolizzaDTO daTipoPolizzaATipoPolizzaDTO(TipoPolizza entity) {
+    public static TipoPolizzaDTO toDto(TipoPolizza entity) {
         if (entity == null) {
             return null;
         }
@@ -16,7 +16,7 @@ public class TipoPolizzaMapper {
                 entity.getDtFine()
         );
     }
-    public static TipoPolizza daTipoPolizzaDTOATipoPolizza(TipoPolizzaDTO dto) {
+    public static TipoPolizza toEntity(TipoPolizzaDTO dto) {
         if (dto == null) {
             return null;
         }

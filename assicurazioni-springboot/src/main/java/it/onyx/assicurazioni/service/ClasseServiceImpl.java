@@ -23,7 +23,7 @@ public class ClasseServiceImpl implements ClasseService {
         try {
             List<ClasseDTO> result = new ArrayList<>(); //crea lista per i risultati
             for (Classe c : classeRepository.findAll()) {   //itera tutta la lista di entità
-                result.add(ClasseMapper.daClasseAClasseDTO(c)); //converte ogni lista in dto e inserisce nel risultato
+                result.add(ClasseMapper.toDto(c)); //converte ogni lista in dto e inserisce nel risultato
             }
             return result;
         } catch (Exception e){
@@ -36,7 +36,7 @@ public class ClasseServiceImpl implements ClasseService {
     public ClasseDTO getById(long id) {
         try {
             if (classeRepository.findById(id).isPresent()) {    //controlla se esiste l'oggetto con l'id passato
-                return ClasseMapper.daClasseAClasseDTO(classeRepository.findById(id).get());    //ritorna l'oggetto se presente
+                return ClasseMapper.toDto(classeRepository.findById(id).get());    //ritorna l'oggetto se presente
             } else {
                 return null;    //ritorna nulla se non presente
             }
@@ -65,7 +65,7 @@ public class ClasseServiceImpl implements ClasseService {
             if (dto.getDtFine().isBefore(dto.getDtInizio())) {  //controlla se la data è coerente
                 return null;
             }
-            return ClasseMapper.daClasseAClasseDTO(classeRepository.save(ClasseMapper.daClasseDTOAClasse(dto)));    //effetua il salvataggio e ritorna l'oggetto modificato
+            return ClasseMapper.toDto(classeRepository.save(ClasseMapper.toEntity(dto)));    //effetua il salvataggio e ritorna l'oggetto modificato
         } else {
             return null;
         }
