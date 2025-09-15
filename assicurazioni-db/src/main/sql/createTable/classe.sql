@@ -6,8 +6,12 @@ CREATE TABLE CLASSE (
     DT_FINE DATE    --data fine della classe
 );
 
+ALTER TABLE CLASSE ADD UTENTE_C VARCHAR2(16);
+
+
 COMMENT ON COLUMN CLASSE.ID_CLASSE IS 'Identificativo della classe';
 COMMENT ON COLUMN CLASSE.CD_CLASSE IS 'Codice classe';
 COMMENT ON COLUMN CLASSE.DS_CLASSE IS 'Descrizione classe';
 COMMENT ON COLUMN CLASSE.DT_INIZIO IS 'Data inizio della classe';
 COMMENT ON COLUMN CLASSE.DT_FINE IS 'Data fine della classe';
+COMMENT ON COLUMN CLASSE.UTENTE_C IS 'codice fiscale di utente';

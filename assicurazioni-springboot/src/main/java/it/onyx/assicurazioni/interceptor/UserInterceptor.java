@@ -5,7 +5,6 @@ import it.onyx.assicurazioni.entity.Utente;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.time.LocalDate;
@@ -14,7 +13,7 @@ import java.time.LocalDate;
 public class UserInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         Utente utente = new Utente(
             request.getHeader("codiceFiscale"),
             request.getHeader("nome"),

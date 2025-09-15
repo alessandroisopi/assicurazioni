@@ -5,7 +5,10 @@ CREATE TABLE TIPO_POLIZZA (
     DT_FINE DATE    --data fine della polizza
 );
 
+ALTER TABLE TIPO_POLIZZA ADD UTENTE_C VARCHAR2(16);
+
 COMMENT ON COLUMN TIPO_POLIZZA.ID_TIPO_POLIZZA IS 'identificativo del tipo della polizza';
 COMMENT ON COLUMN TIPO_POLIZZA.DS_TIPO_POLIZZA IS 'descrizione del tipo della polizza';
 COMMENT ON COLUMN TIPO_POLIZZA.DT_INIZIO IS 'data di inizio della polizza';
 COMMENT ON COLUMN TIPO_POLIZZA.DT_FINE IS 'data fine della polizza';
+COMMENT ON COLUMN TIPO_POLIZZA.UTENTE_C IS 'codice fiscale di utente';

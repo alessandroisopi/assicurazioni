@@ -5,7 +5,10 @@ CREATE TABLE STATO_POLIZZA (
     DT_FINE DATE    --data fine validità dello stato polizza
 );
 
+ALTER TABLE STATO_POLIZZA ADD UTENTE_C VARCHAR2(16);
+
 COMMENT ON COLUMN STATO_POLIZZA.ID_STATO_POLIZZA IS 'identificativo stato polizza';
 COMMENT ON COLUMN STATO_POLIZZA.DS_STATO_POLIZZA IS 'descrizione dello stato della polizza';
 COMMENT ON COLUMN STATO_POLIZZA.DT_INIZIO IS 'data inizio validità dello stato polizza';
 COMMENT ON COLUMN STATO_POLIZZA.DT_FINE IS 'data fine validità dello stato polizza';
+COMMENT ON COLUMN STATO_POLIZZA.UTENTE_C IS 'codice fiscale di utente';
