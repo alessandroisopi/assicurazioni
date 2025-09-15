@@ -23,14 +23,18 @@ public class StatoPolizza {
     @Column(name = "DT_FINE")
     private LocalDate dtFine;
 
+    @Column(name = "UTENTE_C")
+    private String utenteC;
+
     public StatoPolizza() {
     }
 
-    public StatoPolizza(long idStatoPolizza, String dsStatoPolizza, LocalDate dtInizio, LocalDate dtFine) {
+    public StatoPolizza(long idStatoPolizza, String dsStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String utenteC) {
         this.idStatoPolizza = idStatoPolizza;
         this.dsStatoPolizza = dsStatoPolizza;
         this.dtInizio = dtInizio;
         this.dtFine = dtFine;
+        this.utenteC = utenteC;
     }
 
     public long getIdStatoPolizza() {
@@ -63,5 +67,13 @@ public class StatoPolizza {
 
     public void setDtFine(LocalDate dtFine) {
         this.dtFine = dtFine;
+    }
+
+    public String getUtenteC() {
+        return utenteC;
+    }
+
+    public void setUtenteC(String utenteC) {
+        this.utenteC = utenteC;
     }
 }
