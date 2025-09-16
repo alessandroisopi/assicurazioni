@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public class UserInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (request.getHeader("codiceFiscale") != null && request.getHeader("nome") != null && request.getHeader("cognome") != null && request.getHeader("dataNascita") != null) {
             Utente utente = new Utente(
                     request.getHeader("codiceFiscale"),
@@ -24,7 +24,7 @@ public class UserInterceptor implements HandlerInterceptor {
             UserContext.setUtente(utente);
             return true;
         } else {
-            return false;
+            throw new Exception("Valori dell'utente non validi");
         }
 
     }
