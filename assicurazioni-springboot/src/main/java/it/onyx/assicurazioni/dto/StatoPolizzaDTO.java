@@ -5,6 +5,7 @@ import it.onyx.assicurazioni.groupvalidator.OnCreate;
 import it.onyx.assicurazioni.groupvalidator.OnUpdate;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 
 import java.time.LocalDate;
 
@@ -22,6 +23,9 @@ public class StatoPolizzaDTO {
 
     private LocalDate dtFine;
 
+    @Null(message = "Il valore deve essere nullo", groups = {OnCreate.class, OnUpdate.class})
+    private String utenteC;
+
     public StatoPolizzaDTO() {
     }
 
@@ -30,6 +34,14 @@ public class StatoPolizzaDTO {
         this.dsStatoPolizza = dsStatoPolizza;
         this.dtInizio = dtInizio;
         this.dtFine = dtFine;
+    }
+
+    public StatoPolizzaDTO(long idStatoPolizza, String dsStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String utenteC) {
+        this.idStatoPolizza = idStatoPolizza;
+        this.dsStatoPolizza = dsStatoPolizza;
+        this.dtInizio = dtInizio;
+        this.dtFine = dtFine;
+        this.utenteC = utenteC;
     }
 
     public StatoPolizzaDTO(long idStatoPolizza) {
@@ -68,6 +80,14 @@ public class StatoPolizzaDTO {
         this.dtFine = dtFine;
     }
 
+    public String getUtenteC() {
+        return utenteC;
+    }
+
+    public void setUtenteC(String utenteC) {
+        this.utenteC = utenteC;
+    }
+
     @Override
     public String toString() {
         return "StatoPolizzaDTO{" +
@@ -75,7 +95,7 @@ public class StatoPolizzaDTO {
                 ", dsStatoPolizza='" + dsStatoPolizza + '\'' +
                 ", dtInizio=" + dtInizio +
                 ", dtFine=" + dtFine +
-                ", Utente=" + UserContext.getUtente() +
+                ", utenteC='" + utenteC + '\'' +
                 '}';
     }
 }

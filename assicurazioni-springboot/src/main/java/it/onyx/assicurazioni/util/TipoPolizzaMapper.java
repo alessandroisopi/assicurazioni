@@ -1,6 +1,5 @@
 package it.onyx.assicurazioni.util;
 
-import it.onyx.assicurazioni.context.UserContext;
 import it.onyx.assicurazioni.dto.TipoPolizzaDTO;
 import it.onyx.assicurazioni.entity.TipoPolizza;
 
@@ -14,7 +13,8 @@ public class TipoPolizzaMapper {
                 entity.getIdTipoPolizza(),
                 entity.getDsTipoPolizza(),
                 entity.getDtInizio(),
-                entity.getDtFine()
+                entity.getDtFine(),
+                entity.getUtenteC()
         );
     }
     public static TipoPolizza toEntity(TipoPolizzaDTO dto) {
@@ -26,7 +26,7 @@ public class TipoPolizzaMapper {
                 dto.getDsTipoPolizza(),
                 dto.getDtInizio(),
                 dto.getDtFine(),
-                UserContext.getUtente().getCF()
+                dto.getUtenteC()
         );
     }
 }

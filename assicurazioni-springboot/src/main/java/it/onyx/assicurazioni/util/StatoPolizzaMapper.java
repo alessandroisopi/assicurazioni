@@ -1,6 +1,5 @@
 package it.onyx.assicurazioni.util;
 
-import it.onyx.assicurazioni.context.UserContext;
 import it.onyx.assicurazioni.dto.StatoPolizzaDTO;
 import it.onyx.assicurazioni.entity.StatoPolizza;
 
@@ -14,7 +13,8 @@ public class StatoPolizzaMapper {
                 entity.getIdStatoPolizza(),
                 entity.getDsStatoPolizza(),
                 entity.getDtInizio(),
-                entity.getDtFine()
+                entity.getDtFine(),
+                entity.getUtenteC()
         );
     }
 
@@ -27,7 +27,7 @@ public class StatoPolizzaMapper {
                 dto.getDsStatoPolizza(),
                 dto.getDtInizio(),
                 dto.getDtFine(),
-                UserContext.getUtente().getCF()
+                dto.getUtenteC()
         );
     }
 }

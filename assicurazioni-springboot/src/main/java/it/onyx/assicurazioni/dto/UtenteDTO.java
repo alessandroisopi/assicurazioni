@@ -1,22 +1,22 @@
-package it.onyx.assicurazioni.entity;
+package it.onyx.assicurazioni.dto;
 
 import java.time.LocalDate;
 
-public class Utente {
+public class UtenteDTO {
 
     private String codiceFiscale;
     private String nome;
     private String cognome;
     private LocalDate dataNascita;
 
-    public Utente(String codiceFiscale, String nome, String cognome, LocalDate dataNascita) {
+    public UtenteDTO() {
+    }
+
+    public UtenteDTO(String codiceFiscale, String nome, String cognome, LocalDate dataNascita) {
         this.codiceFiscale = codiceFiscale;
         this.nome = nome;
         this.cognome = cognome;
         this.dataNascita = dataNascita;
-    }
-
-    public Utente() {
     }
 
     public String getCodiceFiscale() {
@@ -53,7 +53,7 @@ public class Utente {
 
     @Override
     public String toString() {
-        return "Utente{" +
+        return "UtenteDTO{" +
                 "codiceFiscale='" + codiceFiscale + '\'' +
                 ", nome='" + nome + '\'' +
                 ", cognome='" + cognome + '\'' +
