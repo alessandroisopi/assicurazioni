@@ -18,7 +18,6 @@ public class UserContext {
     }
 
     public static void clear() {
-        // FONDAMENTALE: Rimuove l'oggetto dal thread alla fine della richiesta.
         // Questo previene memory leak e l'uso accidentale dei dati in richieste successive.
         context.remove();
     }

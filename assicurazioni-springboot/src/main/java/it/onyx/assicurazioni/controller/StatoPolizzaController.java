@@ -63,7 +63,7 @@ public class StatoPolizzaController {
     public ResponseEntity<Void> delete(@PathVariable("id") long id) {
         boolean result = statoPolizzaService.delete(id);
         if (result) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else  {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }

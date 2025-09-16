@@ -1,5 +1,6 @@
 package it.onyx.assicurazioni.service;
 
+import it.onyx.assicurazioni.context.UserContext;
 import it.onyx.assicurazioni.dto.StatoPolizzaDTO;
 import it.onyx.assicurazioni.entity.StatoPolizza;
 import it.onyx.assicurazioni.repository.StatoPolizzaRepository;
@@ -25,6 +26,7 @@ public class StatoPolizzaServiceImpl implements StatoPolizzaService {
                     return null;
                 }
             }
+            dto.setUtenteC(UserContext.getUtente().getCodiceFiscale());
             StatoPolizza statoPolizza = StatoPolizzaMapper.toEntity(dto);
             StatoPolizzaDTO result = StatoPolizzaMapper.toDto(statoPolizzaRepository.save(statoPolizza));
             if (statoPolizzaRepository.existsById(dto.getIdStatoPolizza())) {
@@ -78,6 +80,7 @@ public class StatoPolizzaServiceImpl implements StatoPolizzaService {
                 if (dto.getDtFine().isBefore(dto.getDtInizio())) {
                     return null;
                 }
+                dto.setUtenteC(UserContext.getUtente().getCodiceFiscale());
                 return StatoPolizzaMapper.toDto(statoPolizzaRepository.save(StatoPolizzaMapper.toEntity(dto)));
             } else {
                 return null;

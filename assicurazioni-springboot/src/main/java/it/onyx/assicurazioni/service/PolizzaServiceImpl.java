@@ -1,5 +1,6 @@
 package it.onyx.assicurazioni.service;
 
+import it.onyx.assicurazioni.context.UserContext;
 import it.onyx.assicurazioni.dto.PolizzaDTO;
 import it.onyx.assicurazioni.entity.*;
 import it.onyx.assicurazioni.repository.ClasseRepository;
@@ -56,6 +57,7 @@ public class PolizzaServiceImpl implements PolizzaService {
             if(dto.getDtFine().isBefore(dto.getDtInizio())) {   //controllo che la data sia coerente
                 return null;
             }
+            polizza.setUtenteC(UserContext.getUtente().getCodiceFiscale());
             polizza = polizzaRepository.save(polizza);  //effettua il salvataggio sia nel database che nella variabile
             if (polizzaRepository.existsById(polizza.getId())) { //controllo se andato tutto bene
                 return PolizzaMapper.toDto(polizza);
@@ -102,10 +104,10 @@ public class PolizzaServiceImpl implements PolizzaService {
            PolizzaEmbeddedId id = new PolizzaEmbeddedId(dto.getIdPolizza(), dto.getDtInserimento());
            if (polizzaRepository.findById(id).isPresent()) { //controlla l'esistenza dell'oggetto
                Polizza polizzaDB = polizzaRepository.findById(id).get();   //prende il campo nel db per riempire le colonne che non devono essere aggiornate
-               if (dto.getIdTipoPolizza().getIdTipoPolizza() == 0) {  //una serie di if che controlla campo per campo, se nulli vengono rimpiazzati con quelli da database
+               if (dto.getIdTipoPolizza() == null) {  //una serie di if che controlla campo per campo, se nulli vengono rimpiazzati con quelli da database
                    dto.setIdTipoPolizza(TipoPolizzaMapper.toDto(polizzaDB.getIdTipoPolizza()));
                }
-               if (dto.getIdClasse().getIdClasse() == 0) {
+               if (dto.getIdClasse() == null) {
                    dto.setIdClasse(ClasseMapper.toDto(polizzaDB.getIdClasse()));
                }
                if (dto.getIdIntestatario() == 0) {
@@ -127,6 +129,7 @@ public class PolizzaServiceImpl implements PolizzaService {
                    return null;
                }
                dto.setCombinato();  //viene reimpostato il campo numPolizza
+               dto.setUtenteC(UserContext.getUtente().getCodiceFiscale());
                return PolizzaMapper.toDto(polizzaRepository.save(PolizzaMapper.toEntity(dto))); //viene salvato e il ritornato
            } else {
                return null;

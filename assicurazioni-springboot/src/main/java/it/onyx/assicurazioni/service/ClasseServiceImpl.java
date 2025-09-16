@@ -1,5 +1,6 @@
 package it.onyx.assicurazioni.service;
 
+import it.onyx.assicurazioni.context.UserContext;
 import it.onyx.assicurazioni.dto.ClasseDTO;
 import it.onyx.assicurazioni.entity.Classe;
 import it.onyx.assicurazioni.repository.ClasseRepository;
@@ -65,7 +66,8 @@ public class ClasseServiceImpl implements ClasseService {
             if (dto.getDtFine().isBefore(dto.getDtInizio())) {  //controlla se la data è coerente
                 return null;
             }
-            return ClasseMapper.toDto(classeRepository.save(ClasseMapper.toEntity(dto)));    //effetua il salvataggio e ritorna l'oggetto modificato
+            dto.setUtenteC(UserContext.getUtente().getCodiceFiscale());
+            return ClasseMapper.toDto(classeRepository.save(ClasseMapper.toEntity(dto)));    //effettua il salvataggio e ritorna l'oggetto modificato
         } else {
             return null;
         }
