@@ -10,7 +10,8 @@ public class ClasseMapper {
                 entity.getCdClasse(),
                 entity.getDsClasse(),
                 entity.getDtInizio(),
-                entity.getDtFine()
+                entity.getDtFine(),
+                entity.getUtenteC()
         );
     }
 
@@ -20,7 +21,8 @@ public class ClasseMapper {
                 dto.getCdClasse(),
                 dto.getDsClasse(),
                 dto.getDtInizio(),
-                dto.getDtFine()
+                dto.getDtFine(),
+                dto.getUtenteC()
         );
     }
 }

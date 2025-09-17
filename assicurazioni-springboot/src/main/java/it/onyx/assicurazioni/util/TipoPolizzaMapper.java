@@ -13,7 +13,8 @@ public class TipoPolizzaMapper {
                 entity.getIdTipoPolizza(),
                 entity.getDsTipoPolizza(),
                 entity.getDtInizio(),
-                entity.getDtFine()
+                entity.getDtFine(),
+                entity.getUtenteC()
         );
     }
     public static TipoPolizza toEntity(TipoPolizzaDTO dto) {
@@ -24,7 +25,8 @@ public class TipoPolizzaMapper {
                 dto.getIdTipoPolizza(),
                 dto.getDsTipoPolizza(),
                 dto.getDtInizio(),
-                dto.getDtFine()
+                dto.getDtFine(),
+                dto.getUtenteC()
         );
     }
 }

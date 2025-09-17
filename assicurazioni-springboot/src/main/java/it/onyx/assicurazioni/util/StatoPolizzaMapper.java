@@ -13,7 +13,8 @@ public class StatoPolizzaMapper {
                 entity.getIdStatoPolizza(),
                 entity.getDsStatoPolizza(),
                 entity.getDtInizio(),
-                entity.getDtFine()
+                entity.getDtFine(),
+                entity.getUtenteC()
         );
     }
 
@@ -25,7 +26,8 @@ public class StatoPolizzaMapper {
                 dto.getIdStatoPolizza(),
                 dto.getDsStatoPolizza(),
                 dto.getDtInizio(),
-                dto.getDtFine()
+                dto.getDtFine(),
+                dto.getUtenteC()
         );
     }
 }

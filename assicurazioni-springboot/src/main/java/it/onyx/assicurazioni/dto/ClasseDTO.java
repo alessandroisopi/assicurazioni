@@ -1,9 +1,11 @@
 package it.onyx.assicurazioni.dto;
 
+import it.onyx.assicurazioni.context.UserContext;
 import it.onyx.assicurazioni.groupvalidator.OnCreate;
 import it.onyx.assicurazioni.groupvalidator.OnUpdate;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 
 import java.time.LocalDate;
 
@@ -24,6 +26,9 @@ public class ClasseDTO {
 
     private LocalDate dtFine;
 
+    @Null(message = "Il valore deve essere nullo", groups = {OnCreate.class, OnUpdate.class})
+    private String utenteC;
+
     public ClasseDTO() {
     }
 
@@ -37,6 +42,15 @@ public class ClasseDTO {
         this.dsClasse = dsClasse;
         this.dtInizio = dtInizio;
         this.dtFine = dtFine;
+    }
+
+    public ClasseDTO(long idClasse, String cdClasse, String dsClasse, LocalDate dtInizio, LocalDate dtFine, String utenteC) {
+        this.idClasse = idClasse;
+        this.cdClasse = cdClasse;
+        this.dsClasse = dsClasse;
+        this.dtInizio = dtInizio;
+        this.dtFine = dtFine;
+        this.utenteC = utenteC;
     }
 
     public long getIdClasse() {
@@ -79,6 +93,14 @@ public class ClasseDTO {
         this.dtFine = dtFine;
     }
 
+    public String getUtenteC() {
+        return utenteC;
+    }
+
+    public void setUtenteC(String utenteC) {
+        this.utenteC = utenteC;
+    }
+
     @Override
     public String toString() {
         return "ClasseDTO{" +
@@ -87,6 +109,7 @@ public class ClasseDTO {
                 ", dsClasse='" + dsClasse + '\'' +
                 ", dtInizio=" + dtInizio +
                 ", dtFine=" + dtFine +
+                ", utenteC='" + utenteC + '\'' +
                 '}';
     }
 }

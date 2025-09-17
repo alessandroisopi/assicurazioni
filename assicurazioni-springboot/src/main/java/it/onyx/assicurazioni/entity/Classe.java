@@ -26,15 +26,19 @@ public class Classe {
     @Column(name = "DT_FINE")
     private LocalDate dtFine;
 
+    @Column(name = "UTENTE_C")
+    private String utenteC;
+
     public Classe() {
     }
 
-    public Classe(long idClasse, String cdClasse, String dsClasse, LocalDate dtInizio, LocalDate dtFine) {
+    public Classe(long idClasse, String cdClasse, String dsClasse, LocalDate dtInizio, LocalDate dtFine, String utenteC) {
         this.idClasse = idClasse;
         this.cdClasse = cdClasse;
         this.dsClasse = dsClasse;
         this.dtInizio = dtInizio;
         this.dtFine = dtFine;
+        this.utenteC = utenteC;
     }
 
     public long getIdClasse() {
@@ -77,14 +81,11 @@ public class Classe {
         this.dtFine = dtFine;
     }
 
-    @Override
-    public String toString() {
-        return "Classe{" +
-                "idClasse=" + idClasse +
-                ", cdClasse='" + cdClasse + '\'' +
-                ", dsClasse='" + dsClasse + '\'' +
-                ", dtInizio=" + dtInizio +
-                ", dtFine=" + dtFine +
-                '}';
+    public String getUtenteC() {
+        return utenteC;
+    }
+
+    public void setUtenteC(String utenteC) {
+        this.utenteC = utenteC;
     }
 }

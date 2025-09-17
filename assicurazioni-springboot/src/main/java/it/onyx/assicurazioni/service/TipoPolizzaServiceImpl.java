@@ -1,5 +1,6 @@
 package it.onyx.assicurazioni.service;
 
+import it.onyx.assicurazioni.context.UserContext;
 import it.onyx.assicurazioni.dto.TipoPolizzaDTO;
 import it.onyx.assicurazioni.entity.TipoPolizza;
 import it.onyx.assicurazioni.repository.TipoPolizzaRepository;
@@ -62,6 +63,7 @@ public class TipoPolizzaServiceImpl implements TipoPolizzaService {
                 if (dto.getDtFine().isBefore(tipoPolizzaDB.getDtInizio())) {
                     return null;
                 }
+                dto.setUtenteC(UserContext.getUtente().getCodiceFiscale());
                 return TipoPolizzaMapper.toDto(tipoPolizzaRepository.save(TipoPolizzaMapper.toEntity(dto)));
             } else {
                 return null;

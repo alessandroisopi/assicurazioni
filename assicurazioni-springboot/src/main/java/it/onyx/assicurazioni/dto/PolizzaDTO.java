@@ -10,7 +10,6 @@ import java.time.LocalDate;
 
 public class PolizzaDTO {
 
-
     @Min(value = 1, message = "Il valore deve essere maggiore o uguale a 1", groups = {OnUpdate.class, OnCreate.class})
     @NotNull(message = "il valore non può essere nullo", groups = {OnUpdate.class, OnCreate.class})
     private long idPolizza;
@@ -32,6 +31,8 @@ public class PolizzaDTO {
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
     private LocalDate dtFine;
     private String note;
+    @Null(message = "Il valore deve essere nullo", groups = {OnCreate.class, OnUpdate.class})
+    private String utenteC;
 
     public PolizzaDTO() {}
 
@@ -46,6 +47,20 @@ public class PolizzaDTO {
         this.dtInizio = dtInizio;
         this.dtFine = dtFine;
         this.note = note;
+    }
+
+    public PolizzaDTO(long idPolizza, LocalDate dtInserimento, TipoPolizzaDTO idTipoPolizza, ClasseDTO idClasse, long idIntestatario, StatoPolizzaDTO idStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String note, String utenteC) {
+        this.idPolizza = idPolizza;
+        this.dtInserimento = dtInserimento;
+        this.idTipoPolizza = idTipoPolizza;
+        this.idClasse = idClasse;
+        this.idIntestatario = idIntestatario;
+        this.idStatoPolizza = idStatoPolizza;
+        this.numPolizza = idIntestatario + "|" + idTipoPolizza.getIdTipoPolizza();
+        this.dtInizio = dtInizio;
+        this.dtFine = dtFine;
+        this.note = note;
+        this.utenteC = utenteC;
     }
 
     public long getIdPolizza() {
@@ -71,7 +86,6 @@ public class PolizzaDTO {
     public void setIdTipoPolizza(TipoPolizzaDTO idTipoPolizza) {
         this.idTipoPolizza = idTipoPolizza;
     }
-
 
     public ClasseDTO getIdClasse() {
         return idClasse;
@@ -105,10 +119,6 @@ public class PolizzaDTO {
         this.numPolizza = numPolizza;
     }
 
-    public void setCombinato() {
-        this.numPolizza = idIntestatario + "|" + idTipoPolizza.getIdTipoPolizza();
-    }
-
     public LocalDate getDtInizio() {
         return dtInizio;
     }
@@ -133,6 +143,14 @@ public class PolizzaDTO {
         this.note = note;
     }
 
+    public String getUtenteC() {
+        return utenteC;
+    }
+
+    public void setUtenteC(String utenteC) {
+        this.utenteC = utenteC;
+    }
+
     @Override
     public String toString() {
         return "PolizzaDTO{" +
@@ -146,6 +164,11 @@ public class PolizzaDTO {
                 ", dtInizio=" + dtInizio +
                 ", dtFine=" + dtFine +
                 ", note='" + note + '\'' +
+                ", utenteC='" + utenteC + '\'' +
                 '}';
+    }
+
+    public void setCombinato() {
+        this.numPolizza = idIntestatario + "|" + idTipoPolizza.getIdTipoPolizza();
     }
 }
