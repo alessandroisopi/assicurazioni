@@ -2,14 +2,12 @@ package it.onyx.assicurazioni.dto;
 
 import it.onyx.assicurazioni.groupvalidator.OnCreate;
 import it.onyx.assicurazioni.groupvalidator.OnUpdate;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 
 import java.time.LocalDate;
 
 public class CostoPolizzaDTO {
-    @Min(value = 1, message = "Il valore deve essere maggiore o uguale a 1", groups = {OnUpdate.class, OnCreate.class})
     @NotNull(message = "il valore non può essere nullo", groups = {OnUpdate.class, OnCreate.class})
     private ClasseDTO idClasse;
 
