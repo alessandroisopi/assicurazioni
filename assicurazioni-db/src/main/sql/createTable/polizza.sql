@@ -8,10 +8,9 @@ CREATE TABLE POLIZZA (
     NUM_POLIZZA VARCHAR2(64) NOT NULL,  --numero della polizza
     DT_INIZIO DATE NOT NULL,    --data inizio polizza
     DT_FINE DATE NOT NULL,  --data fine polizza
-    NOTE VARCHAR2(255)  --note polizza
+    NOTE VARCHAR2(255),  --note polizza
+    UTENTE_C VARCHAR2(16) NOT NULL  --codice fiscale di utente
 );
-
-ALTER TABLE POLIZZA ADD UTENTE_C VARCHAR2(16);
 
 COMMENT ON COLUMN POLIZZA.ID_POLIZZA IS 'identificativo polizza';
 COMMENT ON COLUMN POLIZZA.DT_INSERIMENTO IS 'data inserimento';

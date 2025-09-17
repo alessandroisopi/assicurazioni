@@ -3,11 +3,9 @@ CREATE TABLE CLASSE (
     CD_CLASSE VARCHAR2(10) NOT NULL,    --codice classe
     DS_CLASSE VARCHAR2(255) NOT NULL,   --descrizione classe
     DT_INIZIO DATE NOT NULL,    --data inizio della classe
-    DT_FINE DATE    --data fine della classe
+    DT_FINE DATE,    --data fine della classe
+    UTENTE_C VARCHAR2(16) NOT NULL  --codice fiscale di utente
 );
-
-ALTER TABLE CLASSE ADD UTENTE_C VARCHAR2(16);
-
 
 COMMENT ON COLUMN CLASSE.ID_CLASSE IS 'Identificativo della classe';
 COMMENT ON COLUMN CLASSE.CD_CLASSE IS 'Codice classe';
