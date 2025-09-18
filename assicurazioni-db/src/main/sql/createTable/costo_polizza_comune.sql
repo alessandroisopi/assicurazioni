@@ -1,0 +1,13 @@
+CREATE TABLE COSTO_POLIZZA_COMUNE(
+    ID_COMUNE NUMBER NOT NULL,
+    INCREMENTO NUMBER NOT NULL,
+    DT_INIZIO DATE NOT NULL,
+    DT_FINE DATE,
+    PRIMARY KEY(ID_COMUNE, DT_INIZIO)
+);
+
+COMMENT ON COLUMN COSTO_POLIZZA_COMUNE.ID_COMUNE IS 'identificativo della classe associata e prima parte della chiave primaria';
+COMMENT ON COLUMN COSTO_POLIZZA_COMUNE.INCREMENTO IS 'incremento in percentuale';
+COMMENT ON COLUMN COSTO_POLIZZA_COMUNE.DT_INIZIO IS 'data inizio validità e seconda parte della chiave primaria';
+COMMENT ON COLUMN COSTO_POLIZZA_COMUNE.DT_FINE IS 'data fine validità';
+
