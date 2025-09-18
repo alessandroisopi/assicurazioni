@@ -37,6 +37,9 @@ public class PolizzaServiceImpl implements PolizzaService {
     @Override
     public PolizzaDTO insert(PolizzaDTO dto) {
         try {
+            if (polizzaRepository.existsById(new PolizzaEmbeddedId(dto.getIdClasse().getIdClasse(), dto.getDtInserimento()))) {
+                return null;
+            }
             dto.setCombinato();
             Polizza polizza = PolizzaMapper.toEntity(dto);    //conversione a entità del dto
             if (tipoPolizzaRepository.findById(dto.getIdTipoPolizza().getIdTipoPolizza()).isEmpty()) {

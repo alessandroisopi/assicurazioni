@@ -1,0 +1,14 @@
+CREATE TABLE COSTO_POLIZZA_ETA(
+    ETA_INIZIO NUMBER NOT NULL,
+    ETA_FINE NUMBER NOT NULL,
+    INCREMENTO NUMBER NOT NULL,
+    DT_INIZIO DATE NOT NULL,
+    DT_FINE DATE,
+    PRIMARY KEY(ETA_INIZIO, ETA_FINE, DT_INIZIO)
+);
+
+COMMENT ON COLUMN COSTO_POLIZZA_ETA.ETA_INIZIO IS 'inizio range di età e prima parte della chiave primaria';
+COMMENT ON COLUMN COSTO_POLIZZA_ETA.ETA_FINE IS 'fine range di età e seconda parte della chiave primaria';
+COMMENT ON COLUMN COSTO_POLIZZA_ETA.INCREMENTO IS 'incremento in percentuale';
+COMMENT ON COLUMN COSTO_POLIZZA_ETA.DT_INIZIO IS 'data inizio validità e terza parte della chiave primaria';
+COMMENT ON COLUMN COSTO_POLIZZA_ETA.DT_FINE IS 'data fine validità';
