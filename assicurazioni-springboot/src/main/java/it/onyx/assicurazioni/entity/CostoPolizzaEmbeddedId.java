@@ -8,23 +8,23 @@ import java.time.LocalDate;
 @Embeddable
 public class CostoPolizzaEmbeddedId implements Serializable {
 
-    private long idClasse;
+    private long idTipoPolizza;
     private LocalDate dtInizio;
 
-    public CostoPolizzaEmbeddedId(long idClasse, LocalDate dtInizio) {
-        this.idClasse = idClasse;
+    public CostoPolizzaEmbeddedId(long idTipoPolizza, LocalDate dtInizio) {
+        this.idTipoPolizza = idTipoPolizza;
         this.dtInizio = dtInizio;
     }
 
     public CostoPolizzaEmbeddedId() {
     }
 
-    public long getIdClasse() {
-        return idClasse;
+    public long getIdTipoPolizza() {
+        return idTipoPolizza;
     }
 
-    public void setIdClasse(long idClasse) {
-        this.idClasse = idClasse;
+    public void setIdTipoPolizza(long idTipoPolizza) {
+        this.idTipoPolizza = idTipoPolizza;
     }
 
     public LocalDate getDtInizio() {

@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface CostoPolizzaRepository extends JpaRepository<CostoPolizza, CostoPolizzaEmbeddedId> {
     @Query(nativeQuery = true, value = "SELECT * FROM COSTO_POLIZZA " +
             "WHERE DT_INIZIO = (SELECT MAX(DT_INIZIO) FROM COSTO_POLIZZA " +
-            "WHERE ID_CLASSE = :id)")
+            "WHERE ID_TIPO_POLIZZA = :id)")
     CostoPolizza getById(@Param("id") long id);
 }

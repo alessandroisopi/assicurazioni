@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 public class CostoPolizzaDTO {
     @NotNull(message = "il valore non può essere nullo", groups = {OnUpdate.class, OnCreate.class})
-    private ClasseDTO idClasse;
+    private TipoPolizzaDTO idTipoPolizza;
 
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
     private float costo;
@@ -22,8 +22,8 @@ public class CostoPolizzaDTO {
     @Null(message = "il valore deve essere nullo", groups = {OnUpdate.class, OnCreate.class})
     private String UtenteC;
 
-    public CostoPolizzaDTO(ClasseDTO idClasse, float costo, LocalDate dtInizio, LocalDate dtFine, String utenteC) {
-        this.idClasse = idClasse;
+    public CostoPolizzaDTO(TipoPolizzaDTO idTipoPolizza, float costo, LocalDate dtInizio, LocalDate dtFine, String utenteC) {
+        this.idTipoPolizza = idTipoPolizza;
         this.costo = costo;
         this.dtInizio = dtInizio;
         this.dtFine = dtFine;
@@ -33,12 +33,12 @@ public class CostoPolizzaDTO {
     public CostoPolizzaDTO() {
     }
 
-    public ClasseDTO getIdClasse() {
-        return idClasse;
+    public TipoPolizzaDTO getIdTipoPolizza() {
+        return idTipoPolizza;
     }
 
-    public void setIdClasse(ClasseDTO idClasse) {
-        this.idClasse = idClasse;
+    public void setIdTipoPolizza(TipoPolizzaDTO idTipoPolizza) {
+        this.idTipoPolizza = idTipoPolizza;
     }
 
     public float getCosto() {
@@ -71,5 +71,16 @@ public class CostoPolizzaDTO {
 
     public void setUtenteC(String utenteC) {
         UtenteC = utenteC;
+    }
+
+    @Override
+    public String toString() {
+        return "CostoPolizzaDTO{" +
+                "idTipoPolizza=" + idTipoPolizza +
+                ", costo=" + costo +
+                ", dtInizio=" + dtInizio +
+                ", dtFine=" + dtFine +
+                ", UtenteC='" + UtenteC + '\'' +
+                '}';
     }
 }

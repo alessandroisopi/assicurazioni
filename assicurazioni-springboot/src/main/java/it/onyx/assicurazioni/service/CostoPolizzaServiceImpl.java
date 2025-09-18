@@ -4,8 +4,8 @@ import it.onyx.assicurazioni.context.UserContext;
 import it.onyx.assicurazioni.dto.CostoPolizzaDTO;
 import it.onyx.assicurazioni.entity.CostoPolizza;
 import it.onyx.assicurazioni.entity.CostoPolizzaEmbeddedId;
-import it.onyx.assicurazioni.repository.ClasseRepository;
 import it.onyx.assicurazioni.repository.CostoPolizzaRepository;
+import it.onyx.assicurazioni.repository.TipoPolizzaRepository;
 import it.onyx.assicurazioni.util.CostoPolizzaMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +22,12 @@ public class CostoPolizzaServiceImpl implements CostoPolizzaService {
     private CostoPolizzaRepository costoPolizzaRepository;
 
     @Autowired
-    private ClasseRepository classeRepository;
+    private TipoPolizzaRepository tipoPolizzaRepository;
 
     @Override
     public CostoPolizzaDTO insert(CostoPolizzaDTO dto) {
         try {
-            if (costoPolizzaRepository.existsById(new CostoPolizzaEmbeddedId(dto.getIdClasse().getIdClasse(), dto.getDtInizio()))) {
+            if (costoPolizzaRepository.existsById(new CostoPolizzaEmbeddedId(dto.getIdTipoPolizza().getIdTipoPolizza(), dto.getDtInizio()))) {
                 return null;
             }
             if (dto.getDtFine() != null) {
@@ -36,10 +36,10 @@ public class CostoPolizzaServiceImpl implements CostoPolizzaService {
                 }
             }
             CostoPolizza costoPolizza = CostoPolizzaMapper.toEntity(dto);
-            if (classeRepository.findById(dto.getIdClasse().getIdClasse()).isEmpty()) {
+            if (tipoPolizzaRepository.findById(dto.getIdTipoPolizza().getIdTipoPolizza()).isEmpty()) {
                 return null;
             }
-            costoPolizza.setIdClasse(classeRepository.findById(dto.getIdClasse().getIdClasse()).get());
+            costoPolizza.setIdTipoPolizza(tipoPolizzaRepository.findById(dto.getIdTipoPolizza().getIdTipoPolizza()).get());
             costoPolizza.setUtenteC(UserContext.getUtente().getCodiceFiscale());
             costoPolizza = costoPolizzaRepository.save(costoPolizza);
             if (costoPolizzaRepository.existsById(costoPolizza.getId())) {
@@ -84,7 +84,7 @@ public class CostoPolizzaServiceImpl implements CostoPolizzaService {
     @Override
     public CostoPolizzaDTO update(CostoPolizzaDTO dto) {
         try {
-            CostoPolizzaEmbeddedId id = new CostoPolizzaEmbeddedId(dto.getIdClasse().getIdClasse(), dto.getDtInizio());
+            CostoPolizzaEmbeddedId id = new CostoPolizzaEmbeddedId(dto.getIdTipoPolizza().getIdTipoPolizza(), dto.getDtInizio());
             if (costoPolizzaRepository.findById(id).isEmpty()) {
                 return null;
             }

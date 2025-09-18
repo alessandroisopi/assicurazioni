@@ -7,7 +7,7 @@ public class CostoPolizzaMapper {
 
     public static CostoPolizzaDTO toDto(CostoPolizza entity) {
         return new CostoPolizzaDTO(
-                ClasseMapper.toDto(entity.getIdClasse()),
+                TipoPolizzaMapper.toDto(entity.getIdTipoPolizza()),
                 entity.getCosto(),
                 entity.getId().getDtInizio(),
                 entity.getDtFine(),
@@ -17,7 +17,7 @@ public class CostoPolizzaMapper {
 
     public static CostoPolizza toEntity(CostoPolizzaDTO dto) {
         return new CostoPolizza(
-                ClasseMapper.toEntity(dto.getIdClasse()),
+                TipoPolizzaMapper.toEntity(dto.getIdTipoPolizza()),
                 dto.getCosto(),
                 dto.getDtInizio(),
                 dto.getDtFine(),

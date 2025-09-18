@@ -12,9 +12,9 @@ public class CostoPolizza {
     private CostoPolizzaEmbeddedId id;
 
     @ManyToOne
-    @MapsId("idClasse")
-    @JoinColumn(name = "ID_CLASSE", referencedColumnName = "ID_CLASSE")
-    private Classe idClasse;
+    @MapsId("idTipoPolizza")
+    @JoinColumn(name = "ID_TIPO_POLIZZA", referencedColumnName = "ID_TIPO_POLIZZA")
+    private TipoPolizza idTipoPolizza;
 
     @Column(name = "COSTO")
     private float costo;
@@ -28,9 +28,9 @@ public class CostoPolizza {
     public CostoPolizza() {
     }
 
-    public CostoPolizza(Classe idClasse, float costo, LocalDate dtInizio, LocalDate dtFine, String utenteC) {
-        this.id = new CostoPolizzaEmbeddedId(idClasse.getIdClasse(), dtInizio);
-        this.idClasse = idClasse;
+    public CostoPolizza(TipoPolizza idTipoPolizza, float costo, LocalDate dtInizio, LocalDate dtFine, String utenteC) {
+        this.id = new CostoPolizzaEmbeddedId(idTipoPolizza.getIdTipoPolizza(), dtInizio);
+        this.idTipoPolizza = idTipoPolizza;
         this.costo = costo;
         this.dtFine = dtFine;
         this.utenteC = utenteC;
@@ -44,12 +44,12 @@ public class CostoPolizza {
         this.id = id;
     }
 
-    public Classe getIdClasse() {
-        return idClasse;
+    public TipoPolizza getIdTipoPolizza() {
+        return idTipoPolizza;
     }
 
-    public void setIdClasse(Classe idClasse) {
-        this.idClasse = idClasse;
+    public void setIdTipoPolizza(TipoPolizza idTipoPolizza) {
+        this.idTipoPolizza = idTipoPolizza;
     }
 
     public float getCosto() {
