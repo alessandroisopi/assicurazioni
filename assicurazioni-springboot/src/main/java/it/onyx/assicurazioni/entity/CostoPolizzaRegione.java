@@ -8,10 +8,10 @@ import jakarta.persistence.Table;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "COSTO_POLIZZA_COMUNE")
-public class CostoPolizzaComune {
+@Table(name = "COSTO_POLIZZA_REGIONE")
+public class CostoPolizzaRegione {
     @EmbeddedId
-    private CostoPolizzaComuneEmbeddedId id;
+    private CostoPolizzaRegioneEmbeddedId id;
 
     @Column(name = "INCREMENTO")
     private int incremento;
@@ -19,20 +19,20 @@ public class CostoPolizzaComune {
     @Column(name = "DT_FINE")
     private LocalDate dtFine;
 
-    public CostoPolizzaComune(CostoPolizzaComuneEmbeddedId id, int incremento, LocalDate dtFine) {
+    public CostoPolizzaRegione(CostoPolizzaRegioneEmbeddedId id, int incremento, LocalDate dtFine) {
         this.id = id;
         this.incremento = incremento;
         this.dtFine = dtFine;
     }
 
-    public CostoPolizzaComune() {
+    public CostoPolizzaRegione() {
     }
 
-    public CostoPolizzaComuneEmbeddedId getId() {
+    public CostoPolizzaRegioneEmbeddedId getId() {
         return id;
     }
 
-    public void setId(CostoPolizzaComuneEmbeddedId id) {
+    public void setId(CostoPolizzaRegioneEmbeddedId id) {
         this.id = id;
     }
 

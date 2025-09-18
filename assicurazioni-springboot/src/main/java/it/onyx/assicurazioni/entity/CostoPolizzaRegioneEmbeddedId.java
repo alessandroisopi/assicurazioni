@@ -6,24 +6,24 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Embeddable
-public class CostoPolizzaComuneEmbeddedId implements Serializable {
-    private long idComune;
+public class CostoPolizzaRegioneEmbeddedId implements Serializable {
+    private long idRegione;
     private LocalDate dtInizio;
 
-    public CostoPolizzaComuneEmbeddedId(long idComune, LocalDate dtInizio) {
-        this.idComune = idComune;
+    public CostoPolizzaRegioneEmbeddedId(long idComune, LocalDate dtInizio) {
+        this.idRegione = idComune;
         this.dtInizio = dtInizio;
     }
 
-    public CostoPolizzaComuneEmbeddedId() {
+    public CostoPolizzaRegioneEmbeddedId() {
     }
 
-    public long getIdComune() {
-        return idComune;
+    public long getIdRegione() {
+        return idRegione;
     }
 
-    public void setIdComune(long idComune) {
-        this.idComune = idComune;
+    public void setIdRegione(long idRegione) {
+        this.idRegione = idRegione;
     }
 
     public LocalDate getDtInizio() {
