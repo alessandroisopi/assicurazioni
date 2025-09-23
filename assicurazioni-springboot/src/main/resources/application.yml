@@ -19,6 +19,6 @@ logging:
 
 security:
   user:
-    name: "user"
-    password: "password"
+    name: "admin"
+    password: "rufini"
     role: "USER"
