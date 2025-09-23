@@ -70,4 +70,9 @@ public class PolizzaController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();     //se non trova l'oggetto da eliminare torna lo stato not found
         }
     }
+
+    @GetMapping(path = "/verificaStatoPolizza/{cd}")
+    public boolean verificaStatoPolizza(@PathVariable("cd") String cd) {
+        return polizzaService.verificaStatoPolizza(cd);
+    }
 }

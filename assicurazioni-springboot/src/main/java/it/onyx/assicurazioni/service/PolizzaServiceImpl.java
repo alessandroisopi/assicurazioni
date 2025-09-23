@@ -113,8 +113,8 @@ public class PolizzaServiceImpl implements PolizzaService {
                if (dto.getIdClasse() == null) {
                    dto.setIdClasse(ClasseMapper.toDto(polizzaDB.getIdClasse()));
                }
-               if (dto.getIdIntestatario() == 0) {
-                   dto.setIdIntestatario(polizzaDB.getIdIntestatario());
+               if (dto.getCdIntestatario() == 0) {
+                   dto.setCdIntestatario(polizzaDB.getCdIntestatario());
                }
                if (dto.getIdStatoPolizza() == null) {
                    dto.setIdStatoPolizza(StatoPolizzaMapper.toDto(polizzaDB.getIdStatoPolizza()));
@@ -154,6 +154,16 @@ public class PolizzaServiceImpl implements PolizzaService {
                 return false;
             }
         }  catch (Exception e) {
+            System.err.println(e.getMessage());
+            throw e;
+        }
+    }
+
+    public boolean verificaStatoPolizza(String cd) {
+        try {
+            Polizza result = polizzaRepository.getByCdIntestatario(cd);
+            return result != null;
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             throw e;
         }
