@@ -72,7 +72,10 @@ public class PolizzaController {
     }
 
     @GetMapping(path = "/verificaStatoPolizza/{cd}")
-    public boolean verificaStatoPolizza(@PathVariable("cd") String cd) {
-        return polizzaService.verificaStatoPolizza(cd);
+    public ResponseEntity<Boolean> verificaStatoPolizza(@PathVariable("cd") String cd) {
+        if (polizzaService.verificaStatoPolizza(cd)) {
+            return ResponseEntity.status(HttpStatus.OK).body(true);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
     }
 }
