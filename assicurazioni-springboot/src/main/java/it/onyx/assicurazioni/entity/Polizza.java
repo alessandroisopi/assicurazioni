@@ -20,7 +20,7 @@ public class Polizza {
     private Classe idClasse; //indentificativo classe polizza
 
     @Column(name = "CD_INTESTATARIO")
-    private long cdIntestatario; //indentificativo intestatario polizza
+    private String cdIntestatario; //indentificativo intestatario polizza
 
     @ManyToOne
     @JoinColumn(name = "ID_STATO_POLIZZA", referencedColumnName = "ID_STATO_POLIZZA")
@@ -44,7 +44,7 @@ public class Polizza {
     public Polizza() {
     }
 
-    public Polizza(long idPolizza, LocalDate dtInserimento, TipoPolizza idTipoPolizza, Classe idClasse, long cdIntestatario, StatoPolizza idStatoPolizza, String numPolizza, LocalDate dtInizio, LocalDate dtFine, String note, String utenteC) {
+    public Polizza(long idPolizza, LocalDate dtInserimento, TipoPolizza idTipoPolizza, Classe idClasse, String cdIntestatario, StatoPolizza idStatoPolizza, String numPolizza, LocalDate dtInizio, LocalDate dtFine, String note, String utenteC) {
         this.idTipoPolizza = idTipoPolizza;
         this.idClasse = idClasse;
         this.cdIntestatario = cdIntestatario;
@@ -81,11 +81,11 @@ public class Polizza {
         this.idClasse = idClasse;
     }
 
-    public long getCdIntestatario() {
+    public String getCdIntestatario() {
         return cdIntestatario;
     }
 
-    public void setCdIntestatario(long cdIntestatario) {
+    public void setCdIntestatario(String cdIntestatario) {
         this.cdIntestatario = cdIntestatario;
     }
 

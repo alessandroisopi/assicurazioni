@@ -19,9 +19,8 @@ public class PolizzaDTO {
     private TipoPolizzaDTO idTipoPolizza;
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
     private ClasseDTO idClasse;
-    @Min(value=1, message = "Il valore deve essere maggiore o uguale a 1", groups = {OnCreate.class})
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
-    private long cdIntestatario;
+    private String cdIntestatario;
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
     private StatoPolizzaDTO idStatoPolizza;
     @Null(message = "Il valore deve essere nullo", groups = {OnCreate.class, OnUpdate.class})
@@ -36,7 +35,7 @@ public class PolizzaDTO {
 
     public PolizzaDTO() {}
 
-    public PolizzaDTO(long idPolizza, LocalDate dtInserimento, TipoPolizzaDTO idTipoPolizza, ClasseDTO idClasse, long cdIntestatario, StatoPolizzaDTO idStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
+    public PolizzaDTO(long idPolizza, LocalDate dtInserimento, TipoPolizzaDTO idTipoPolizza, ClasseDTO idClasse, String cdIntestatario, StatoPolizzaDTO idStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
         this.idPolizza = idPolizza;
         this.dtInserimento = dtInserimento;
         this.idTipoPolizza = idTipoPolizza;
@@ -49,7 +48,7 @@ public class PolizzaDTO {
         this.note = note;
     }
 
-    public PolizzaDTO(long idPolizza, LocalDate dtInserimento, TipoPolizzaDTO idTipoPolizza, ClasseDTO idClasse, long cdIntestatario, StatoPolizzaDTO idStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String note, String utenteC) {
+    public PolizzaDTO(long idPolizza, LocalDate dtInserimento, TipoPolizzaDTO idTipoPolizza, ClasseDTO idClasse, String cdIntestatario, StatoPolizzaDTO idStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String note, String utenteC) {
         this.idPolizza = idPolizza;
         this.dtInserimento = dtInserimento;
         this.idTipoPolizza = idTipoPolizza;
@@ -107,11 +106,11 @@ public class PolizzaDTO {
         return numPolizza;
     }
 
-    public long getCdIntestatario() {
+    public String getCdIntestatario() {
         return cdIntestatario;
     }
 
-    public void setCdIntestatario(long cdIntestatario) {
+    public void setCdIntestatario(String cdIntestatario) {
         this.cdIntestatario = cdIntestatario;
     }
 

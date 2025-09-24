@@ -113,7 +113,7 @@ public class PolizzaServiceImpl implements PolizzaService {
                if (dto.getIdClasse() == null) {
                    dto.setIdClasse(ClasseMapper.toDto(polizzaDB.getIdClasse()));
                }
-               if (dto.getCdIntestatario() == 0) {
+               if (dto.getCdIntestatario().isEmpty()) {
                    dto.setCdIntestatario(polizzaDB.getCdIntestatario());
                }
                if (dto.getIdStatoPolizza() == null) {
