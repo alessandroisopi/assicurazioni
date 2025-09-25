@@ -2,6 +2,7 @@ package it.onyx.assicurazioni.service;
 
 import it.onyx.assicurazioni.context.UserContext;
 import it.onyx.assicurazioni.dto.PolizzaDTO;
+import it.onyx.assicurazioni.dtoNoEntity.PolizzaInsert;
 import it.onyx.assicurazioni.entity.*;
 import it.onyx.assicurazioni.repository.ClasseRepository;
 import it.onyx.assicurazioni.repository.PolizzaRepository;
@@ -12,12 +13,19 @@ import it.onyx.assicurazioni.util.PolizzaMapper;
 import it.onyx.assicurazioni.util.StatoPolizzaMapper;
 import it.onyx.assicurazioni.util.TipoPolizzaMapper;
 import jakarta.transaction.Transactional;
+import onyx.classi.generated.DtoCittadino;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @Transactional
@@ -33,6 +41,9 @@ public class PolizzaServiceImpl implements PolizzaService {
 
     @Autowired
     private StatoPolizzaRepository statoPolizzaRepository;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Override
     public PolizzaDTO insert(PolizzaDTO dto) {
@@ -170,7 +181,32 @@ public class PolizzaServiceImpl implements PolizzaService {
     }
 
     @Override
-    public PolizzaDTO insertControl() {
-        return null;
+    public PolizzaDTO insertControllata(PolizzaInsert dto) throws Exception {
+        String urlGetCittadinoByCf = "http://192.168.1.32:8282/persona/cittadinoByCf/" + dto.getContraente().getCf();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("nome", UserContext.getUtente().getNome());
+        headers.set("cognome", UserContext.getUtente().getCognome());
+        headers.set("codFiscale", UserContext.getUtente().getCodiceFiscale());
+        headers.set("dtNascita", UserContext.getUtente().getDataNascita().toString());
+        HttpEntity<String> listaHeaders = new HttpEntity<>(headers);
+        ResponseEntity<DtoCittadino> responseCittadino = restTemplate.exchange(
+          urlGetCittadinoByCf,
+          HttpMethod.GET,
+          listaHeaders,
+          DtoCittadino.class
+        );
+        DtoCittadino dtoCittadino = responseCittadino.getBody();
+        if  (dtoCittadino == null) {
+            throw new Exception("Ritornato un cittadino nullo");
+        }
+        if  (!dtoCittadino.getNomeCittadinoDto().equals(dto.getContraente().getNome())) {
+            throw new Exception("Nome non valido");
+        }
+        if (!dtoCittadino.getCognomeCittadinoDto().equals(dto.getContraente().getCognome())) {
+            throw new Exception("Cognome non valido");
+        }
+        if (!dtoCittadino.getDataNascitaDto().equals(dto.getContraente().getDtNascita().toString())) {
+            throw new Exception("Data di nascita non valida");
+        }
     }
 }
