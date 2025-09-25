@@ -7,3 +7,4 @@ target/
 *.iml
 /assicurazioni-springboot/src/main/resources/http/requestPolizza.http
 /assicurazioni-xsd/src/main/java/META-INF/JAXB/
+*.xjb
