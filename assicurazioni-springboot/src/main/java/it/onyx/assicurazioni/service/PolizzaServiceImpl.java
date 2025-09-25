@@ -168,4 +168,9 @@ public class PolizzaServiceImpl implements PolizzaService {
             throw e;
         }
     }
+
+    @Override
+    public PolizzaDTO insertControl() {
+        return null;
+    }
 }

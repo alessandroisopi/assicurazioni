@@ -2,7 +2,7 @@
 // Questo file è stato generato dall'Eclipse Implementation of JAXB, v3.0.2 
 // Vedere https://eclipse-ee4j.github.io/jaxb-ri 
 // Qualsiasi modifica a questo file andrà persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2025.09.25 alle 12:43:32 PM CEST 
+// Generato il: 2025.09.25 alle 12:57:24 PM CEST 
 //
 
 
@@ -82,6 +82,54 @@ public class ObjectFactory {
      */
     public TransitoDto createTransitoDto() {
         return new TransitoDto();
+    }
+
+    /**
+     * Create an instance of {@link DtoCittadino }
+     * 
+     */
+    public DtoCittadino createDtoCittadino() {
+        return new DtoCittadino();
+    }
+
+    /**
+     * Create an instance of {@link DtoComune }
+     * 
+     */
+    public DtoComune createDtoComune() {
+        return new DtoComune();
+    }
+
+    /**
+     * Create an instance of {@link DtoProvincia }
+     * 
+     */
+    public DtoProvincia createDtoProvincia() {
+        return new DtoProvincia();
+    }
+
+    /**
+     * Create an instance of {@link DtoContatto }
+     * 
+     */
+    public DtoContatto createDtoContatto() {
+        return new DtoContatto();
+    }
+
+    /**
+     * Create an instance of {@link DtoIndirizzo }
+     * 
+     */
+    public DtoIndirizzo createDtoIndirizzo() {
+        return new DtoIndirizzo();
+    }
+
+    /**
+     * Create an instance of {@link DtoVeicoloCittadino }
+     * 
+     */
+    public DtoVeicoloCittadino createDtoVeicoloCittadino() {
+        return new DtoVeicoloCittadino();
     }
 
     /**
