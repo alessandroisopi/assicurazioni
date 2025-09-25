@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0">
+    
+  <xs:complexType name="dtoCittadino">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="codiceFiscaleDto" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="cognomeCittadinoDto" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dataInserimentoDto" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dataNascitaDto" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="idCittadinoDto" type="xs:int"/>
+            
+      <xs:element minOccurs="0" name="idComuneNascitaDto" type="dtoComune"/>
+            
+      <xs:element minOccurs="0" name="idStatoCittadinoDto" type="xs:int"/>
+            
+      <xs:element minOccurs="0" name="nomeCittadinoDto" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="note" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="utenteCDto" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="dtoComune">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="dataFineDto" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dataInizioDto" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="idComuneDto" type="xs:int"/>
+            
+      <xs:element minOccurs="0" name="idProvinciaDto" type="dtoProvincia"/>
+            
+      <xs:element minOccurs="0" name="nomeComuneDto" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="utenteCDto" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="dtoProvincia">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="dataFineDto" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dataInizioDto" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="idProvinciaDto" type="xs:int"/>
+            
+      <xs:element minOccurs="0" name="idRegioneDto" type="xs:int"/>
+            
+      <xs:element minOccurs="0" name="nomeProvinciaDto" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="utenteCDto" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="dtoContatto">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="dataInsertContattoDto" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="idContattoDto" type="xs:int"/>
+            
+      <xs:element minOccurs="0" name="idTipoContattoDto" type="xs:int"/>
+            
+      <xs:element minOccurs="0" name="nomeContattoDto" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="utenteCDto" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="dtoIndirizzo">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="capDto" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dataFineDto" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dataInizioDto" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="idComuneDto" type="dtoComune"/>
+            
+      <xs:element minOccurs="0" name="idIndirizzoDto" type="xs:int"/>
+            
+      <xs:element minOccurs="0" name="nomeViaDto" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="numeroCivicoDto" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="utenteCDto" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="dtoVeicoloCittadino">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="dataFineDto" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dataInizioDto" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="idCittadinoDto" type="xs:int"/>
+            
+      <xs:element minOccurs="0" name="numTelaioDto" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="utenteCDto" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+  
+</xs:schema>
