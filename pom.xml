@@ -20,5 +20,6 @@
 	<modules>
 		<module>assicurazioni-springboot</module>
 		<module>assicurazioni-db</module>
-	</modules>
+        <module>assicurazioni-xsd</module>
+    </modules>
 </project>

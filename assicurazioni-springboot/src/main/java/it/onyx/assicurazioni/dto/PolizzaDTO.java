@@ -1,10 +1,12 @@
 package it.onyx.assicurazioni.dto;
 
+import it.onyx.assicurazioni.adapter.LocalDateAdapter;
 import it.onyx.assicurazioni.groupvalidator.OnCreate;
 import it.onyx.assicurazioni.groupvalidator.OnUpdate;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import java.time.LocalDate;
 
@@ -70,6 +72,7 @@ public class PolizzaDTO {
         this.idPolizza = idPolizza;
     }
 
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     public LocalDate getDtInserimento() {
         return dtInserimento;
     }
@@ -118,6 +121,7 @@ public class PolizzaDTO {
         this.numPolizza = numPolizza;
     }
 
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     public LocalDate getDtInizio() {
         return dtInizio;
     }
@@ -126,6 +130,7 @@ public class PolizzaDTO {
         this.dtInizio = dtInizio;
     }
 
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     public LocalDate getDtFine() {
         return dtFine;
     }
