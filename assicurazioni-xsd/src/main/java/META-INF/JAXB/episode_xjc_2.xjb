@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="3.0" xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb">
+  <!--
+
+Questo file è stato generato dall'Eclipse Implementation of JAXB, v3.0.2 
+Vedere https://eclipse-ee4j.github.io/jaxb-ri 
+Qualsiasi modifica a questo file andrà persa durante la ricompilazione dello schema di origine. 
+Generato il: 2025.09.25 alle 09:54:03 AM CEST 
+
+  -->
+  <jaxb:bindings scd="x-schema::">
+    <jaxb:schemaBindings map="false">
+      <jaxb:package name="onyx.classi.generated"/>
+    </jaxb:schemaBindings>
+    <jaxb:bindings scd="~autostradaDto">
+      <jaxb:class ref="onyx.classi.generated.AutostradaDto"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~caselloDto">
+      <jaxb:class ref="onyx.classi.generated.CaselloDto"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~statoCaselloDto">
+      <jaxb:class ref="onyx.classi.generated.StatoCaselloDto"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~tipoCaselloDto">
+      <jaxb:class ref="onyx.classi.generated.TipoCaselloDto"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~tipoTransitoDto">
+      <jaxb:class ref="onyx.classi.generated.TipoTransitoDto"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~transitoDto">
+      <jaxb:class ref="onyx.classi.generated.TransitoDto"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~esitoRevisioneDTO">
+      <jaxb:class ref="onyx.classi.generated.EsitoRevisioneDTO"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~veicoloDTO">
+      <jaxb:class ref="onyx.classi.generated.VeicoloDTO"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~immatricolatoDTO">
+      <jaxb:class ref="onyx.classi.generated.ImmatricolatoDTO"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~proprietarioDTO">
+      <jaxb:class ref="onyx.classi.generated.ProprietarioDTO"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~marcaDTO">
+      <jaxb:class ref="onyx.classi.generated.MarcaDTO"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~modelloDTO">
+      <jaxb:class ref="onyx.classi.generated.ModelloDTO"/>
+    </jaxb:bindings>
+    <jaxb:bindings scd="~tipoVeicoloDTO">
+      <jaxb:class ref="onyx.classi.generated.TipoVeicoloDTO"/>
+    </jaxb:bindings>
+  </jaxb:bindings>
+</jaxb:bindings>
+

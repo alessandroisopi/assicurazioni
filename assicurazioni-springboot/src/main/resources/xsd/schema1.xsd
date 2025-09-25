@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0">
+    
+  <xs:complexType name="classeDTO">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="cdClasse" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dsClasse" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dtFine" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dtInizio" type="xs:string"/>
+            
+      <xs:element name="idClasse" type="xs:long"/>
+            
+      <xs:element minOccurs="0" name="utenteC" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="costoPolizzaDTO">
+        
+    <xs:sequence>
+            
+      <xs:element name="costo" type="xs:float"/>
+            
+      <xs:element minOccurs="0" name="dtFine" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dtInizio" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="idTipoPolizza" type="tipoPolizzaDTO"/>
+            
+      <xs:element minOccurs="0" name="utenteC" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="tipoPolizzaDTO">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="dsTipoPolizza" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dtFine" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dtInizio" type="xs:string"/>
+            
+      <xs:element name="idTipoPolizza" type="xs:long"/>
+            
+      <xs:element minOccurs="0" name="utenteC" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="polizzaDTO">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="cdIntestatario" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dtFine" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dtInizio" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dtInserimento" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="idClasse" type="classeDTO"/>
+            
+      <xs:element name="idPolizza" type="xs:long"/>
+            
+      <xs:element minOccurs="0" name="idStatoPolizza" type="statoPolizzaDTO"/>
+            
+      <xs:element minOccurs="0" name="idTipoPolizza" type="tipoPolizzaDTO"/>
+            
+      <xs:element minOccurs="0" name="note" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="numPolizza" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="utenteC" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="statoPolizzaDTO">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="dsStatoPolizza" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dtFine" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dtInizio" type="xs:string"/>
+            
+      <xs:element name="idStatoPolizza" type="xs:long"/>
+            
+      <xs:element minOccurs="0" name="utenteC" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="utenteDTO">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="codiceFiscale" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="cognome" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dataNascita" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="nome" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+  
+</xs:schema>
