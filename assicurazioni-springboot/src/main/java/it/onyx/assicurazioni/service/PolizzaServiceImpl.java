@@ -14,7 +14,9 @@ import it.onyx.assicurazioni.util.StatoPolizzaMapper;
 import it.onyx.assicurazioni.util.TipoPolizzaMapper;
 import jakarta.transaction.Transactional;
 import onyx.classi.generated.DtoCittadino;
+import onyx.classi.generated.VeicoloDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -208,5 +211,46 @@ public class PolizzaServiceImpl implements PolizzaService {
         if (!dtoCittadino.getDataNascitaDto().equals(dto.getContraente().getDtNascita().toString())) {
             throw new Exception("Data di nascita non valida");
         }
+        if (dto.getTipoPolizza().getIdTipoPolizza() == 2) { //se entra qua sta in RCA
+            String urlgetAllTelai = "http://192.168.1.32:8282/veicoloCitt/getAllTelaiDiCitt?codiceFiscale=" + dto.getContraente().getCf();
+            ParameterizedTypeReference<List<String>> responseListString = new ParameterizedTypeReference<List<String>>() {};
+            ResponseEntity<List<String>> responseAllTelai = restTemplate.exchange(
+                    urlgetAllTelai,
+                    HttpMethod.GET,
+                    listaHeaders,
+                    responseListString
+            );
+            List<String> telai = responseAllTelai.getBody();
+            if (telai == null) {
+                throw new Exception("Ritornata lista di telai nulla");
+            }
+            //da qui mi serve il metodo di marim
+
+            //continua i controlli e i vari set
+            Polizza result = new Polizza();
+            Polizza controlloClasse = polizzaRepository.getAllByCd(dto.getCdIntestatario());    //aggiungi un controllo che vede se ha proprio una polizza
+            //se non ce l'ha devo fare una query che prende l'ultimo elemento e aumento il suo id di 1
+            result.setId(new PolizzaEmbeddedId(controlloClasse.getId().getIdPolizza(), LocalDate.now()));
+            if (LocalDate.now().isBefore(controlloClasse.getDtFine().minusYears(2))) {
+                result.setIdClasse(controlloClasse.getIdClasse());
+            } else {
+                result.setIdClasse(classeRepository.findById(14L).get());
+            }
+            result.setIdTipoPolizza(tipoPolizzaRepository.findById(dto.getTipoPolizza().getIdTipoPolizza()).get());
+            result.setCdIntestatario(dto.getCdIntestatario());
+            result.setIdStatoPolizza(statoPolizzaRepository.findById(4L).get());
+            result.setDtInizio(controlloClasse.getDtFine().plusDays(1));
+            result.setDtFine(result.getDtInizio().plusYears(1));
+            result.setNote("Polizza RCA Standard");
+            result.setUtenteC(UserContext.getUtente().getCodiceFiscale());
+            result.setCombinato();
+            return PolizzaMapper.toDto(result);
+        } else if (dto.getTipoPolizza().getIdTipoPolizza() == 1) {
+            if (Period.between(LocalDate.parse(dtoCittadino.getDataNascitaDto()), LocalDate.now()).getYears() > 14 && dtoCittadino.getIdStatoCittadinoDto() != 2) {
+                Polizza result = new Polizza();
+
+            }
+        }
+        return null;
     }
 }

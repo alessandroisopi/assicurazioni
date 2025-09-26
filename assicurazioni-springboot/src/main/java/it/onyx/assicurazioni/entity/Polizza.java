@@ -136,4 +136,8 @@ public class Polizza {
     public void setUtenteC(String utenteC) {
         this.utenteC = utenteC;
     }
+
+    public void setCombinato() {
+        this.numPolizza = this.cdIntestatario + "|" + this.idTipoPolizza.getIdTipoPolizza();
+    }
 }
