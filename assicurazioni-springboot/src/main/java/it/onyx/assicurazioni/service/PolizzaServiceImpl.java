@@ -361,13 +361,15 @@ public class PolizzaServiceImpl implements PolizzaService {
 
     private static DtoCittadino getDtoCittadino(PolizzaInsert dto, ResponseEntity<DtoCittadino> responseCittadino) throws Exception {
         DtoCittadino dtoCittadino = responseCittadino.getBody();
-        //controlla che il
+        //controlla se il cittadino è nullo
         if  (dtoCittadino == null) {
             throw new Exception("Ritornato un cittadino nullo");
         }
+        //controlla se il nome corrisponde
         if  (!dtoCittadino.getNomeCittadinoDto().equals(dto.getContraente().getNome())) {
             throw new Exception("Nome non valido");
         }
+        //controlla il cognome
         if (!dtoCittadino.getCognomeCittadinoDto().equals(dto.getContraente().getCognome())) {
             throw new Exception("Cognome non valido");
         }
