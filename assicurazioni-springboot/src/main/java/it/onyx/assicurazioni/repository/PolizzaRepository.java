@@ -23,4 +23,7 @@ public interface PolizzaRepository extends JpaRepository<Polizza, PolizzaEmbedde
 
     @Query(nativeQuery = true, value = "SELECT * FROM POLIZZA WHERE CD_INTESTATARIO = :cd and DT_INSERIMENTO = (SELECT MAX(DT_INSERIMENTO) FROM POLIZZA WHERE CD_INTESTATARIO = :cd)")
     Polizza getAllByCd(@Param("cd")  String cd);
+
+    @Query(nativeQuery = true, value = "SELECT MAX(ID_POLIZZA) FROM POLIZZA")
+    long countMax();
 }
