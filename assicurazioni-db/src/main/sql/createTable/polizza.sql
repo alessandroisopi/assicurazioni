@@ -1,6 +1,6 @@
 CREATE TABLE POLIZZA (
     ID_POLIZZA NUMBER NOT NULL, --identificativo polizza
-    DT_INSERIMENTO DATE NOT NULL, --data inserimento
+    DT_INSERIMENTO TIMESTAMP NOT NULL, --data e ora inserimento
     ID_TIPO_POLIZZA NUMBER NOT NULL,    --identificativo tipo polizza
     ID_CLASSE NUMBER NOT NULL,  --identificativo classe polizza
     CD_INTESTATARIO VARCHAR2(64) NOT NULL,    --codice intestatario polizza
@@ -13,7 +13,7 @@ CREATE TABLE POLIZZA (
 );
 
 COMMENT ON COLUMN POLIZZA.ID_POLIZZA IS 'identificativo polizza';
-COMMENT ON COLUMN POLIZZA.DT_INSERIMENTO IS 'data inserimento';
+COMMENT ON COLUMN POLIZZA.DT_INSERIMENTO IS 'data e ora inserimento';
 COMMENT ON COLUMN POLIZZA.ID_TIPO_POLIZZA IS 'identificativo tipo polizza';
 COMMENT ON COLUMN POLIZZA.ID_CLASSE IS 'identificativo classe polizza';
 COMMENT ON COLUMN POLIZZA.CD_INTESTATARIO IS 'codice intestatario polizza';
