@@ -158,7 +158,7 @@ public class PolizzaServiceImpl implements PolizzaService {
     }
 
     @Override
-    public boolean delete(long idPolizza, LocalDate dtInserimento) {
+    public boolean delete(long idPolizza, LocalDateTime dtInserimento) {
         try {
             PolizzaEmbeddedId id = new PolizzaEmbeddedId(idPolizza, dtInserimento); //viene creato direttamente l'oggetto della chiave composta per comodità
             if (polizzaRepository.existsById(id)) { //controlla l'esistenza
