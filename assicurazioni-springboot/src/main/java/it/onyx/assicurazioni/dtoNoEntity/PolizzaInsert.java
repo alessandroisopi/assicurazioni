@@ -1,8 +1,6 @@
 package it.onyx.assicurazioni.dtoNoEntity;
 
 import it.onyx.assicurazioni.dto.TipoPolizzaDTO;
-import it.onyx.assicurazioni.entity.Polizza;
-import it.onyx.assicurazioni.repository.PolizzaRepository;
 
 public class PolizzaInsert {
 

@@ -2,7 +2,6 @@ package it.onyx.assicurazioni.adapter;
 
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 

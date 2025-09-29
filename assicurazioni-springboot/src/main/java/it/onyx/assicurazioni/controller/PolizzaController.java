@@ -1,6 +1,7 @@
 package it.onyx.assicurazioni.controller;
 
 import it.onyx.assicurazioni.dto.PolizzaDTO;
+import it.onyx.assicurazioni.dtoNoEntity.PolizzaInsert;
 import it.onyx.assicurazioni.groupvalidator.OnCreate;
 import it.onyx.assicurazioni.groupvalidator.OnUpdate;
 import it.onyx.assicurazioni.service.PolizzaService;
@@ -11,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -77,5 +78,10 @@ public class PolizzaController {
             return ResponseEntity.status(HttpStatus.OK).body(true);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
+    }
+
+    @PostMapping(path = "/insert", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<PolizzaDTO> insertControllata(@RequestBody PolizzaInsert dto) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(polizzaService.insertControllata(dto));
     }
 }

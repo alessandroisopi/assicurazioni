@@ -14,21 +14,23 @@ import it.onyx.assicurazioni.util.StatoPolizzaMapper;
 import it.onyx.assicurazioni.util.TipoPolizzaMapper;
 import jakarta.transaction.Transactional;
 import onyx.classi.generated.DtoCittadino;
-import onyx.classi.generated.VeicoloDTO;
+import onyx.classi.generated.ImmatricolatoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 @Service
 @Transactional
@@ -47,6 +49,12 @@ public class PolizzaServiceImpl implements PolizzaService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Value("${url.persone}")
+    private String persone;
+
+    @Value("${url.registro}")
+    private String registro;
 
     @Override
     public PolizzaDTO insert(PolizzaDTO dto) {
@@ -185,7 +193,7 @@ public class PolizzaServiceImpl implements PolizzaService {
 
     @Override
     public PolizzaDTO insertControllata(PolizzaInsert dto) throws Exception {
-        String urlGetCittadinoByCf = "http://192.168.1.32:8282/persona/cittadinoByCf/" + dto.getContraente().getCf();
+        String urlGetCittadinoByCf = persone + "persona/cittadinoByCf/" + dto.getContraente().getCf();
         HttpHeaders headers = new HttpHeaders();
         headers.set("nome", UserContext.getUtente().getNome());
         headers.set("cognome", UserContext.getUtente().getCognome());
@@ -212,8 +220,8 @@ public class PolizzaServiceImpl implements PolizzaService {
             throw new Exception("Data di nascita non valida");
         }
         if (dto.getTipoPolizza().getIdTipoPolizza() == 2) { //se entra qua sta in RCA
-            String urlgetAllTelai = "http://192.168.1.32:8282/veicoloCitt/getAllTelaiDiCitt?codiceFiscale=" + dto.getContraente().getCf();
-            ParameterizedTypeReference<List<String>> responseListString = new ParameterizedTypeReference<List<String>>() {};
+            String urlgetAllTelai = persone + "veicoloCitt/getAllTelaiDiCitt?codiceFiscale=" + dto.getContraente().getCf();
+            ParameterizedTypeReference<List<String>> responseListString = new ParameterizedTypeReference<>() {};
             ResponseEntity<List<String>> responseAllTelai = restTemplate.exchange(
                     urlgetAllTelai,
                     HttpMethod.GET,
@@ -226,24 +234,79 @@ public class PolizzaServiceImpl implements PolizzaService {
             }
             //da qui mi serve il metodo di marim
 
+            boolean controlloVeicolo = false;
+            ParameterizedTypeReference<List<ImmatricolatoDTO>> responseListImmatricolato = new ParameterizedTypeReference<>() {};
+            for (String telaio : telai) {
+                String urlgetImmatricolatoByTelaio = registro + "immatricolato/telaio/" + telaio;
+                ResponseEntity<List<ImmatricolatoDTO>> responseImmatricolato = null;
+                try {
+                    responseImmatricolato = restTemplate.exchange(
+                      urlgetImmatricolatoByTelaio,
+                      HttpMethod.GET,
+                      listaHeaders,
+                      responseListImmatricolato
+                    );
+                } catch (RestClientException e) {
+                    System.err.println(e.getMessage());
+                }
+                if (responseImmatricolato != null) {
+                    if (responseImmatricolato.getBody() != null) {
+                        for (ImmatricolatoDTO immatricolatoDTO : responseImmatricolato.getBody()) {
+                            if (immatricolatoDTO.getDsTarga().equals(dto.getCdIntestatario())) {
+                                controlloVeicolo = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (controlloVeicolo) {
+                    break;
+                }
+            }
+
+            if (!controlloVeicolo) {
+                throw new Exception("La targa non è associata alla persone con questo codice fiscale");
+            }
             //continua i controlli e i vari set
             Polizza result = new Polizza();
-            Polizza controlloClasse = polizzaRepository.getAllByCd(dto.getCdIntestatario());    //aggiungi un controllo che vede se ha proprio una polizza
-            //se non ce l'ha devo fare una query che prende l'ultimo elemento e aumento il suo id di 1
-            result.setId(new PolizzaEmbeddedId(controlloClasse.getId().getIdPolizza(), LocalDate.now()));
-            if (LocalDate.now().isBefore(controlloClasse.getDtFine().minusYears(2))) {
-                result.setIdClasse(controlloClasse.getIdClasse());
+            Polizza controlloClasse = polizzaRepository.getAllByCd(dto.getCdIntestatario());
+            if (controlloClasse == null) {
+                long idMax = polizzaRepository.countMax();
+                result.setId(new PolizzaEmbeddedId(idMax + 1, LocalDateTime.now()));
+                if (classeRepository.findById(14L).isPresent()) {
+                    result.setIdClasse(classeRepository.findById(14L).get());
+                } else {
+                    throw new Exception("Errore inserimento classe");
+                }
+                result.setDtInizio(LocalDate.now());
             } else {
-                result.setIdClasse(classeRepository.findById(14L).get());
+                result.setId(new PolizzaEmbeddedId(controlloClasse.getId().getIdPolizza(), LocalDateTime.now()));
+                if (LocalDate.now().isBefore(controlloClasse.getDtFine().minusYears(2))) {
+                    result.setIdClasse(controlloClasse.getIdClasse());
+                } else {
+                    if (classeRepository.findById(14L).isPresent()) {
+                        result.setIdClasse(classeRepository.findById(14L).get());
+                    } else {
+                        throw new Exception("Errore inserimento classe");
+                    }
+                }
+                result.setDtInizio(controlloClasse.getDtFine().plusDays(1));
+            }
+
+            if (tipoPolizzaRepository.findById(dto.getTipoPolizza().getIdTipoPolizza()).isEmpty()) {
+                throw new  Exception("Errore inserimento tipo polizza");
             }
             result.setIdTipoPolizza(tipoPolizzaRepository.findById(dto.getTipoPolizza().getIdTipoPolizza()).get());
             result.setCdIntestatario(dto.getCdIntestatario());
+            if (statoPolizzaRepository.findById(4L).isEmpty()) {
+                throw new Exception("Errore inserimento stato polizza");
+            }
             result.setIdStatoPolizza(statoPolizzaRepository.findById(4L).get());
-            result.setDtInizio(controlloClasse.getDtFine().plusDays(1));
             result.setDtFine(result.getDtInizio().plusYears(1));
             result.setNote("Polizza RCA Standard");
             result.setUtenteC(UserContext.getUtente().getCodiceFiscale());
             result.setCombinato();
+            polizzaRepository.save(result);
             return PolizzaMapper.toDto(result);
         } else if (dto.getTipoPolizza().getIdTipoPolizza() == 1) {
             if (Period.between(LocalDate.parse(dtoCittadino.getDataNascitaDto()), LocalDate.now()).getYears() > 14 && dtoCittadino.getIdStatoCittadinoDto() != 2) {

@@ -3,7 +3,6 @@ package it.onyx.assicurazioni.service;
 import it.onyx.assicurazioni.dto.PolizzaDTO;
 import it.onyx.assicurazioni.dtoNoEntity.PolizzaInsert;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
