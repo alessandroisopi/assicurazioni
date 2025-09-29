@@ -18,6 +18,9 @@ public class PolizzaInsert {
         this.cdIntestatario = cdIntestatario;
     }
 
+    public PolizzaInsert() {
+    }
+
     public Contraente getContraente() {
         return contraente;
     }

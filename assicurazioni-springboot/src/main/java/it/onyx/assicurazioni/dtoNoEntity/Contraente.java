@@ -19,6 +19,9 @@ public class Contraente {
         this.dtNascita = dtNascita;
     }
 
+    public Contraente() {
+    }
+
     public String getNome() {
         return nome;
     }
