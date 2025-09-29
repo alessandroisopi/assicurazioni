@@ -1,6 +1,7 @@
 package it.onyx.assicurazioni.dto;
 
 import it.onyx.assicurazioni.adapter.LocalDateAdapter;
+import it.onyx.assicurazioni.adapter.LocalDateTimeAdapter;
 import it.onyx.assicurazioni.groupvalidator.OnCreate;
 import it.onyx.assicurazioni.groupvalidator.OnUpdate;
 import jakarta.validation.constraints.Min;
@@ -9,6 +10,7 @@ import jakarta.validation.constraints.Null;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class PolizzaDTO {
 
@@ -16,7 +18,7 @@ public class PolizzaDTO {
     @NotNull(message = "il valore non può essere nullo", groups = {OnUpdate.class, OnCreate.class})
     private long idPolizza;
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class, OnUpdate.class})
-    private LocalDate dtInserimento;
+    private LocalDateTime dtInserimento;
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
     private TipoPolizzaDTO idTipoPolizza;
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
@@ -37,7 +39,7 @@ public class PolizzaDTO {
 
     public PolizzaDTO() {}
 
-    public PolizzaDTO(long idPolizza, LocalDate dtInserimento, TipoPolizzaDTO idTipoPolizza, ClasseDTO idClasse, String cdIntestatario, StatoPolizzaDTO idStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
+    public PolizzaDTO(long idPolizza, LocalDateTime dtInserimento, TipoPolizzaDTO idTipoPolizza, ClasseDTO idClasse, String cdIntestatario, StatoPolizzaDTO idStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
         this.idPolizza = idPolizza;
         this.dtInserimento = dtInserimento;
         this.idTipoPolizza = idTipoPolizza;
@@ -50,7 +52,7 @@ public class PolizzaDTO {
         this.note = note;
     }
 
-    public PolizzaDTO(long idPolizza, LocalDate dtInserimento, TipoPolizzaDTO idTipoPolizza, ClasseDTO idClasse, String cdIntestatario, StatoPolizzaDTO idStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String note, String utenteC) {
+    public PolizzaDTO(long idPolizza, LocalDateTime dtInserimento, TipoPolizzaDTO idTipoPolizza, ClasseDTO idClasse, String cdIntestatario, StatoPolizzaDTO idStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String note, String utenteC) {
         this.idPolizza = idPolizza;
         this.dtInserimento = dtInserimento;
         this.idTipoPolizza = idTipoPolizza;
@@ -72,12 +74,12 @@ public class PolizzaDTO {
         this.idPolizza = idPolizza;
     }
 
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    public LocalDate getDtInserimento() {
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    public LocalDateTime getDtInserimento() {
         return dtInserimento;
     }
 
-    public void setDtInserimento(LocalDate dtInserimento) {
+    public void setDtInserimento(LocalDateTime dtInserimento) {
         this.dtInserimento = dtInserimento;
     }
 

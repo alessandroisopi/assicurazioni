@@ -3,6 +3,7 @@ package it.onyx.assicurazioni.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "POLIZZA")
@@ -44,7 +45,7 @@ public class Polizza {
     public Polizza() {
     }
 
-    public Polizza(long idPolizza, LocalDate dtInserimento, TipoPolizza idTipoPolizza, Classe idClasse, String cdIntestatario, StatoPolizza idStatoPolizza, String numPolizza, LocalDate dtInizio, LocalDate dtFine, String note, String utenteC) {
+    public Polizza(long idPolizza, LocalDateTime dtInserimento, TipoPolizza idTipoPolizza, Classe idClasse, String cdIntestatario, StatoPolizza idStatoPolizza, String numPolizza, LocalDate dtInizio, LocalDate dtFine, String note, String utenteC) {
         this.idTipoPolizza = idTipoPolizza;
         this.idClasse = idClasse;
         this.cdIntestatario = cdIntestatario;
