@@ -342,7 +342,7 @@ public class PolizzaServiceImpl implements PolizzaService {
             result.setDtFine(result.getDtInizio().plusYears(1));
             //imposta la nota di base
             result.setNote("Polizza RCA Standard");
-            //imposta chi ha effetuato le modifiche
+            //imposta chi ha effettuato le modifiche
             result.setUtenteC(UserContext.getUtente().getCodiceFiscale());
             //imposta il numero della polizza
             result.setCombinato();
@@ -351,12 +351,43 @@ public class PolizzaServiceImpl implements PolizzaService {
             //ritorna l'oggetto completo
             return PolizzaMapper.toDto(result);
         } else if (dto.getTipoPolizza().getIdTipoPolizza() == 1) {
+            //controlla se il cittadino ha più di 14 anni ed è vivo
             if (Period.between(LocalDate.parse(dtoCittadino.getDataNascitaDto()), LocalDate.now()).getYears() > 14 && dtoCittadino.getIdStatoCittadinoDto() != 2) {
                 Polizza result = new Polizza();
-
+                long idMax = polizzaRepository.countMax();
+                //imposta l'id ma molto probabilmente andrà modificato
+                result.setId(new PolizzaEmbeddedId(idMax + 1, LocalDateTime.now()));
+                //imposta il tipo polizza come polizza vita
+                result.setIdTipoPolizza(tipoPolizzaRepository.findById(dto.getTipoPolizza().getIdTipoPolizza()).get());
+                //imposta la classe come prima temporaneamente
+                if (classeRepository.findById(1L).isEmpty()) {
+                    throw new Exception("Errore inserimento classe");
+                }
+                result.setIdClasse(classeRepository.findById(1L).get());
+                //controlla se l'intestatario è coerente con il contraente e lo imposta
+                if (!dto.getCdIntestatario().equals(dtoCittadino.getCodiceFiscaleDto())) {
+                    throw new Exception("Errore codice fiscale tra contraente e intestatario");
+                }
+                result.setCdIntestatario(dto.getCdIntestatario());
+                //imposta lo stato come da pagare
+                result.setIdStatoPolizza(statoPolizzaRepository.findById(4L).get());
+                //imposta la data di inizio a oggi
+                result.setDtInizio(LocalDate.now());
+                //imposta la data di fine dopo un anno di quella di inizio
+                result.setDtFine(result.getDtInizio().plusYears(1));
+                //imposta la nota standard
+                result.setNote("Polizza Vita Standard");
+                //imposta l'utente che ha effettuato questa insert
+                result.setUtenteC(UserContext.getUtente().getCodiceFiscale());
+                //imposta il numero della polizza
+                result.setCombinato();
+                polizzaRepository.save(result);
+                return PolizzaMapper.toDto(result);
             }
+        } else {
+            throw new  Exception("Tipo di polizza non gestita in questo servizio");
         }
-        return null;
+        throw new Exception("Errore inserimento polizza");
     }
 
     private static DtoCittadino getDtoCittadino(PolizzaInsert dto, ResponseEntity<DtoCittadino> responseCittadino) throws Exception {
