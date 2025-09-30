@@ -17,7 +17,7 @@
             
       <xs:element minOccurs="0" name="idComuneNascitaDto" type="dtoComune"/>
             
-      <xs:element minOccurs="0" name="idStatoCittadinoDto" type="xs:int"/>
+      <xs:element minOccurs="0" name="idStatoCittadinoDto" type="dtoStatoCittadino"/>
             
       <xs:element minOccurs="0" name="nomeCittadinoDto" type="xs:string"/>
             
@@ -69,6 +69,20 @@
       
   </xs:complexType>
     
+  <xs:complexType name="dtoStatoCittadino">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="descrizioneDto" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="idStatoCittadinoDto" type="xs:int"/>
+            
+      <xs:element minOccurs="0" name="utenteCDto" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
   <xs:complexType name="dtoContatto">
         
     <xs:sequence>
@@ -111,6 +125,18 @@
       
   </xs:complexType>
     
+  <xs:complexType name="dtoRegistroAuto">
+        
+    <xs:sequence>
+            
+      <xs:element name="immatricolato" type="xs:boolean"/>
+            
+      <xs:element minOccurs="0" name="targa" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
   <xs:complexType name="dtoVeicoloCittadino">
         
     <xs:sequence>
@@ -124,6 +150,26 @@
       <xs:element minOccurs="0" name="numTelaioDto" type="xs:string"/>
             
       <xs:element minOccurs="0" name="utenteCDto" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="dtoImmatricolato">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="veicolo" type="dtoVeicolo"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="dtoVeicolo">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="numTelaio" type="xs:string"/>
           
     </xs:sequence>
       

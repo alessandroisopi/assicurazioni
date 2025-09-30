@@ -210,12 +210,8 @@ public class PolizzaServiceImpl implements PolizzaService {
           listaHeaders,
           DtoCittadino.class
         );
-        //ottiene il risultato
+        //ottiene il risultato ed effettua controlli
         DtoCittadino dtoCittadino = getDtoCittadino(dto, responseCittadino);
-        //controlla se ci sono stati risultati altrimenti lancia un eccezione
-        if (!dtoCittadino.getDataNascitaDto().equals(dto.getContraente().getDtNascita().toString())) {
-            throw new Exception("Data di nascita non valida");
-        }
         //controlla se la polizza si tratta di RCA(2) o sulla vita(1)
         if (dto.getTipoPolizza().getIdTipoPolizza() == 2) {
             //recupera tutti i telai di una persona tramite codice fiscale con il servizio di persone
@@ -403,6 +399,10 @@ public class PolizzaServiceImpl implements PolizzaService {
         //controlla il cognome
         if (!dtoCittadino.getCognomeCittadinoDto().equals(dto.getContraente().getCognome())) {
             throw new Exception("Cognome non valido");
+        }
+        //controlla se ci sono stati risultati altrimenti lancia un eccezione
+        if (!dtoCittadino.getDataNascitaDto().equals(dto.getContraente().getDtNascita().toString())) {
+            throw new Exception("Data di nascita non valida");
         }
         return dtoCittadino;
     }
