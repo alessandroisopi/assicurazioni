@@ -18,6 +18,8 @@ import onyx.classi.generated.ImmatricolatoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -384,6 +386,22 @@ public class PolizzaServiceImpl implements PolizzaService {
             throw new  Exception("Tipo di polizza non gestita in questo servizio");
         }
         throw new Exception("Errore inserimento polizza");
+    }
+
+    @Override
+    public List<PolizzaDTO> getByParams(PolizzaDTO dto) {
+        //creato example matcher per ignorare embedded id
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withIgnoreNullValues()
+                .withIgnorePaths("id.idPolizza", "id.dtInserimento");
+        //crea example per la findAll
+        Example<Polizza> example = Example.of(PolizzaMapper.toEntity(dto), matcher);
+        List<PolizzaDTO> result = new ArrayList<>();
+        for (Polizza p : polizzaRepository.findAll(example)) {
+            result.add(PolizzaMapper.toDto(p));
+        }
+
+        return result;
     }
 
     private static DtoCittadino getDtoCittadino(PolizzaInsert dto, ResponseEntity<DtoCittadino> responseCittadino) throws Exception {
