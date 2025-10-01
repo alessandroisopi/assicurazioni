@@ -28,9 +28,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -400,7 +404,9 @@ public class PolizzaServiceImpl implements PolizzaService {
         for (Polizza p : polizzaRepository.findAll(example)) {
             result.add(PolizzaMapper.toDto(p));
         }
-
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
+        String path = "assicurazioni-springboot/src/main/resources/risultati_csv/" + timestamp + "-ResultGetByParams.csv";
+        writeCSV(result, path);
         return result;
     }
 
@@ -423,5 +429,33 @@ public class PolizzaServiceImpl implements PolizzaService {
             throw new Exception("Data di nascita non valida");
         }
         return dtoCittadino;
+    }
+
+    private void writeCSV(List<PolizzaDTO> polizze, String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            file.getParentFile().mkdirs();
+        }
+        try (FileWriter writer = new FileWriter(filePath)) {
+
+            writer.append("idPolizza,dtInserimento,idTipoPolizza,idClasse,cdIntestatario,idStatoPolizza,numPolizza,dtInizio,dtFine,note,utenteC\n");
+
+            for (PolizzaDTO p : polizze) {
+                writer.append(String.valueOf(p.getIdPolizza())).append(",");
+                writer.append(p.getDtInserimento().toString()).append(",");
+                writer.append(String.valueOf(p.getIdTipoPolizza().getIdTipoPolizza())).append(",");
+                writer.append(String.valueOf(p.getIdClasse().getIdClasse())).append(",");
+                writer.append(p.getCdIntestatario()).append(",");
+                writer.append(String.valueOf(p.getIdStatoPolizza().getIdStatoPolizza())).append(",");
+                writer.append(p.getNumPolizza()).append(",");
+                writer.append(p.getDtInizio().toString()).append(",");
+                writer.append(p.getDtFine().toString()).append(",");
+                writer.append(p.getNote()).append(",");
+                writer.append(p.getUtenteC()).append("\n");
+            }
+        } catch (IOException e) {
+            System.err.println("Errore scrittura file csv");
+            System.err.println(e.getMessage());
+        }
     }
 }
