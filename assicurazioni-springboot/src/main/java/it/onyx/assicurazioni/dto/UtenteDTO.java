@@ -1,5 +1,8 @@
 package it.onyx.assicurazioni.dto;
 
+import it.onyx.assicurazioni.adapter.LocalDateAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import java.time.LocalDate;
 
 public class UtenteDTO {
@@ -43,6 +46,7 @@ public class UtenteDTO {
         this.cognome = cognome;
     }
 
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     public LocalDate getDataNascita() {
         return dataNascita;
     }

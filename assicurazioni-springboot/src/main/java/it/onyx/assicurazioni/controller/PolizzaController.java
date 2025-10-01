@@ -1,6 +1,7 @@
 package it.onyx.assicurazioni.controller;
 
 import it.onyx.assicurazioni.dto.PolizzaDTO;
+import it.onyx.assicurazioni.dtoNoEntity.PolizzaInsert;
 import it.onyx.assicurazioni.groupvalidator.OnCreate;
 import it.onyx.assicurazioni.groupvalidator.OnUpdate;
 import it.onyx.assicurazioni.service.PolizzaService;
@@ -11,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -62,12 +63,25 @@ public class PolizzaController {
     }
 
     @DeleteMapping(path = "/{id}/{dtInserimento}", produces = "application/json")
-    public ResponseEntity<Void> delete(@PathVariable("id") long id,@PathVariable("dtInserimento") @DateTimeFormat LocalDate dtInserimento) {
+    public ResponseEntity<Void> delete(@PathVariable("id") long id,@PathVariable("dtInserimento") @DateTimeFormat LocalDateTime dtInserimento) {
         boolean result = polizzaService.delete(id, dtInserimento);  //esegue la delete
         if (result) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();    //se torna true la delete è andata bene e torna lo stato no content
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();     //se non trova l'oggetto da eliminare torna lo stato not found
         }
+    }
+
+    @GetMapping(path = "/verificaStatoPolizza/{cd}")
+    public ResponseEntity<Boolean> verificaStatoPolizza(@PathVariable("cd") String cd) {
+        if (polizzaService.verificaStatoPolizza(cd)) {
+            return ResponseEntity.status(HttpStatus.OK).body(true);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
+    }
+
+    @PostMapping(path = "/insert", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<PolizzaDTO> insertControllata(@RequestBody PolizzaInsert dto) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(polizzaService.insertControllata(dto));
     }
 }

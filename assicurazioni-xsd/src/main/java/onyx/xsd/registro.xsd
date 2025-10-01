@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0">
+    
+  <xs:complexType name="esitoRevisioneDTO">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="dsEsitoRevisione" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dtFine" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dtinizio" type="xs:string"/>
+            
+      <xs:element name="idEsitoRevisione" type="xs:int"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="immatricolatoDTO">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="dsTarga" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dtFine" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dtInizio" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dtInsert" type="xs:string"/>
+            
+      <xs:element name="idImmatricolazione" type="xs:int"/>
+            
+      <xs:element minOccurs="0" name="idVeicolo" type="xs:int"/>
+            
+      <xs:element minOccurs="0" name="proprietario" type="proprietarioDTO"/>
+            
+      <xs:element minOccurs="0" name="utenteC" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="veicolo" type="veicoloDTO"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="proprietarioDTO">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="cf" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="veicoloDTO">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="dtInserimento" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="idMarca" type="marcaDTO"/>
+            
+      <xs:element minOccurs="0" name="idModello" type="modelloDTO"/>
+            
+      <xs:element name="idVeicolo" type="xs:int"/>
+            
+      <xs:element minOccurs="0" name="telaio" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="tipoVeicoloDTO" type="tipoVeicoloDTO"/>
+            
+      <xs:element minOccurs="0" name="utenteC" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="marcaDTO">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="dscMarca" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dtFine" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dtInizio" type="xs:string"/>
+            
+      <xs:element name="idMarca" type="xs:int"/>
+            
+      <xs:element minOccurs="0" name="utenteC" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="modelloDTO">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="dsModello" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dtFine" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dtInizio" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="idMarca" type="marcaDTO"/>
+            
+      <xs:element name="idModello" type="xs:int"/>
+            
+      <xs:element minOccurs="0" name="utenteC" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="tipoVeicoloDTO">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="dsTipoVeicolo" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dtFine" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="dtInizio" type="xs:string"/>
+            
+      <xs:element name="idTipoVeicolo" type="xs:int"/>
+            
+      <xs:element minOccurs="0" name="utenteC" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="revisioneDTO">
+        
+    <xs:complexContent>
+            
+      <xs:extension base="userEntity">
+                
+        <xs:sequence>
+                    
+          <xs:element minOccurs="0" name="dtRevisione" type="xs:string"/>
+                    
+          <xs:element minOccurs="0" name="dtScadenza" type="xs:string"/>
+                    
+          <xs:element minOccurs="0" name="idEsitoRevisione" type="esitoRevisioneDTO"/>
+                    
+          <xs:element name="idRevisione" type="xs:int"/>
+                    
+          <xs:element minOccurs="0" name="idVeicolo" type="xs:int"/>
+                    
+          <xs:element name="kmPercorsi" type="xs:int"/>
+                    
+          <xs:element minOccurs="0" name="veicolo" type="veicoloDTO"/>
+                  
+        </xs:sequence>
+              
+      </xs:extension>
+          
+    </xs:complexContent>
+      
+  </xs:complexType>
+    
+  <xs:complexType abstract="true" name="userEntity">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="utenteC" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
+  <xs:complexType name="veicoloIDDTO">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="dtInserimento" type="xs:string"/>
+            
+      <xs:element name="idVeicolo" type="xs:int"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+  
+</xs:schema>

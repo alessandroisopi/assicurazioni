@@ -14,12 +14,12 @@ public class UserInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if (request.getHeader("codiceFiscale") != null && request.getHeader("nome") != null && request.getHeader("cognome") != null && request.getHeader("dataNascita") != null) {
+        if (request.getHeader("codFiscale") != null && request.getHeader("nome") != null && request.getHeader("cognome") != null && request.getHeader("dtNascita") != null) {
             Utente utente = new Utente(
-                    request.getHeader("codiceFiscale"),
+                    request.getHeader("codFiscale"),
                     request.getHeader("nome"),
                     request.getHeader("cognome"),
-                    LocalDate.parse(request.getHeader("dataNascita"))
+                    LocalDate.parse(request.getHeader("dtNascita"))
             );
             UserContext.setUtente(utente);
             return true;

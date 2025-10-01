@@ -3,17 +3,17 @@ package it.onyx.assicurazioni.entity;
 import jakarta.persistence.Embeddable;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Embeddable
 public class PolizzaEmbeddedId implements Serializable {
     private long idPolizza;
-    private LocalDate dtInserimento;
+    private LocalDateTime dtInserimento;
 
     public PolizzaEmbeddedId() {
     }
 
-    public PolizzaEmbeddedId(long idPolizza, LocalDate dtInserimento) {
+    public PolizzaEmbeddedId(long idPolizza, LocalDateTime dtInserimento) {
         this.idPolizza = idPolizza;
         this.dtInserimento = dtInserimento;
     }
@@ -26,11 +26,11 @@ public class PolizzaEmbeddedId implements Serializable {
         this.idPolizza = idPolizza;
     }
 
-    public LocalDate getDtInserimento() {
+    public LocalDateTime getDtInserimento() {
         return dtInserimento;
     }
 
-    public void setDtInserimento(LocalDate dtInserimento) {
+    public void setDtInserimento(LocalDateTime dtInserimento) {
         this.dtInserimento = dtInserimento;
     }
 }
