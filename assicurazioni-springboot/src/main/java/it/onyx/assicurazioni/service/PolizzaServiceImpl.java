@@ -408,7 +408,7 @@ public class PolizzaServiceImpl implements PolizzaService {
             result.add(PolizzaMapper.toDto(p));
         }
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
-        String path = "assicurazioni-springboot/src/main/resources/risultati_csv/get/" + timestamp + "-ResultGetByParams.xlsx";
+        String path = "assicurazioni-springboot/src/main/resources/risultati/get/" + timestamp + "-ResultGetByParams.xlsx";
         writeExcel(result, path);
         return result;
     }
