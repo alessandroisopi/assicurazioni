@@ -15,9 +15,15 @@ import it.onyx.assicurazioni.util.TipoPolizzaMapper;
 import jakarta.transaction.Transactional;
 import onyx.classi.generated.DtoCittadino;
 import onyx.classi.generated.ImmatricolatoDTO;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -26,9 +32,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -348,7 +357,7 @@ public class PolizzaServiceImpl implements PolizzaService {
             return PolizzaMapper.toDto(result);
         } else if (dto.getTipoPolizza().getIdTipoPolizza() == 1) {
             //controlla se il cittadino ha più di 14 anni ed è vivo
-            if (Period.between(LocalDate.parse(dtoCittadino.getDataNascitaDto()), LocalDate.now()).getYears() > 14 && dtoCittadino.getIdStatoCittadinoDto() != 2) {
+            if (Period.between(LocalDate.parse(dtoCittadino.getDataNascitaDto()), LocalDate.now()).getYears() > 14 && dtoCittadino.getIdStatoCittadinoDto().getIdStatoCittadinoDto() != 2) {
                 Polizza result = new Polizza();
                 long idMax = polizzaRepository.countMax();
                 //imposta l'id ma molto probabilmente andrà modificato
@@ -386,6 +395,24 @@ public class PolizzaServiceImpl implements PolizzaService {
         throw new Exception("Errore inserimento polizza");
     }
 
+    @Override
+    public List<PolizzaDTO> getByParams(PolizzaDTO dto) {
+        //creato example matcher per ignorare embedded id
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withIgnoreNullValues()
+                .withIgnorePaths("id.idPolizza", "id.dtInserimento");
+        //crea example per la findAll
+        Example<Polizza> example = Example.of(PolizzaMapper.toEntity(dto), matcher);
+        List<PolizzaDTO> result = new ArrayList<>();
+        for (Polizza p : polizzaRepository.findAll(example)) {
+            result.add(PolizzaMapper.toDto(p));
+        }
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
+        String path = "assicurazioni-springboot/src/main/resources/risultati_csv/get/" + timestamp + "-ResultGetByParams.xlsx";
+        writeExcel(result, path);
+        return result;
+    }
+
     private static DtoCittadino getDtoCittadino(PolizzaInsert dto, ResponseEntity<DtoCittadino> responseCittadino) throws Exception {
         DtoCittadino dtoCittadino = responseCittadino.getBody();
         //controlla se il cittadino è nullo
@@ -406,4 +433,50 @@ public class PolizzaServiceImpl implements PolizzaService {
         }
         return dtoCittadino;
     }
+
+    private void writeExcel(List<PolizzaDTO> polizze, String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            file.getParentFile().mkdirs();
+        }
+
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Polizze");
+
+            // Header
+            Row headerRow = sheet.createRow(0);
+            String[] headers = {
+                    "idPolizza", "dtInserimento", "idTipoPolizza", "idClasse", "cdIntestatario",
+                    "idStatoPolizza", "numPolizza", "dtInizio", "dtFine", "note", "utenteC"
+            };
+
+            for (int i = 0; i < headers.length; i++) {
+                headerRow.createCell(i).setCellValue(headers[i]);
+            }
+
+            int rowIdx = 1;
+            for (PolizzaDTO p : polizze) {
+                Row row = sheet.createRow(rowIdx++);
+
+                row.createCell(0).setCellValue(p.getIdPolizza());
+                row.createCell(1).setCellValue(p.getDtInserimento().toString());
+                row.createCell(2).setCellValue(p.getIdTipoPolizza().getIdTipoPolizza());
+                row.createCell(3).setCellValue(p.getIdClasse().getIdClasse());
+                row.createCell(4).setCellValue(p.getCdIntestatario());
+                row.createCell(5).setCellValue(p.getIdStatoPolizza().getIdStatoPolizza());
+                row.createCell(6).setCellValue(p.getNumPolizza());
+                row.createCell(7).setCellValue(p.getDtInizio().toString());
+                row.createCell(8).setCellValue(p.getDtFine().toString());
+                row.createCell(9).setCellValue(p.getNote());
+                row.createCell(10).setCellValue(p.getUtenteC());
+
+                FileOutputStream fileOut = new FileOutputStream(filePath);
+                workbook.write(fileOut);
+            }
+        } catch (Exception e) {
+            System.err.println("Errore scrittura file Excel");
+            System.err.println(e.getMessage());
+        }
+    }
+
 }

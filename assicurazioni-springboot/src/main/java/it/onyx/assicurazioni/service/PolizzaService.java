@@ -17,4 +17,6 @@ public interface PolizzaService {
     boolean verificaStatoPolizza(String cd); //controlla se il cd intestatario passato è idoneo alla RCA e controlla se è ancora attiva
 
     PolizzaDTO insertControllata(PolizzaInsert dto) throws Exception;
+
+    List<PolizzaDTO> getByParams(PolizzaDTO dto);
 }

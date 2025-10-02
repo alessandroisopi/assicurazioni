@@ -9,3 +9,4 @@ target/
 /assicurazioni-xsd/src/main/java/META-INF/JAXB/
 *.xjb
 /assicurazioni-xsd/src/main/java/onyx/classi/generated/
+/assicurazioni-springboot/src/main/resources/risultati_csv/
