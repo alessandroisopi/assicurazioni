@@ -15,6 +15,10 @@ import it.onyx.assicurazioni.util.TipoPolizzaMapper;
 import jakarta.transaction.Transactional;
 import onyx.classi.generated.DtoCittadino;
 import onyx.classi.generated.ImmatricolatoDTO;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -29,8 +33,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -405,8 +408,8 @@ public class PolizzaServiceImpl implements PolizzaService {
             result.add(PolizzaMapper.toDto(p));
         }
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
-        String path = "assicurazioni-springboot/src/main/resources/risultati_csv/" + timestamp + "-ResultGetByParams.csv";
-        writeCSV(result, path);
+        String path = "assicurazioni-springboot/src/main/resources/risultati_csv/get/" + timestamp + "-ResultGetByParams.xlsx";
+        writeExcel(result, path);
         return result;
     }
 
@@ -431,31 +434,49 @@ public class PolizzaServiceImpl implements PolizzaService {
         return dtoCittadino;
     }
 
-    private void writeCSV(List<PolizzaDTO> polizze, String filePath) {
+    private void writeExcel(List<PolizzaDTO> polizze, String filePath) {
         File file = new File(filePath);
         if (!file.exists()) {
             file.getParentFile().mkdirs();
         }
-        try (FileWriter writer = new FileWriter(filePath)) {
 
-            writer.append("idPolizza,dtInserimento,idTipoPolizza,idClasse,cdIntestatario,idStatoPolizza,numPolizza,dtInizio,dtFine,note,utenteC\n");
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Polizze");
 
-            for (PolizzaDTO p : polizze) {
-                writer.append(String.valueOf(p.getIdPolizza())).append(",");
-                writer.append(p.getDtInserimento().toString()).append(",");
-                writer.append(String.valueOf(p.getIdTipoPolizza().getIdTipoPolizza())).append(",");
-                writer.append(String.valueOf(p.getIdClasse().getIdClasse())).append(",");
-                writer.append(p.getCdIntestatario()).append(",");
-                writer.append(String.valueOf(p.getIdStatoPolizza().getIdStatoPolizza())).append(",");
-                writer.append(p.getNumPolizza()).append(",");
-                writer.append(p.getDtInizio().toString()).append(",");
-                writer.append(p.getDtFine().toString()).append(",");
-                writer.append(p.getNote()).append(",");
-                writer.append(p.getUtenteC()).append("\n");
+            // Header
+            Row headerRow = sheet.createRow(0);
+            String[] headers = {
+                    "idPolizza", "dtInserimento", "idTipoPolizza", "idClasse", "cdIntestatario",
+                    "idStatoPolizza", "numPolizza", "dtInizio", "dtFine", "note", "utenteC"
+            };
+
+            for (int i = 0; i < headers.length; i++) {
+                headerRow.createCell(i).setCellValue(headers[i]);
             }
-        } catch (IOException e) {
-            System.err.println("Errore scrittura file csv");
+
+            int rowIdx = 1;
+            for (PolizzaDTO p : polizze) {
+                Row row = sheet.createRow(rowIdx++);
+
+                row.createCell(0).setCellValue(p.getIdPolizza());
+                row.createCell(1).setCellValue(p.getDtInserimento().toString());
+                row.createCell(2).setCellValue(p.getIdTipoPolizza().getIdTipoPolizza());
+                row.createCell(3).setCellValue(p.getIdClasse().getIdClasse());
+                row.createCell(4).setCellValue(p.getCdIntestatario());
+                row.createCell(5).setCellValue(p.getIdStatoPolizza().getIdStatoPolizza());
+                row.createCell(6).setCellValue(p.getNumPolizza());
+                row.createCell(7).setCellValue(p.getDtInizio().toString());
+                row.createCell(8).setCellValue(p.getDtFine().toString());
+                row.createCell(9).setCellValue(p.getNote());
+                row.createCell(10).setCellValue(p.getUtenteC());
+
+                FileOutputStream fileOut = new FileOutputStream(filePath);
+                workbook.write(fileOut);
+            }
+        } catch (Exception e) {
+            System.err.println("Errore scrittura file Excel");
             System.err.println(e.getMessage());
         }
     }
+
 }
