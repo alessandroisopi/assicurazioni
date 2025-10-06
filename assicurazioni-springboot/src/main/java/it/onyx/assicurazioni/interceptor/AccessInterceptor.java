@@ -13,12 +13,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.HandlerMapping;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
@@ -30,11 +31,10 @@ public class AccessInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         String filePath = "assicurazioni-springboot/src/main/resources/risultati/accessi/accessi.pdf";
         File file = new File(filePath);
+        File outFile = new File(filePath);
         if (!file.exists()) {
             file.createNewFile();
         }
-        PdfDocument pdfDocument = new PdfDocument(new PdfWriter(new FileOutputStream(filePath, true)));
-        Document document = new Document(pdfDocument);
         //inserisce la data del log
         Text logDataText = new Text("Log " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss")) + "\n");
         //inserisce il nome del metodo
@@ -57,6 +57,7 @@ public class AccessInterceptor implements HandlerInterceptor {
         }
 
         //controllo se ci sono path variable
+        @SuppressWarnings("unchecked")
         Map<String, String> pathVars = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
 
         Text pathVarText = null;
@@ -92,7 +93,29 @@ public class AccessInterceptor implements HandlerInterceptor {
         if (bodyText != null) {
             paragraph.add(bodyText);
         }
-        document.add(paragraph);
-        document.close();
+        byte[] addedPdfBytes;
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+             PdfWriter memWriter = new PdfWriter(baos);
+             PdfDocument memPdf = new PdfDocument(memWriter);
+             Document memDoc = new Document(memPdf)) {
+            memDoc.add(paragraph);
+            memDoc.close();
+            addedPdfBytes = baos.toByteArray();
+        }
+
+        File tmpFile = File.createTempFile("accessi-merge-", ".pdf");
+        try (
+                PdfDocument existing = new PdfDocument(new PdfReader(outFile));
+                PdfDocument added = new PdfDocument(new PdfReader(new ByteArrayInputStream(addedPdfBytes)));
+                PdfDocument result = new PdfDocument(new PdfWriter(tmpFile))
+        ) {
+            PdfMerger merger = new PdfMerger(result);
+            merger.merge(existing, 1, existing.getNumberOfPages());
+            merger.merge(added, 1, added.getNumberOfPages());
+        }
+
+        // === Sostituisco in modo sicuro il file originale ===
+        Files.move(tmpFile.toPath(), outFile.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
+
     }
 }
