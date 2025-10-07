@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="it", xmlns:th="http://www.thymeleaf.org">
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"></meta>
     <title>Polizza</title>
 </head>
 <body>
@@ -10,8 +10,8 @@
 
 <h2 class="section-title">Dati Polizza</h2>
 <table>
-    <tr><th>ID Polizza</th><td th:text="${polizza.idPolizza}"></td></tr>
-    <tr><th>Data Inserimento</th><td th:text="${polizza.dtInserimento}"></td></tr>
+    <tr><th>ID Polizza</th><td th:text="${polizza.id.idPolizza}"></td></tr>
+    <tr><th>Data Inserimento</th><td th:text="${polizza.id.dtInserimento}"></td></tr>
     <tr><th>Numero Polizza</th><td th:text="${polizza.numPolizza}"></td></tr>
     <tr><th>Intestatario (Codice)</th><td th:text="${polizza.cdIntestatario}"></td></tr>
     <tr><th>Data Inizio</th><td th:text="${polizza.dtInizio}"></td></tr>
@@ -46,11 +46,11 @@
 
 <h2 class="section-title">Dati Cliente</h2>
 <table>
-    <tr><th>Nome</th><td th:text="${cittadino.nome}"></td></tr>
-    <tr><th>Cognome</th><td th:text="${cittadino.cognome}"></td></tr>
-    <tr><th>Codice Fiscale</th><td th:text="${cittadino.codiceFiscale}"></td></tr>
-    <tr><th>Email</th><td th:text="${cittadino.email}"></td></tr>
-    <tr><th>Telefono</th><td th:text="${cittadino.telefono}"></td></tr>
+    <tr><th>Nome</th><td th:text="${cittadino.nomeCittadinoDto}"></td></tr>
+    <tr><th>Cognome</th><td th:text="${cittadino.cognomeCittadinoDto}"></td></tr>
+    <tr><th>Codice Fiscale</th><td th:text="${cittadino.codiceFiscaleDto}"></td></tr>
+    <tr><th>Data di Nascita</th><td th:text="${cittadino.dataNascitaDto}"></td></tr>
+    <tr><th>Comune di Nascita</th><td th:text="${cittadino.idComuneNascitaDto.nomeComuneDto}"></td></tr>
 </table>
 
 </body>
