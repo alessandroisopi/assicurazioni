@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>Polizza RCA</title>
+    <style>
+        .page-header {
+            text-align: right;
+        }
+
+        #page-footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+        #page-footer:after {
+            counter-increment: page;
+            content: counter(page);
+        }
+    </style>
+</head>
+<body>
+<header class="page-header">
+    <p th:text="${data}"></p>
+</header>
+
+<h1>Dettagli Polizza RCA</h1>
+
+<h2>Dati Polizza</h2>
+<table>
+    <tr><th>ID Polizza</th><td th:text="${polizza.id.idPolizza}"></td></tr>
+    <tr><th>Data Inserimento</th><td th:text="${polizza.id.dtInserimento}"></td></tr>
+    <tr><th>Numero Polizza</th><td th:text="${polizza.numPolizza}"></td></tr>
+    <tr><th>Data Inizio</th><td th:text="${polizza.dtInizio}"></td></tr>
+    <tr><th>Data Fine</th><td th:text="${polizza.dtFine}"></td></tr>
+    <tr><th>Note</th><td th:text="${polizza.note}"></td></tr>
+</table>
+
+<h2>Tipo di Polizza</h2>
+<table>
+    <tr><th>ID Tipo Polizza</th><td th:text="${polizza.idTipoPolizza.idTipoPolizza}"></td></tr>
+    <tr><th>Descrizione</th><td th:text="${polizza.idTipoPolizza.dsTipoPolizza}"></td></tr>
+    <tr><th>Data Inizio</th><td th:text="${polizza.idTipoPolizza.dtInizio}"></td></tr>
+    <tr><th>Data Fine</th><td th:text="${polizza.idTipoPolizza.dtFine}"></td></tr>
+</table>
+
+<h2>Classe</h2>
+<table>
+    <tr><th>ID Classe</th><td th:text="${polizza.idClasse.idClasse}"></td></tr>
+    <tr><th>Codice Classe</th><td th:text="${polizza.idClasse.cdClasse}"></td></tr>
+    <tr><th>Descrizione Classe</th><td th:text="${polizza.idClasse.dsClasse}"></td></tr>
+    <tr><th>Data Inizio</th><td th:text="${polizza.idClasse.dtInizio}"></td></tr>
+    <tr><th>Data Fine</th><td th:text="${polizza.idClasse.dtFine}"></td></tr>
+</table>
+
+<h2>Stato Polizza</h2>
+<table>
+    <tr><th>ID Stato</th><td th:text="${polizza.idStatoPolizza.idStatoPolizza}"></td></tr>
+    <tr><th>Descrizione Stato</th><td th:text="${polizza.idStatoPolizza.dsStatoPolizza}"></td></tr>
+    <tr><th>Data Inizio</th><td th:text="${polizza.idStatoPolizza.dtInizio}"></td></tr>
+    <tr><th>Data Fine</th><td th:text="${polizza.idStatoPolizza.dtFine}"></td></tr>
+</table>
+
+<h2>Dati del Veicolo</h2>
+<table>
+    <tr><th>Targa del veicolo</th><td th:text="${targa}"></td></tr>
+    <tr><th>Numero del telaio</th><td th:text="${veicolo.telaio}"></td></tr>
+    <tr><th>Marca del Veicolo</th><td th:text="${veicolo.idMarca.dscMarca}"></td></tr>
+    <tr><th>Modello del Veicolo</th><td th:text="${veicolo.idModello.dsModello}"></td></tr>
+    <tr><th>Tipo del veicolo</th><td th:text="${veicolo.tipoVeicoloDTO.dsTipoVeicolo}"></td></tr>
+
+</table>
+
+<h2>Dati Cliente</h2>
+<table th:each="c : ${cittadini}">
+    <tr><th>Nome</th> <td th:text="${c.nomeCittadinoDto}"></td></tr>
+    <tr><th>Cognome</th><td th:text="${c.cognomeCittadinoDto}"></td></tr>
+    <tr><th>Codice Fiscale</th><td th:text="${c.codiceFiscaleDto}"></td></tr>
+    <tr><th>Data di Nascita</th><td th:text="${c.dataNascitaDto}"></td></tr>
+    <tr><th>Comune di Nascita</th><td th:text="${c.idComuneNascitaDto.nomeComuneDto}"></td></tr>
+</table>
+<footer id="page-footer">
+    Pagina
+</footer>
+</body>
+</html>
