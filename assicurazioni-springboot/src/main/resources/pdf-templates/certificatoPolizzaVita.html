@@ -25,20 +25,20 @@
     <p th:text="${data}"></p>
 </header>
 
-<h1>Dettagli Polizza</h1>
+<h1>Dettagli Polizza Vita</h1>
 
 <h2 class="section-title">Dati Polizza</h2>
 <table>
     <tr><th>ID Polizza</th><td th:text="${polizza.id.idPolizza}"></td></tr>
     <tr><th>Data Inserimento</th><td th:text="${polizza.id.dtInserimento}"></td></tr>
     <tr><th>Numero Polizza</th><td th:text="${polizza.numPolizza}"></td></tr>
-    <tr><th>Intestatario (Codice)</th><td th:text="${polizza.cdIntestatario}"></td></tr>
+    <tr><th>Intestatario</th><td th:text="${polizza.cdIntestatario}"></td></tr>
     <tr><th>Data Inizio</th><td th:text="${polizza.dtInizio}"></td></tr>
     <tr><th>Data Fine</th><td th:text="${polizza.dtFine}"></td></tr>
     <tr><th>Note</th><td th:text="${polizza.note}"></td></tr>
 </table>
 
-<h2 class="section-title">Tipo di Polizza</h2>
+<h2>Tipo di Polizza</h2>
 <table>
     <tr><th>ID Tipo Polizza</th><td th:text="${polizza.idTipoPolizza.idTipoPolizza}"></td></tr>
     <tr><th>Descrizione</th><td th:text="${polizza.idTipoPolizza.dsTipoPolizza}"></td></tr>
@@ -46,7 +46,7 @@
     <tr><th>Data Fine</th><td th:text="${polizza.idTipoPolizza.dtFine}"></td></tr>
 </table>
 
-<h2 class="section-title">Classe</h2>
+<h2>Classe</h2>
 <table>
     <tr><th>ID Classe</th><td th:text="${polizza.idClasse.idClasse}"></td></tr>
     <tr><th>Codice Classe</th><td th:text="${polizza.idClasse.cdClasse}"></td></tr>
@@ -55,7 +55,7 @@
     <tr><th>Data Fine</th><td th:text="${polizza.idClasse.dtFine}"></td></tr>
 </table>
 
-<h2 class="section-title">Stato Polizza</h2>
+<h2>Stato Polizza</h2>
 <table>
     <tr><th>ID Stato</th><td th:text="${polizza.idStatoPolizza.idStatoPolizza}"></td></tr>
     <tr><th>Descrizione Stato</th><td th:text="${polizza.idStatoPolizza.dsStatoPolizza}"></td></tr>
@@ -63,7 +63,7 @@
     <tr><th>Data Fine</th><td th:text="${polizza.idStatoPolizza.dtFine}"></td></tr>
 </table>
 
-<h2 class="section-title">Dati Cliente</h2>
+<h2>Dati Cliente</h2>
 <table>
     <tr><th>Nome</th><td th:text="${cittadino.nomeCittadinoDto}"></td></tr>
     <tr><th>Cognome</th><td th:text="${cittadino.cognomeCittadinoDto}"></td></tr>
