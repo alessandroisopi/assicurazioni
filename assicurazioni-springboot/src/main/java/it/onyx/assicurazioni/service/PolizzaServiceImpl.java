@@ -39,7 +39,9 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -55,6 +57,9 @@ public class PolizzaServiceImpl implements PolizzaService {
 
     @Autowired
     private StatoPolizzaRepository statoPolizzaRepository;
+
+    @Autowired
+    private PdfGenerateService pdfGenerateService;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -413,6 +418,37 @@ public class PolizzaServiceImpl implements PolizzaService {
         return result;
     }
 
+    @Override
+    public void generatePdfFile(long id) throws Exception {
+        Map<String, Object> data = new HashMap<>();
+        Polizza polizza = polizzaRepository.getById(id);
+        if (polizza == null) {
+            throw new Exception("Polizza non trovata");
+        }
+        data.put("polizza", polizza);
+        if (polizza.getIdTipoPolizza().getIdTipoPolizza() == 1) {   //ramo polizza vita
+            String urlGetCittadinoByCf = persone + "persona/cittadinoByCf/" + polizza.getCdIntestatario();
+            HttpEntity<String> listaHeaders = creaListaHeader();
+            //manda la richiesta
+            ResponseEntity<DtoCittadino> responseCittadino = restTemplate.exchange(
+                    urlGetCittadinoByCf,
+                    HttpMethod.GET,
+                    listaHeaders,
+                    DtoCittadino.class
+            );
+            DtoCittadino cittadino = responseCittadino.getBody();
+            data.put("cittadino", cittadino);
+        } else if (polizza.getIdTipoPolizza().getIdTipoPolizza() == 2) {    //ramo RCA
+            throw new Exception("Polizza RCA non implementata");
+        } else {
+            throw new Exception("Tipo di polizza non gestita");
+        }
+        data.put("data", LocalDate.now());
+        pdfGenerateService.generatePdfFile("certificatoPolizzaVita", data, "certificatoPolizzaVita.pdf");
+
+
+    }
+
     private static DtoCittadino getDtoCittadino(PolizzaInsert dto, ResponseEntity<DtoCittadino> responseCittadino) throws Exception {
         DtoCittadino dtoCittadino = responseCittadino.getBody();
         //controlla se il cittadino è nullo
@@ -432,6 +468,15 @@ public class PolizzaServiceImpl implements PolizzaService {
             throw new Exception("Data di nascita non valida");
         }
         return dtoCittadino;
+    }
+
+    private HttpEntity<String> creaListaHeader() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("nome", UserContext.getUtente().getNome());
+        headers.set("cognome", UserContext.getUtente().getCognome());
+        headers.set("codFiscale", UserContext.getUtente().getCodiceFiscale());
+        headers.set("dtNascita", UserContext.getUtente().getDataNascita().toString());
+        return new HttpEntity<>(headers);
     }
 
     private void writeExcel(List<PolizzaDTO> polizze, String filePath) {

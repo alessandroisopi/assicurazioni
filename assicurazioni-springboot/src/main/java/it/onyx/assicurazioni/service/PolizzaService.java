@@ -19,4 +19,6 @@ public interface PolizzaService {
     PolizzaDTO insertControllata(PolizzaInsert dto) throws Exception;
 
     List<PolizzaDTO> getByParams(PolizzaDTO dto);
+
+    void generatePdfFile(long id) throws Exception;
 }
