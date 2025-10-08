@@ -15,6 +15,7 @@ import it.onyx.assicurazioni.util.TipoPolizzaMapper;
 import jakarta.transaction.Transactional;
 import onyx.classi.generated.DtoCittadino;
 import onyx.classi.generated.ImmatricolatoDTO;
+import onyx.classi.generated.VeicoloDTO;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -438,15 +439,41 @@ public class PolizzaServiceImpl implements PolizzaService {
             );
             DtoCittadino cittadino = responseCittadino.getBody();
             data.put("cittadino", cittadino);
+            data.put("data", LocalDate.now());
+            pdfGenerateService.generatePdfFile("certificatoPolizzaVita", data, "certificatoPolizzaVita.pdf");
         } else if (polizza.getIdTipoPolizza().getIdTipoPolizza() == 2) {    //ramo RCA
-            throw new Exception("Polizza RCA non implementata");
+            String urlGetVeicoloByTarga = registro + "/immatricolato/targa/" + polizza.getCdIntestatario();
+            HttpEntity<String> listaHeaders = creaListaHeader();
+            ResponseEntity<VeicoloDTO> responseVeicolo = restTemplate.exchange(
+                    urlGetVeicoloByTarga,
+                    HttpMethod.GET,
+                    listaHeaders,
+                    VeicoloDTO.class
+            );
+            VeicoloDTO veicolo = responseVeicolo.getBody();
+            if (veicolo == null) {
+                throw new Exception("Veicolo non trovato");
+            }
+            data.put("veicolo", veicolo);
+            data.put("targa", polizza.getCdIntestatario());
+            String urlGetCittadinoByTelaio = persone + "/veicoloCitt/getProprTelaio/" + veicolo.getTelaio();
+            ParameterizedTypeReference<List<DtoCittadino>> responseListaCittadini =  new ParameterizedTypeReference<>() {};
+            ResponseEntity<List<DtoCittadino>> responseTelai = restTemplate.exchange(
+                    urlGetCittadinoByTelaio,
+                    HttpMethod.GET,
+                    listaHeaders,
+                    responseListaCittadini
+            );
+            List<DtoCittadino> listaCittadini = responseTelai.getBody();
+            if  (listaCittadini == null) {
+                throw new Exception("Nessun cittadino non trovato");
+            }
+            data.put("cittadini", listaCittadini);
+            data.put("data", LocalDate.now());
+            pdfGenerateService.generatePdfFile("certificatoRCA", data, "certificatoRCA.pdf");
         } else {
             throw new Exception("Tipo di polizza non gestita");
         }
-        data.put("data", LocalDate.now());
-        pdfGenerateService.generatePdfFile("certificatoPolizzaVita", data, "certificatoPolizzaVita.pdf");
-
-
     }
 
     private static DtoCittadino getDtoCittadino(PolizzaInsert dto, ResponseEntity<DtoCittadino> responseCittadino) throws Exception {
