@@ -1,7 +1,9 @@
 package it.onyx.assicurazioni.dto;
 
+import it.onyx.assicurazioni.adapter.LocalDateTimeAdapter;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import java.time.LocalDateTime;
 
@@ -45,6 +47,7 @@ public class DocumentoPolizzaDTO {
         this.id = id;
     }
 
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     public LocalDateTime getDtInserimento() {
         return dtInserimento;
     }

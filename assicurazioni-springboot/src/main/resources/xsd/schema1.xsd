@@ -57,6 +57,26 @@
       
   </xs:complexType>
     
+  <xs:complexType name="documentoPolizzaDTO">
+        
+    <xs:sequence>
+            
+      <xs:element minOccurs="0" name="doc" type="xs:base64Binary"/>
+            
+      <xs:element minOccurs="0" name="dtInserimento" type="xs:string"/>
+            
+      <xs:element name="id" type="xs:long"/>
+            
+      <xs:element minOccurs="0" name="idPolizza" type="polizzaDTO"/>
+            
+      <xs:element minOccurs="0" name="nomeFile" type="xs:string"/>
+            
+      <xs:element minOccurs="0" name="utenteC" type="xs:string"/>
+          
+    </xs:sequence>
+      
+  </xs:complexType>
+    
   <xs:complexType name="polizzaDTO">
         
     <xs:sequence>
