@@ -27,3 +27,10 @@ url:
   autostrade: "http://192.168.1.32:8181/"
   persone: "http://192.168.1.32:8282/"
   registro: "http://192.168.1.32:8383/"
+
+path:
+  pdf:
+    directory: "assicurazioni-springboot/src/main/resources/risultati/pdfGenerati/"
+
+insert:
+  documentoPolizza: true
