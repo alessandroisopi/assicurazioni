@@ -1,21 +1,29 @@
 package it.onyx.assicurazioni.dto;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
+
 import java.time.LocalDateTime;
 
 public class DocumentoPolizzaDTO {
 
+    @Null(message = "Non puo essere specificato il valore")
     private long id;
+    @Null(message = "Non puo essere specificato il valore")
     private LocalDateTime dtInserimento;
+    @NotNull(message = "Il valore deve essere specificato")
     private PolizzaDTO idPolizza;
+    @Null(message = "Non puo essere specificato il valore")
     private byte[] doc;
+    @NotNull(message = "Il valore deve essere specificato")
     private String nomeFile;
+    @Null(message = "Non puo essere specificato il valore")
     private String utenteC;
 
     public DocumentoPolizzaDTO() {
     }
 
-    public DocumentoPolizzaDTO(long id, PolizzaDTO idPolizza, String nomeFile) {
-        this.id = id;
+    public DocumentoPolizzaDTO(PolizzaDTO idPolizza, String nomeFile) {
         this.idPolizza = idPolizza;
         this.nomeFile = nomeFile;
     }
