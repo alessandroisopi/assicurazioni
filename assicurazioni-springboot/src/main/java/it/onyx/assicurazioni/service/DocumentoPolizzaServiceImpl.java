@@ -1,7 +1,5 @@
 package it.onyx.assicurazioni.service;
 
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfReader;
 import it.onyx.assicurazioni.context.UserContext;
 import it.onyx.assicurazioni.dto.DocumentoPolizzaDTO;
 import it.onyx.assicurazioni.entity.DocumentoPolizza;
@@ -13,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -52,5 +49,14 @@ public class DocumentoPolizzaServiceImpl implements DocumentoPolizzaService {
         dto.setUtenteC(UserContext.getUtente().getCodiceFiscale());
         DocumentoPolizza entity = DocumentoPolizzaMapper.toEntity(dto);
         return DocumentoPolizzaMapper.toDto(documentoPolizzaRepository.save(entity));
+    }
+
+    @Override
+    public DocumentoPolizzaDTO getById(long id) throws Exception {
+        if (documentoPolizzaRepository.getById(id) == null) {
+            throw new Exception("Impossibile trovare il documento desiderato");
+        } else {
+            return DocumentoPolizzaMapper.toDto(documentoPolizzaRepository.getById(id));
+        }
     }
 }
