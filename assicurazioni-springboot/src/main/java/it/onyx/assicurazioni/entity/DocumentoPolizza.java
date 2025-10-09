@@ -2,6 +2,8 @@ package it.onyx.assicurazioni.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "DOCUMENTO_POLIZZA")
 public class DocumentoPolizza {
@@ -27,8 +29,8 @@ public class DocumentoPolizza {
     public DocumentoPolizza() {
     }
 
-    public DocumentoPolizza(DocumentoPolizzaEmbeddedId id, long idPolizza, byte[] doc, String nomeFile, String utenteC, Polizza polizza) {
-        this.id = id;
+    public DocumentoPolizza(long id, LocalDateTime dtInserimento, long idPolizza, byte[] doc, String nomeFile, String utenteC, Polizza polizza) {
+        this.id = new DocumentoPolizzaEmbeddedId(id, dtInserimento);
         this.idPolizza = idPolizza;
         this.doc = doc;
         this.nomeFile = nomeFile;

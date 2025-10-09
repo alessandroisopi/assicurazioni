@@ -5,9 +5,10 @@ import it.onyx.assicurazioni.entity.DocumentoPolizza;
 import it.onyx.assicurazioni.entity.DocumentoPolizzaEmbeddedId;
 
 public class DocumentoPolizzaMapper {
-    public DocumentoPolizza toEntity(DocumentoPolizzaDTO dto) {
+    public static DocumentoPolizza toEntity(DocumentoPolizzaDTO dto) {
         return new DocumentoPolizza(
-                new DocumentoPolizzaEmbeddedId(dto.getId(), dto.getDtInserimento()),
+                dto.getId(),
+                dto.getDtInserimento(),
                 dto.getIdPolizza().getIdPolizza(),
                 dto.getDoc(),
                 dto.getNomeFile(),
@@ -15,7 +16,7 @@ public class DocumentoPolizzaMapper {
                 PolizzaMapper.toEntity(dto.getIdPolizza())
         );
     }
-    public DocumentoPolizzaDTO toDto(DocumentoPolizza entity) {
+    public static DocumentoPolizzaDTO toDto(DocumentoPolizza entity) {
         return new DocumentoPolizzaDTO(
                 entity.getId().getId(),
                 entity.getId().getDtInserimento(),
