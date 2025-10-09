@@ -66,6 +66,10 @@ public class PolizzaDTO {
         this.utenteC = utenteC;
     }
 
+    public PolizzaDTO(long idPolizza) {
+        this.idPolizza = idPolizza;
+    }
+
     public long getIdPolizza() {
         return idPolizza;
     }
