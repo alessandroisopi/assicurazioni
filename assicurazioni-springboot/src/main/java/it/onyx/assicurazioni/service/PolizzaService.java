@@ -20,5 +20,5 @@ public interface PolizzaService {
 
     List<PolizzaDTO> getByParams(PolizzaDTO dto);
 
-    void generatePdfFile(long id) throws Exception;
+    void generatePdfFile(long id, String nomeFilePDF) throws Exception;
 }

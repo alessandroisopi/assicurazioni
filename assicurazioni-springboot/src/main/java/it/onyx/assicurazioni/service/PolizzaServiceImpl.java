@@ -420,7 +420,7 @@ public class PolizzaServiceImpl implements PolizzaService {
     }
 
     @Override
-    public void generatePdfFile(long id) throws Exception {
+    public void generatePdfFile(long id, String nomeFilePDF) throws Exception {
         Map<String, Object> data = new HashMap<>();
         Polizza polizza = polizzaRepository.getById(id);
         if (polizza == null) {
@@ -440,7 +440,8 @@ public class PolizzaServiceImpl implements PolizzaService {
             DtoCittadino cittadino = responseCittadino.getBody();
             data.put("cittadino", cittadino);
             data.put("data", LocalDate.now());
-            pdfGenerateService.generatePdfFile("certificatoPolizzaVita", data, "certificatoPolizzaVita.pdf");
+            String pdfFileName = nomeFilePDF + ".pdf";
+            pdfGenerateService.generatePdfFile("certificatoPolizzaVita", data, pdfFileName);
         } else if (polizza.getIdTipoPolizza().getIdTipoPolizza() == 2) {    //ramo RCA
             String urlGetVeicoloByTarga = registro + "/immatricolato/targa/" + polizza.getCdIntestatario();
             HttpEntity<String> listaHeaders = creaListaHeader();
@@ -470,7 +471,8 @@ public class PolizzaServiceImpl implements PolizzaService {
             }
             data.put("cittadini", listaCittadini);
             data.put("data", LocalDate.now());
-            pdfGenerateService.generatePdfFile("certificatoRCA", data, "certificatoRCA.pdf");
+            String pdfFileName = nomeFilePDF + ".pdf";
+            pdfGenerateService.generatePdfFile("certificatoRCA", data,  pdfFileName);
         } else {
             throw new Exception("Tipo di polizza non gestita");
         }
