@@ -33,4 +33,9 @@ public class DocumentoPolizzaController {
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
         return new ResponseEntity<>(doc, headers, HttpStatus.OK);
     }
+
+    @GetMapping(path = "/{id}", produces = "application/json")
+    public ResponseEntity<DocumentoPolizzaDTO> getById(@PathVariable("id") long id) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(documentoPolizzaService.getById(id));
+    }
 }
