@@ -420,9 +420,9 @@ public class PolizzaServiceImpl implements PolizzaService {
     }
 
     @Override
-    public void generatePdfFile(long id, String nomeFilePDF) throws Exception {
+    public void generatePdfFile(long idPolizza, String nomeFilePDF) throws Exception {
         Map<String, Object> data = new HashMap<>();
-        Polizza polizza = polizzaRepository.getById(id);
+        Polizza polizza = polizzaRepository.getById(idPolizza);
         if (polizza == null) {
             throw new Exception("Polizza non trovata");
         }
