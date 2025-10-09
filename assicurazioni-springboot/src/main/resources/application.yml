@@ -31,3 +31,6 @@ url:
 path:
   pdf:
     directory: "assicurazioni-springboot/src/main/resources/risultati/pdfGenerati/"
+
+insert:
+  documentoPolizza: true
