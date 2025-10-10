@@ -68,9 +68,7 @@ public class PolizzaServiceImpl implements PolizzaService {
     @Override
     public PolizzaDTO insert(PolizzaDTO dto) {
         try {
-            if (polizzaRepository.existsById(new PolizzaEmbeddedId(dto.getIdClasse().getIdClasse(), dto.getDtInserimento()))) {
-                return null;
-            }
+            dto.setDtInserimento(LocalDateTime.now());
             dto.setCombinato();
             Polizza polizza = PolizzaMapper.toEntity(dto);    //conversione a entità del dto
             if (tipoPolizzaRepository.findById(dto.getIdTipoPolizza().getIdTipoPolizza()).isEmpty()) {
@@ -92,12 +90,13 @@ public class PolizzaServiceImpl implements PolizzaService {
                 return null;
             }
             polizza.setUtenteC(UserContext.getUtente().getCodiceFiscale());
-            polizza = polizzaRepository.save(polizza);  //effettua il salvataggio sia nel database che nella variabile
-            if (polizzaRepository.existsById(polizza.getId())) { //controllo se andato tutto bene
-                return PolizzaMapper.toDto(polizza);
-            } else {
-                return null;
+            Polizza controlloPolizzaVecchia = polizzaRepository.getById(polizza.getId().getIdPolizza());
+            if (controlloPolizzaVecchia != null) {
+                controlloPolizzaVecchia.setValido(0);
+                polizzaRepository.save(controlloPolizzaVecchia);
             }
+            polizza.setValido(1);
+            return PolizzaMapper.toDto(polizzaRepository.save(polizza));  //effettua il salvataggio sia nel database che nella variabile
         } catch (Exception e) {
             System.err.println(e.getMessage());
             throw e;

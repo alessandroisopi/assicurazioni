@@ -2,6 +2,7 @@ package it.onyx.assicurazioni.repository;
 
 import it.onyx.assicurazioni.entity.Polizza;
 import it.onyx.assicurazioni.entity.PolizzaEmbeddedId;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -27,12 +28,4 @@ public interface PolizzaRepository extends JpaRepository<Polizza, PolizzaEmbedde
 
     @Query(nativeQuery = true, value = "SELECT MAX(ID_POLIZZA) FROM POLIZZA")
     long countMax();
-
-    @Modifying
-    @Query(nativeQuery = true, value = "UPDATE POLIZZA SET VALIDO = NOT VALIDO " +
-            "WHERE (:idPolizza, :dtInserimento) IN " +
-            "(SELECT ID_POLIZZA, MAX(DT_INSERIMENTO) " +
-            "FROM POLIZZA " +
-            "GROUP BY ID_POLIZZA);")
-    void setValidoReverse(@Param("idPolizza") long idPolizza, @Param("dtInserimento") LocalDateTime dtInserimento);
 }

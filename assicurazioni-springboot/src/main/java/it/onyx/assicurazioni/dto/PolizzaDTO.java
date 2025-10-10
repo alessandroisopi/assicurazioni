@@ -4,6 +4,7 @@ import it.onyx.assicurazioni.adapter.LocalDateAdapter;
 import it.onyx.assicurazioni.adapter.LocalDateTimeAdapter;
 import it.onyx.assicurazioni.groupvalidator.OnCreate;
 import it.onyx.assicurazioni.groupvalidator.OnUpdate;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
@@ -17,7 +18,7 @@ public class PolizzaDTO {
     @Min(value = 1, message = "Il valore deve essere maggiore o uguale a 1", groups = {OnUpdate.class, OnCreate.class})
     @NotNull(message = "il valore non può essere nullo", groups = {OnUpdate.class, OnCreate.class})
     private long idPolizza;
-    @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class, OnUpdate.class})
+    @NotNull(message = "il valore non può essere nullo", groups = {OnUpdate.class})
     private LocalDateTime dtInserimento;
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
     private TipoPolizzaDTO idTipoPolizza;
@@ -36,7 +37,8 @@ public class PolizzaDTO {
     private String note;
     @Null(message = "Il valore deve essere nullo", groups = {OnCreate.class, OnUpdate.class})
     private String utenteC;
-    @Null(message = "Il valore deve essere nullo", groups = {OnCreate.class, OnUpdate.class})
+    @Min(value = 0)
+    @Max(value = 0)
     private int valido;
 
     public PolizzaDTO() {}
