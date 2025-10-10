@@ -355,7 +355,7 @@ public class PolizzaServiceImpl implements PolizzaService {
             return PolizzaMapper.toDto(result);
         } else if (dto.getTipoPolizza().getIdTipoPolizza() == 1) {
             //controlla se il cittadino ha più di 14 anni ed è vivo
-            if (Period.between(LocalDate.parse(dtoCittadino.getDataNascitaDto()), LocalDate.now()).getYears() > 14 && dtoCittadino.getIdStatoCittadinoDto() != 2) {
+            if (Period.between(LocalDate.parse(dtoCittadino.getDataNascitaDto()), LocalDate.now()).getYears() > 14 && dtoCittadino.getIdStatoCittadinoDto().getIdStatoCittadinoDto() != 2) {
                 Polizza result = new Polizza();
                 long idMax = polizzaRepository.countMax();
                 //imposta l'id ma molto probabilmente andrà modificato
