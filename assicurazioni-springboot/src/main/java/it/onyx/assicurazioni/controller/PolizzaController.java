@@ -84,9 +84,4 @@ public class PolizzaController {
     public ResponseEntity<PolizzaDTO> insertControllata(@RequestBody PolizzaInsert dto) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(polizzaService.insertControllata(dto));
     }
-
-    @GetMapping(path = "/getByParams", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<List<PolizzaDTO>> getByParams(@RequestBody PolizzaDTO dto) {
-        return ResponseEntity.status(HttpStatus.OK).body(polizzaService.getByParams(dto));
-    }
 }
