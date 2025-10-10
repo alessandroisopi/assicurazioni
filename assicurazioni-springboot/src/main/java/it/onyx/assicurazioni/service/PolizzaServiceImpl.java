@@ -134,39 +134,43 @@ public class PolizzaServiceImpl implements PolizzaService {
     @Override
     public PolizzaDTO update(PolizzaDTO dto) {
        try {
-           PolizzaEmbeddedId id = new PolizzaEmbeddedId(dto.getIdPolizza(), dto.getDtInserimento());
-           if (polizzaRepository.findById(id).isPresent()) { //controlla l'esistenza dell'oggetto
-               Polizza polizzaDB = polizzaRepository.findById(id).get();   //prende il campo nel db per riempire le colonne che non devono essere aggiornate
-               if (dto.getIdTipoPolizza() == null) {  //una serie di if che controlla campo per campo, se nulli vengono rimpiazzati con quelli da database
-                   dto.setIdTipoPolizza(TipoPolizzaMapper.toDto(polizzaDB.getIdTipoPolizza()));
-               }
-               if (dto.getIdClasse() == null) {
-                   dto.setIdClasse(ClasseMapper.toDto(polizzaDB.getIdClasse()));
-               }
-               if (dto.getCdIntestatario().isEmpty()) {
-                   dto.setCdIntestatario(polizzaDB.getCdIntestatario());
-               }
-               if (dto.getIdStatoPolizza() == null) {
-                   dto.setIdStatoPolizza(StatoPolizzaMapper.toDto(polizzaDB.getIdStatoPolizza()));
-               }
-               if (dto.getDtInizio() == null) {
-                   dto.setDtInizio(polizzaDB.getDtInizio());
-               }
-               if (dto.getDtFine() == null) {
-                   dto.setDtFine(polizzaDB.getDtFine());
-               }
-               if (dto.getNote() == null) {
-                   dto.setNote(polizzaDB.getNote());
-               }
-               if(dto.getDtFine().isBefore(dto.getDtInizio())) {    // controllo che la data sia coerente
-                   return null;
-               }
-               dto.setCombinato();  //viene reimpostato il campo numPolizza
-               dto.setUtenteC(UserContext.getUtente().getCodiceFiscale());
-               return PolizzaMapper.toDto(polizzaRepository.save(PolizzaMapper.toEntity(dto))); //viene salvato e il ritornato
-           } else {
+           if (polizzaRepository.getById(dto.getIdPolizza()) == null) {
                return null;
            }
+           Polizza polizzaDB = polizzaRepository.getById(dto.getIdPolizza());
+           //controlla l'esistenza dell'oggetto
+           if (dto.getIdTipoPolizza() == null) {  //una serie di if che controlla campo per campo, se nulli vengono rimpiazzati con quelli da database
+               dto.setIdTipoPolizza(TipoPolizzaMapper.toDto(polizzaDB.getIdTipoPolizza()));
+           }
+           if (dto.getIdClasse() == null) {
+               dto.setIdClasse(ClasseMapper.toDto(polizzaDB.getIdClasse()));
+           }
+           if (dto.getCdIntestatario().isEmpty()) {
+               dto.setCdIntestatario(polizzaDB.getCdIntestatario());
+           }
+           if (dto.getIdStatoPolizza() == null) {
+               dto.setIdStatoPolizza(StatoPolizzaMapper.toDto(polizzaDB.getIdStatoPolizza()));
+           }
+           if (dto.getDtInizio() == null) {
+               dto.setDtInizio(polizzaDB.getDtInizio());
+           }
+           if (dto.getDtFine() == null) {
+               dto.setDtFine(polizzaDB.getDtFine());
+           }
+           if (dto.getNote() == null) {
+               dto.setNote(polizzaDB.getNote());
+           }
+           if(dto.getDtFine().isBefore(dto.getDtInizio())) {    // controllo che la data sia coerente
+               return null;
+           }
+           dto.setCombinato();  //viene reimpostato il campo numPolizza
+           dto.setUtenteC(UserContext.getUtente().getCodiceFiscale());
+           dto.setDtInserimento(LocalDateTime.now());
+           dto.setValido(1);
+           polizzaDB.setValido(0);
+           polizzaRepository.save(polizzaDB);
+           return PolizzaMapper.toDto(polizzaRepository.save(PolizzaMapper.toEntity(dto))); //viene salvato e il ritornato
+
        } catch (Exception e) {
            System.err.println(e.getMessage());
            throw e;

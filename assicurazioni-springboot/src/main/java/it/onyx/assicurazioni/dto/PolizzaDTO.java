@@ -18,7 +18,7 @@ public class PolizzaDTO {
     @Min(value = 1, message = "Il valore deve essere maggiore o uguale a 1", groups = {OnUpdate.class, OnCreate.class})
     @NotNull(message = "il valore non può essere nullo", groups = {OnUpdate.class, OnCreate.class})
     private long idPolizza;
-    @NotNull(message = "il valore non può essere nullo", groups = {OnUpdate.class})
+    @Null(message = "il valore non può essere nullo", groups = {OnCreate.class, OnUpdate.class})
     private LocalDateTime dtInserimento;
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
     private TipoPolizzaDTO idTipoPolizza;
