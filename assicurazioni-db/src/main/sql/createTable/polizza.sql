@@ -9,8 +9,7 @@ CREATE TABLE POLIZZA (
     DT_INIZIO DATE NOT NULL,    --data inizio polizza
     DT_FINE DATE NOT NULL,  --data fine polizza
     NOTE VARCHAR2(255),  --note polizza
-    UTENTE_C VARCHAR2(16) NOT NULL,  --codice fiscale di utente
-    VALIDO NUMBER(1) DEFAULT 0 NOT NULL --verifica se è per storico o utilizzabile
+    UTENTE_C VARCHAR2(16) NOT NULL  --codice fiscale di utente
 );
 
 COMMENT ON COLUMN POLIZZA.ID_POLIZZA IS 'identificativo polizza';
@@ -24,7 +23,6 @@ COMMENT ON COLUMN POLIZZA.DT_INIZIO IS 'data inizio polizza';
 COMMENT ON COLUMN POLIZZA.DT_FINE IS 'data fine polizza';
 COMMENT ON COLUMN POLIZZA.NOTE IS 'note polizza';
 COMMENT ON COLUMN POLIZZA.UTENTE_C IS 'codice fiscale di utente';
-COMMENT ON COLUMN POLIZZA.VALIDO IS 'verifica se è per storico o utilizzabile';
 
 ALTER TABLE POLIZZA ADD CONSTRAINT ID_DT_POLIZZA PRIMARY KEY (ID_POLIZZA, DT_INSERIMENTO);
 ALTER TABLE POLIZZA ADD CONSTRAINT FK_TIPO_POLIZZA FOREIGN KEY(ID_TIPO_POLIZZA) REFERENCES TIPO_POLIZZA(ID_TIPO_POLIZZA);
