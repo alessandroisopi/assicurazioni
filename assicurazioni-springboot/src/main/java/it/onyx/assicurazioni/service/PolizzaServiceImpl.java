@@ -83,7 +83,8 @@ public class PolizzaServiceImpl implements PolizzaService {
             polizza.setUtenteC(UserContext.getUtente().getCodiceFiscale());
             Polizza controlloPolizzaVecchia = polizzaRepository.getById(polizza.getId().getIdPolizza());
             if (controlloPolizzaVecchia != null) {
-                delete((controlloPolizzaVecchia.getId().getIdPolizza()));
+                controlloPolizzaVecchia.setValido(0);
+                polizzaRepository.save(controlloPolizzaVecchia);
             }
             polizza.setValido(1);
             return PolizzaMapper.toDto(polizzaRepository.save(polizza));  //effettua il salvataggio sia nel database che nella variabile
@@ -345,10 +346,6 @@ public class PolizzaServiceImpl implements PolizzaService {
             result.setUtenteC(UserContext.getUtente().getCodiceFiscale());
             //imposta il numero della polizza
             result.setCombinato();
-            if (polizzaRepository.getById(result.getId().getIdPolizza()) != null) {
-                delete(result.getId().getIdPolizza());
-            }
-            result.setValido(1);
             //salva la polizza sul database
             polizzaRepository.save(result);
             //ritorna l'oggetto completo
@@ -382,10 +379,6 @@ public class PolizzaServiceImpl implements PolizzaService {
                 result.setNote("Polizza Vita Standard");
                 //imposta l'utente che ha effettuato questa insert
                 result.setUtenteC(UserContext.getUtente().getCodiceFiscale());
-                if (polizzaRepository.getById(result.getId().getIdPolizza()) != null) {
-                    delete(result.getId().getIdPolizza());
-                }
-                result.setValido(1);
                 //imposta il numero della polizza
                 result.setCombinato();
                 polizzaRepository.save(result);
