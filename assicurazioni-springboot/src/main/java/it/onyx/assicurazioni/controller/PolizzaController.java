@@ -62,9 +62,9 @@ public class PolizzaController {
         }
     }
 
-    @DeleteMapping(path = "/{id}", produces = "application/json")
-    public ResponseEntity<Void> delete(@PathVariable("id") long id) {
-        boolean result = polizzaService.delete(id);  //esegue la delete
+    @DeleteMapping(path = "/{id}/{dtInserimento}", produces = "application/json")
+    public ResponseEntity<Void> delete(@PathVariable("id") long id,@PathVariable("dtInserimento") @DateTimeFormat LocalDateTime dtInserimento) {
+        boolean result = polizzaService.delete(id, dtInserimento);  //esegue la delete
         if (result) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();    //se torna true la delete è andata bene e torna lo stato no content
         } else {
