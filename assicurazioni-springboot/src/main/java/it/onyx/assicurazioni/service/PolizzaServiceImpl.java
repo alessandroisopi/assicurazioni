@@ -15,15 +15,9 @@ import it.onyx.assicurazioni.util.TipoPolizzaMapper;
 import jakarta.transaction.Transactional;
 import onyx.classi.generated.DtoCittadino;
 import onyx.classi.generated.ImmatricolatoDTO;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -32,12 +26,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,9 +59,7 @@ public class PolizzaServiceImpl implements PolizzaService {
     @Override
     public PolizzaDTO insert(PolizzaDTO dto) {
         try {
-            if (polizzaRepository.existsById(new PolizzaEmbeddedId(dto.getIdClasse().getIdClasse(), dto.getDtInserimento()))) {
-                return null;
-            }
+            dto.setDtInserimento(LocalDateTime.now());
             dto.setCombinato();
             Polizza polizza = PolizzaMapper.toEntity(dto);    //conversione a entità del dto
             if (tipoPolizzaRepository.findById(dto.getIdTipoPolizza().getIdTipoPolizza()).isEmpty()) {
@@ -92,12 +81,12 @@ public class PolizzaServiceImpl implements PolizzaService {
                 return null;
             }
             polizza.setUtenteC(UserContext.getUtente().getCodiceFiscale());
-            polizza = polizzaRepository.save(polizza);  //effettua il salvataggio sia nel database che nella variabile
-            if (polizzaRepository.existsById(polizza.getId())) { //controllo se andato tutto bene
-                return PolizzaMapper.toDto(polizza);
-            } else {
-                return null;
+            Polizza controlloPolizzaVecchia = polizzaRepository.getById(polizza.getId().getIdPolizza());
+            if (controlloPolizzaVecchia != null) {
+                delete((controlloPolizzaVecchia.getId().getIdPolizza()));
             }
+            polizza.setValido(1);
+            return PolizzaMapper.toDto(polizzaRepository.save(polizza));  //effettua il salvataggio sia nel database che nella variabile
         } catch (Exception e) {
             System.err.println(e.getMessage());
             throw e;
@@ -135,39 +124,43 @@ public class PolizzaServiceImpl implements PolizzaService {
     @Override
     public PolizzaDTO update(PolizzaDTO dto) {
        try {
-           PolizzaEmbeddedId id = new PolizzaEmbeddedId(dto.getIdPolizza(), dto.getDtInserimento());
-           if (polizzaRepository.findById(id).isPresent()) { //controlla l'esistenza dell'oggetto
-               Polizza polizzaDB = polizzaRepository.findById(id).get();   //prende il campo nel db per riempire le colonne che non devono essere aggiornate
-               if (dto.getIdTipoPolizza() == null) {  //una serie di if che controlla campo per campo, se nulli vengono rimpiazzati con quelli da database
-                   dto.setIdTipoPolizza(TipoPolizzaMapper.toDto(polizzaDB.getIdTipoPolizza()));
-               }
-               if (dto.getIdClasse() == null) {
-                   dto.setIdClasse(ClasseMapper.toDto(polizzaDB.getIdClasse()));
-               }
-               if (dto.getCdIntestatario().isEmpty()) {
-                   dto.setCdIntestatario(polizzaDB.getCdIntestatario());
-               }
-               if (dto.getIdStatoPolizza() == null) {
-                   dto.setIdStatoPolizza(StatoPolizzaMapper.toDto(polizzaDB.getIdStatoPolizza()));
-               }
-               if (dto.getDtInizio() == null) {
-                   dto.setDtInizio(polizzaDB.getDtInizio());
-               }
-               if (dto.getDtFine() == null) {
-                   dto.setDtFine(polizzaDB.getDtFine());
-               }
-               if (dto.getNote() == null) {
-                   dto.setNote(polizzaDB.getNote());
-               }
-               if(dto.getDtFine().isBefore(dto.getDtInizio())) {    // controllo che la data sia coerente
-                   return null;
-               }
-               dto.setCombinato();  //viene reimpostato il campo numPolizza
-               dto.setUtenteC(UserContext.getUtente().getCodiceFiscale());
-               return PolizzaMapper.toDto(polizzaRepository.save(PolizzaMapper.toEntity(dto))); //viene salvato e il ritornato
-           } else {
+           if (polizzaRepository.getById(dto.getIdPolizza()) == null) {
                return null;
            }
+           Polizza polizzaDB = polizzaRepository.getById(dto.getIdPolizza());
+           //controlla l'esistenza dell'oggetto
+           if (dto.getIdTipoPolizza() == null) {  //una serie di if che controlla campo per campo, se nulli vengono rimpiazzati con quelli da database
+               dto.setIdTipoPolizza(TipoPolizzaMapper.toDto(polizzaDB.getIdTipoPolizza()));
+           }
+           if (dto.getIdClasse() == null) {
+               dto.setIdClasse(ClasseMapper.toDto(polizzaDB.getIdClasse()));
+           }
+           if (dto.getCdIntestatario().isEmpty()) {
+               dto.setCdIntestatario(polizzaDB.getCdIntestatario());
+           }
+           if (dto.getIdStatoPolizza() == null) {
+               dto.setIdStatoPolizza(StatoPolizzaMapper.toDto(polizzaDB.getIdStatoPolizza()));
+           }
+           if (dto.getDtInizio() == null) {
+               dto.setDtInizio(polizzaDB.getDtInizio());
+           }
+           if (dto.getDtFine() == null) {
+               dto.setDtFine(polizzaDB.getDtFine());
+           }
+           if (dto.getNote() == null) {
+               dto.setNote(polizzaDB.getNote());
+           }
+           if(dto.getDtFine().isBefore(dto.getDtInizio())) {    // controllo che la data sia coerente
+               return null;
+           }
+           dto.setCombinato();  //viene reimpostato il campo numPolizza
+           dto.setUtenteC(UserContext.getUtente().getCodiceFiscale());
+           dto.setDtInserimento(LocalDateTime.now());
+           dto.setValido(1);
+           polizzaDB.setValido(0);
+           polizzaRepository.save(polizzaDB);
+           return PolizzaMapper.toDto(polizzaRepository.save(PolizzaMapper.toEntity(dto))); //viene salvato e il ritornato
+
        } catch (Exception e) {
            System.err.println(e.getMessage());
            throw e;
@@ -175,11 +168,12 @@ public class PolizzaServiceImpl implements PolizzaService {
     }
 
     @Override
-    public boolean delete(long idPolizza, LocalDateTime dtInserimento) {
+    public boolean delete(long idPolizza) {
         try {
-            PolizzaEmbeddedId id = new PolizzaEmbeddedId(idPolizza, dtInserimento); //viene creato direttamente l'oggetto della chiave composta per comodità
-            if (polizzaRepository.existsById(id)) { //controlla l'esistenza
-                polizzaRepository.deleteById(id);   //lo elimina
+            Polizza polizza = polizzaRepository.getById(idPolizza);
+            if (polizza != null) { //controlla l'esistenza
+                polizza.setValido(0);
+                polizzaRepository.save(polizza);
                 return true;    //torna true
             } else  {   //non esiste torna false
                 return false;
@@ -351,13 +345,17 @@ public class PolizzaServiceImpl implements PolizzaService {
             result.setUtenteC(UserContext.getUtente().getCodiceFiscale());
             //imposta il numero della polizza
             result.setCombinato();
+            if (polizzaRepository.getById(result.getId().getIdPolizza()) != null) {
+                delete(result.getId().getIdPolizza());
+            }
+            result.setValido(1);
             //salva la polizza sul database
             polizzaRepository.save(result);
             //ritorna l'oggetto completo
             return PolizzaMapper.toDto(result);
         } else if (dto.getTipoPolizza().getIdTipoPolizza() == 1) {
             //controlla se il cittadino ha più di 14 anni ed è vivo
-            if (Period.between(LocalDate.parse(dtoCittadino.getDataNascitaDto()), LocalDate.now()).getYears() > 14 && dtoCittadino.getIdStatoCittadinoDto().getIdStatoCittadinoDto() != 2) {
+            if (Period.between(LocalDate.parse(dtoCittadino.getDataNascitaDto()), LocalDate.now()).getYears() > 14 && dtoCittadino.getIdStatoCittadinoDto() != 2) {
                 Polizza result = new Polizza();
                 long idMax = polizzaRepository.countMax();
                 //imposta l'id ma molto probabilmente andrà modificato
@@ -384,6 +382,10 @@ public class PolizzaServiceImpl implements PolizzaService {
                 result.setNote("Polizza Vita Standard");
                 //imposta l'utente che ha effettuato questa insert
                 result.setUtenteC(UserContext.getUtente().getCodiceFiscale());
+                if (polizzaRepository.getById(result.getId().getIdPolizza()) != null) {
+                    delete(result.getId().getIdPolizza());
+                }
+                result.setValido(1);
                 //imposta il numero della polizza
                 result.setCombinato();
                 polizzaRepository.save(result);
@@ -393,24 +395,6 @@ public class PolizzaServiceImpl implements PolizzaService {
             throw new  Exception("Tipo di polizza non gestita in questo servizio");
         }
         throw new Exception("Errore inserimento polizza");
-    }
-
-    @Override
-    public List<PolizzaDTO> getByParams(PolizzaDTO dto) {
-        //creato example matcher per ignorare embedded id
-        ExampleMatcher matcher = ExampleMatcher.matching()
-                .withIgnoreNullValues()
-                .withIgnorePaths("id.idPolizza", "id.dtInserimento");
-        //crea example per la findAll
-        Example<Polizza> example = Example.of(PolizzaMapper.toEntity(dto), matcher);
-        List<PolizzaDTO> result = new ArrayList<>();
-        for (Polizza p : polizzaRepository.findAll(example)) {
-            result.add(PolizzaMapper.toDto(p));
-        }
-        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
-        String path = "assicurazioni-springboot/src/main/resources/risultati/get/" + timestamp + "-ResultGetByParams.xlsx";
-        writeExcel(result, path);
-        return result;
     }
 
     private static DtoCittadino getDtoCittadino(PolizzaInsert dto, ResponseEntity<DtoCittadino> responseCittadino) throws Exception {
@@ -433,50 +417,4 @@ public class PolizzaServiceImpl implements PolizzaService {
         }
         return dtoCittadino;
     }
-
-    private void writeExcel(List<PolizzaDTO> polizze, String filePath) {
-        File file = new File(filePath);
-        if (!file.exists()) {
-            file.getParentFile().mkdirs();
-        }
-
-        try (Workbook workbook = new XSSFWorkbook()) {
-            Sheet sheet = workbook.createSheet("Polizze");
-
-            // Header
-            Row headerRow = sheet.createRow(0);
-            String[] headers = {
-                    "idPolizza", "dtInserimento", "idTipoPolizza", "idClasse", "cdIntestatario",
-                    "idStatoPolizza", "numPolizza", "dtInizio", "dtFine", "note", "utenteC"
-            };
-
-            for (int i = 0; i < headers.length; i++) {
-                headerRow.createCell(i).setCellValue(headers[i]);
-            }
-
-            int rowIdx = 1;
-            for (PolizzaDTO p : polizze) {
-                Row row = sheet.createRow(rowIdx++);
-
-                row.createCell(0).setCellValue(p.getIdPolizza());
-                row.createCell(1).setCellValue(p.getDtInserimento().toString());
-                row.createCell(2).setCellValue(p.getIdTipoPolizza().getIdTipoPolizza());
-                row.createCell(3).setCellValue(p.getIdClasse().getIdClasse());
-                row.createCell(4).setCellValue(p.getCdIntestatario());
-                row.createCell(5).setCellValue(p.getIdStatoPolizza().getIdStatoPolizza());
-                row.createCell(6).setCellValue(p.getNumPolizza());
-                row.createCell(7).setCellValue(p.getDtInizio().toString());
-                row.createCell(8).setCellValue(p.getDtFine().toString());
-                row.createCell(9).setCellValue(p.getNote());
-                row.createCell(10).setCellValue(p.getUtenteC());
-
-                FileOutputStream fileOut = new FileOutputStream(filePath);
-                workbook.write(fileOut);
-            }
-        } catch (Exception e) {
-            System.err.println("Errore scrittura file Excel");
-            System.err.println(e.getMessage());
-        }
-    }
-
 }

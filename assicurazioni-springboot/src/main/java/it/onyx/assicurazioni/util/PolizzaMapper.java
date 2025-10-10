@@ -18,7 +18,8 @@ public class PolizzaMapper {
                 polizza.getDtInizio(),
                 polizza.getDtFine(),
                 polizza.getNote(),
-                polizza.getUtenteC()
+                polizza.getUtenteC(),
+                polizza.getValido()
         );
     }
 
@@ -37,7 +38,8 @@ public class PolizzaMapper {
                 dto.getDtInizio(),
                 dto.getDtFine(),
                 dto.getNote(),
-                dto.getUtenteC()
+                dto.getUtenteC(),
+                dto.getValido()
         );
     }
 }

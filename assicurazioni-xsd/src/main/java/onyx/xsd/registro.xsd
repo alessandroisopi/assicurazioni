@@ -11,7 +11,7 @@
             
       <xs:element minOccurs="0" name="dtinizio" type="xs:string"/>
             
-      <xs:element minOccurs="0" name="idEsitoRevisione" type="xs:int"/>
+      <xs:element name="idEsitoRevisione" type="xs:int"/>
           
     </xs:sequence>
       
@@ -145,11 +145,11 @@
                     
           <xs:element minOccurs="0" name="idEsitoRevisione" type="esitoRevisioneDTO"/>
                     
-          <xs:element minOccurs="0" name="idRevisione" type="xs:int"/>
+          <xs:element name="idRevisione" type="xs:int"/>
                     
           <xs:element minOccurs="0" name="idVeicolo" type="xs:int"/>
                     
-          <xs:element minOccurs="0" name="kmPercorsi" type="xs:int"/>
+          <xs:element name="kmPercorsi" type="xs:int"/>
                     
           <xs:element minOccurs="0" name="veicolo" type="veicoloDTO"/>
                   
