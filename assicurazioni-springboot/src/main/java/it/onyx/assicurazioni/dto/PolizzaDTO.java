@@ -4,6 +4,7 @@ import it.onyx.assicurazioni.adapter.LocalDateAdapter;
 import it.onyx.assicurazioni.adapter.LocalDateTimeAdapter;
 import it.onyx.assicurazioni.groupvalidator.OnCreate;
 import it.onyx.assicurazioni.groupvalidator.OnUpdate;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
@@ -17,7 +18,7 @@ public class PolizzaDTO {
     @Min(value = 1, message = "Il valore deve essere maggiore o uguale a 1", groups = {OnUpdate.class, OnCreate.class})
     @NotNull(message = "il valore non può essere nullo", groups = {OnUpdate.class, OnCreate.class})
     private long idPolizza;
-    @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class, OnUpdate.class})
+    @Null(message = "il valore non può essere nullo", groups = {OnCreate.class, OnUpdate.class})
     private LocalDateTime dtInserimento;
     @NotNull(message = "il valore non può essere nullo", groups = {OnCreate.class})
     private TipoPolizzaDTO idTipoPolizza;
@@ -36,23 +37,13 @@ public class PolizzaDTO {
     private String note;
     @Null(message = "Il valore deve essere nullo", groups = {OnCreate.class, OnUpdate.class})
     private String utenteC;
+    @Min(value = 0)
+    @Max(value = 0)
+    private int valido;
 
     public PolizzaDTO() {}
 
-    public PolizzaDTO(long idPolizza, LocalDateTime dtInserimento, TipoPolizzaDTO idTipoPolizza, ClasseDTO idClasse, String cdIntestatario, StatoPolizzaDTO idStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
-        this.idPolizza = idPolizza;
-        this.dtInserimento = dtInserimento;
-        this.idTipoPolizza = idTipoPolizza;
-        this.idClasse = idClasse;
-        this.cdIntestatario = cdIntestatario;
-        this.idStatoPolizza = idStatoPolizza;
-        this.numPolizza = cdIntestatario + "|" + idTipoPolizza.getIdTipoPolizza();
-        this.dtInizio = dtInizio;
-        this.dtFine = dtFine;
-        this.note = note;
-    }
-
-    public PolizzaDTO(long idPolizza, LocalDateTime dtInserimento, TipoPolizzaDTO idTipoPolizza, ClasseDTO idClasse, String cdIntestatario, StatoPolizzaDTO idStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String note, String utenteC) {
+    public PolizzaDTO(long idPolizza, LocalDateTime dtInserimento, TipoPolizzaDTO idTipoPolizza, ClasseDTO idClasse, String cdIntestatario, StatoPolizzaDTO idStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String note, String utenteC, int valido) {
         this.idPolizza = idPolizza;
         this.dtInserimento = dtInserimento;
         this.idTipoPolizza = idTipoPolizza;
@@ -64,6 +55,7 @@ public class PolizzaDTO {
         this.dtFine = dtFine;
         this.note = note;
         this.utenteC = utenteC;
+        this.valido = valido;
     }
 
     public long getIdPolizza() {
@@ -157,6 +149,14 @@ public class PolizzaDTO {
         this.utenteC = utenteC;
     }
 
+    public int getValido() {
+        return valido;
+    }
+
+    public void setValido(int valido) {
+        this.valido = valido;
+    }
+
     @Override
     public String toString() {
         return "PolizzaDTO{" +
@@ -164,13 +164,14 @@ public class PolizzaDTO {
                 ", dtInserimento=" + dtInserimento +
                 ", idTipoPolizza=" + idTipoPolizza +
                 ", idClasse=" + idClasse +
-                ", cdIntestatario=" + cdIntestatario +
+                ", cdIntestatario='" + cdIntestatario + '\'' +
                 ", idStatoPolizza=" + idStatoPolizza +
                 ", numPolizza='" + numPolizza + '\'' +
                 ", dtInizio=" + dtInizio +
                 ", dtFine=" + dtFine +
                 ", note='" + note + '\'' +
                 ", utenteC='" + utenteC + '\'' +
+                ", valido=" + valido +
                 '}';
     }
 

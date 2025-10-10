@@ -82,6 +82,8 @@
       <xs:element minOccurs="0" name="numPolizza" type="xs:string"/>
             
       <xs:element minOccurs="0" name="utenteC" type="xs:string"/>
+            
+      <xs:element name="valido" type="xs:int"/>
           
     </xs:sequence>
       
