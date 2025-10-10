@@ -14,18 +14,18 @@ public class Polizza {
 
     @ManyToOne
     @JoinColumn(name = "ID_TIPO_POLIZZA", referencedColumnName = "ID_TIPO_POLIZZA")
-    private TipoPolizza idTipoPolizza; //identificativo tipo polizza
+    private TipoPolizza idTipoPolizza; //indentificativo tipo polizza
 
     @ManyToOne
     @JoinColumn(name = "ID_CLASSE", referencedColumnName = "ID_CLASSE")
-    private Classe idClasse; //identificativo classe polizza
+    private Classe idClasse; //indentificativo classe polizza
 
     @Column(name = "CD_INTESTATARIO")
-    private String cdIntestatario; //identificativo intestatario polizza
+    private String cdIntestatario; //indentificativo intestatario polizza
 
     @ManyToOne
     @JoinColumn(name = "ID_STATO_POLIZZA", referencedColumnName = "ID_STATO_POLIZZA")
-    private StatoPolizza idStatoPolizza; //identificativo stato polizza
+    private StatoPolizza idStatoPolizza; //indentificativo stato polizza
 
     @Column(name = "NUM_POLIZZA")
     private String numPolizza;  //numero della polizza
@@ -42,13 +42,10 @@ public class Polizza {
     @Column(name = "UTENTE_C")
     private String utenteC;
 
-    @Column(name = "VALIDO")
-    private int valido;
-
     public Polizza() {
     }
 
-    public Polizza(long idPolizza, LocalDateTime dtInserimento, TipoPolizza idTipoPolizza, Classe idClasse, String cdIntestatario, StatoPolizza idStatoPolizza, String numPolizza, LocalDate dtInizio, LocalDate dtFine, String note, String utenteC, int valido) {
+    public Polizza(long idPolizza, LocalDateTime dtInserimento, TipoPolizza idTipoPolizza, Classe idClasse, String cdIntestatario, StatoPolizza idStatoPolizza, String numPolizza, LocalDate dtInizio, LocalDate dtFine, String note, String utenteC) {
         this.idTipoPolizza = idTipoPolizza;
         this.idClasse = idClasse;
         this.cdIntestatario = cdIntestatario;
@@ -59,7 +56,6 @@ public class Polizza {
         this.note = note;
         this.utenteC = utenteC;
         this.id =  new PolizzaEmbeddedId(idPolizza, dtInserimento);
-        this.valido = valido;
     }
 
     public PolizzaEmbeddedId getId() {
@@ -140,14 +136,6 @@ public class Polizza {
 
     public void setUtenteC(String utenteC) {
         this.utenteC = utenteC;
-    }
-
-    public int getValido() {
-        return valido;
-    }
-
-    public void setValido(int valido) {
-        this.valido = valido;
     }
 
     public void setCombinato() {

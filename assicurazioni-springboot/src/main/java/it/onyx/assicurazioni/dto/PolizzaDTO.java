@@ -36,12 +36,23 @@ public class PolizzaDTO {
     private String note;
     @Null(message = "Il valore deve essere nullo", groups = {OnCreate.class, OnUpdate.class})
     private String utenteC;
-    @Null(message = "Il valore deve essere nullo", groups = {OnCreate.class, OnUpdate.class})
-    private int valido;
 
     public PolizzaDTO() {}
 
-    public PolizzaDTO(long idPolizza, LocalDateTime dtInserimento, TipoPolizzaDTO idTipoPolizza, ClasseDTO idClasse, String cdIntestatario, StatoPolizzaDTO idStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String note, String utenteC, int valido) {
+    public PolizzaDTO(long idPolizza, LocalDateTime dtInserimento, TipoPolizzaDTO idTipoPolizza, ClasseDTO idClasse, String cdIntestatario, StatoPolizzaDTO idStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String note) {
+        this.idPolizza = idPolizza;
+        this.dtInserimento = dtInserimento;
+        this.idTipoPolizza = idTipoPolizza;
+        this.idClasse = idClasse;
+        this.cdIntestatario = cdIntestatario;
+        this.idStatoPolizza = idStatoPolizza;
+        this.numPolizza = cdIntestatario + "|" + idTipoPolizza.getIdTipoPolizza();
+        this.dtInizio = dtInizio;
+        this.dtFine = dtFine;
+        this.note = note;
+    }
+
+    public PolizzaDTO(long idPolizza, LocalDateTime dtInserimento, TipoPolizzaDTO idTipoPolizza, ClasseDTO idClasse, String cdIntestatario, StatoPolizzaDTO idStatoPolizza, LocalDate dtInizio, LocalDate dtFine, String note, String utenteC) {
         this.idPolizza = idPolizza;
         this.dtInserimento = dtInserimento;
         this.idTipoPolizza = idTipoPolizza;
@@ -53,7 +64,6 @@ public class PolizzaDTO {
         this.dtFine = dtFine;
         this.note = note;
         this.utenteC = utenteC;
-        this.valido = valido;
     }
 
     public long getIdPolizza() {
@@ -147,14 +157,6 @@ public class PolizzaDTO {
         this.utenteC = utenteC;
     }
 
-    public int getValido() {
-        return valido;
-    }
-
-    public void setValido(int valido) {
-        this.valido = valido;
-    }
-
     @Override
     public String toString() {
         return "PolizzaDTO{" +
@@ -162,14 +164,13 @@ public class PolizzaDTO {
                 ", dtInserimento=" + dtInserimento +
                 ", idTipoPolizza=" + idTipoPolizza +
                 ", idClasse=" + idClasse +
-                ", cdIntestatario='" + cdIntestatario + '\'' +
+                ", cdIntestatario=" + cdIntestatario +
                 ", idStatoPolizza=" + idStatoPolizza +
                 ", numPolizza='" + numPolizza + '\'' +
                 ", dtInizio=" + dtInizio +
                 ", dtFine=" + dtFine +
                 ", note='" + note + '\'' +
                 ", utenteC='" + utenteC + '\'' +
-                ", valido=" + valido +
                 '}';
     }
 
